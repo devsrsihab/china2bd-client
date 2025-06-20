@@ -6,7 +6,7 @@ import avaterImg from "@/assets/images/avater.png";
 
 const Navbar = () => {
   return (
-    <nav className="bg-[#167389] sm:px-7 sm:py-2 py-2 px-4">
+    <nav className="bg-primary fixed top-0 left-0 w-full sm:px-7 sm:py-2 py-2 px-4">
       <div className="flex items-center w-full justify-between  ">
         <div className="flex-[2_1] object-contain justify-self-start flex">
           <Link href="/" aria-label="logo">

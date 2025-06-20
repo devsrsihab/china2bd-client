@@ -17,52 +17,10 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 // Import icons
-import bagIcon from "@/assets/icons/handbag.svg";
 import necklaceIcon from "@/assets/icons/necklace.svg";
+import { commonSidebarItems } from "@/constans/sidebar-items";
 
-const items = [
-  {
-    title: "Handbag",
-    url: "/handbag",
-    icon: bagIcon,
-  },
-  {
-    title: "Necklace",
-    url: "/necklace",
-    icon: necklaceIcon,
-    submenu: [
-      {
-        title: "Necklace 01",
-        url: "/necklace-01",
-        icon: bagIcon,
-      },
-      {
-        title: "Necklace 02",
-        url: "/necklace-02",
-        icon: bagIcon,
-      },
-    ],
-  },
-  {
-    title: "Necklace 123",
-    url: "/necklace-123",
-    icon: necklaceIcon,
-    submenu: [
-      {
-        title: "Necklace 03",
-        url: "/necklace-03",
-        icon: bagIcon,
-      },
-      {
-        title: "Necklace 04",
-        url: "/necklace-04",
-        icon: bagIcon,
-      },
-    ],
-  },
-];
-
-export function AppSidebar() {
+export function CommonSidebar() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   const toggleSubmenu = (title: string) => {
@@ -70,19 +28,21 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar className="bg-red-500 mt-20">
-      <SidebarContent>
+    <Sidebar
+      style={{ width: "306px", borderRight: "0px" }}
+      className="bg-white mt-18 w-[256px]"
+    >
+      <SidebarContent className="pt-2">
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {commonSidebarItems.map((item) => (
                 <div key={item.title}>
                   <SidebarMenuItem>
-                    {item.submenu ? (
+                    {Array.isArray(item.submenu) ? (
                       <button
                         onClick={() => toggleSubmenu(item.title)}
-                        className="w-full flex items-center gap-2 px-[18px] py-3.5 text-black hover:bg-[#e9f0ee] transition-all"
+                        className="w-full flex items-center gap-[18px] font-medium  !text-black px-[18px] py-[14px]  hover:bg-[#e9f0ee] transition-all"
                       >
                         <img
                           src={item.icon.src}
@@ -99,8 +59,8 @@ export function AppSidebar() {
                     ) : (
                       <SidebarMenuButton asChild>
                         <Link
-                          href={item.url}
-                          className="flex items-center px-[18px] py-3.5 gap-2 text-black"
+                          href={item.url || "#"}
+                          className="flex items-center font-medium  !text-black px-[18px] py-[14px] gap-[18px] "
                         >
                           <img
                             src={item.icon.src}
@@ -115,7 +75,7 @@ export function AppSidebar() {
 
                   {/* Animated Submenu */}
                   <AnimatePresence>
-                    {item.submenu && openMenu === item.title && (
+                    {Array.isArray(item.submenu) && openMenu === item.title && (
                       <motion.div
                         className="ml-6"
                         initial={{ height: 0, opacity: 0 }}
@@ -128,13 +88,8 @@ export function AppSidebar() {
                             <SidebarMenuButton asChild>
                               <Link
                                 href={sub.url}
-                                className="flex items-center gap-2 px-[18px] py-3.5 text-sm text-black"
+                                className="flex font-medium  !text-black items-center gap-2 px-[18px] py-[22px] text-sm "
                               >
-                                <img
-                                  src={sub.icon.src}
-                                  alt={sub.title}
-                                  className="w-5 h-5"
-                                />
                                 <span>{sub.title}</span>
                               </Link>
                             </SidebarMenuButton>
