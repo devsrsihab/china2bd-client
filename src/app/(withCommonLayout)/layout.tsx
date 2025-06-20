@@ -1,5 +1,7 @@
+import { AppSidebar } from "@/components/app-sidebar";
 import Footer from "@/components/shared/Footer/Footer";
 import Header from "@/components/shared/Navbar/Header";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Providers } from "@/lib/Providers";
 
 const CommonLayout = ({
@@ -10,7 +12,14 @@ const CommonLayout = ({
   return (
     <Providers>
       <Header />
-      {children}
+
+      <SidebarProvider>
+        <AppSidebar />
+        <main>
+          <SidebarTrigger />
+          {children}
+        </main>
+      </SidebarProvider>
       <Footer />
     </Providers>
   );
