@@ -1,0 +1,12 @@
+[data-sidebar="content"] {
+  background-color: white;
+}
+.bottomBar .item {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
