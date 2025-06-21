@@ -5,7 +5,6 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -17,7 +16,6 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 // Import icons
-import necklaceIcon from "@/assets/icons/necklace.svg";
 import { commonSidebarItems } from "@/constans/sidebar-items";
 
 export function CommonSidebar() {

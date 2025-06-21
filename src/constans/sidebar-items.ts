@@ -1,4 +1,17 @@
 import bagIcon from "@/assets/icons/handbag.svg";
+import autoMobileIcon from "@/assets/icons/automobile_icon.svg";
+import beautyProductIcon from "@/assets/icons/beauty_product.svg";
+import babyItemsIcon from "@/assets/icons/baby_items.svg";
+import womenClothingIcon from "@/assets/icons/womens_clothing.svg";
+import electronicsIcon from "@/assets/icons/electronics.svg";
+import kidIcon from "@/assets/icons/kid.svg";
+import mensClothingIcon from "@/assets/icons/mens_clothing.svg";
+import mobileIcon from "@/assets/icons/mobile.svg";
+import necklaceIcon from "@/assets/icons/necklace.svg";
+import shoesIcon from "@/assets/icons/shoes.svg";
+import sportIcon from "@/assets/icons/sport.svg";
+import sunglassIcon from "@/assets/icons/sunglass.svg";
+import watchIcon from "@/assets/icons/watch.svg";
 
 type SidebarItem = {
   title: string;
@@ -31,7 +44,7 @@ export const commonSidebarItems: SidebarItem[] = [
 
   {
     title: "Jewelry",
-    icon: bagIcon,
+    icon: necklaceIcon,
     submenu: [
       { title: "Bracelet", url: "/shop/bracelet" },
       { title: "Earrings", url: "/shop/earrings" },
@@ -52,7 +65,7 @@ export const commonSidebarItems: SidebarItem[] = [
   },
   {
     title: "Shoes",
-    icon: bagIcon, // replace with your actual icon variable
+    icon: shoesIcon, // replace with your actual icon variable
     submenu: [
       { title: "Men Shoes", url: "/shop/men-shoes" },
       { title: "Men Boot", url: "/shop/men-boot" },
@@ -75,7 +88,7 @@ export const commonSidebarItems: SidebarItem[] = [
 
   {
     title: "Beauty Products",
-    icon: bagIcon, // replace with your actual icon variable
+    icon: beautyProductIcon, // replace with your actual icon variable
     submenu: [
       { title: "Eyeshadow", url: "/shop/eyeshadow" },
       { title: "Eyeliner", url: "/shop/eyeliner" },
@@ -101,7 +114,7 @@ export const commonSidebarItems: SidebarItem[] = [
 
   {
     title: "Mens Clothing",
-    icon: bagIcon, // Assuming you have an appropriate icon component here
+    icon: mensClothingIcon, // Assuming you have an appropriate icon component here
     submenu: [
       { title: "Casual Pants For Men", url: "/shop/casual-pants-men" },
       { title: "Mens Jeans Pant", url: "/shop/jeans-men" },
@@ -124,7 +137,7 @@ export const commonSidebarItems: SidebarItem[] = [
   },
   {
     title: "Womens Clothing",
-    icon: bagIcon,
+    icon: womenClothingIcon,
     submenu: [
       { title: "Hoodies & Sweatshirts", url: "/shop/hoodies-women" },
       { title: "Womens Suits Blazers", url: "/shop/suits-women" },
@@ -147,7 +160,7 @@ export const commonSidebarItems: SidebarItem[] = [
   },
   {
     title: "Baby Items",
-    icon: bagIcon,
+    icon: babyItemsIcon,
     submenu: [
       { title: "Baby Bottle", url: "/shop/baby-bottle" },
       { title: "Diapers", url: "/shop/diapers" },
@@ -167,7 +180,7 @@ export const commonSidebarItems: SidebarItem[] = [
   },
   {
     title: "Office & School",
-    icon: bagIcon,
+    icon: kidIcon,
     submenu: [
       { title: "Ceiling Fan", url: "/shop/ceiling-fan" },
       { title: "Electric Blanket", url: "/shop/electric-blanket" },
@@ -197,7 +210,7 @@ export const commonSidebarItems: SidebarItem[] = [
   },
   {
     title: "Seasonal Products",
-    icon: bagIcon,
+    icon: sunglassIcon,
     submenu: [
       { title: "Summer", url: "/shop/summer" },
       { title: "Summer Dress", url: "/shop/summer-dress" },
@@ -216,7 +229,7 @@ export const commonSidebarItems: SidebarItem[] = [
   },
   {
     title: "Phone accessories",
-    icon: bagIcon,
+    icon: mobileIcon,
     submenu: [
       { title: "Xiaomi", url: "/shop/xiaomi" },
       { title: "Apple", url: "/shop/apple" },
@@ -236,7 +249,7 @@ export const commonSidebarItems: SidebarItem[] = [
   },
   {
     title: "Sports & Fitness",
-    icon: bagIcon,
+    icon: sportIcon,
     submenu: [
       { title: "Snowboard", url: "/shop/snowboard" },
       { title: "Jet Ski", url: "/shop/jet-ski" },
@@ -250,7 +263,7 @@ export const commonSidebarItems: SidebarItem[] = [
   },
   {
     title: "Entertainment Items",
-    icon: bagIcon,
+    icon: electronicsIcon,
     submenu: [
       { title: "Gopro", url: "/shop/gopro" },
       { title: "Camera", url: "/shop/camera" },
@@ -270,7 +283,7 @@ export const commonSidebarItems: SidebarItem[] = [
   },
   {
     title: "Watches",
-    icon: bagIcon,
+    icon: watchIcon,
     submenu: [
       { title: "Watch", url: "/shop/watch" },
       { title: "Womens Watch", url: "/shop/women-watches" },
@@ -283,7 +296,7 @@ export const commonSidebarItems: SidebarItem[] = [
   },
   {
     title: "Automobile Items",
-    icon: bagIcon,
+    icon: autoMobileIcon,
     submenu: [
       { title: "Automobile", url: "/shop/automobile" },
       { title: "Interior Accessories", url: "/shop/car-interior" },
