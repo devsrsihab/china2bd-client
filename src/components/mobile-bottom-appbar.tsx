@@ -6,10 +6,17 @@ import Image from "next/image";
 import { Menu, User, Phone, MessageCircle } from "lucide-react";
 import diamonIcon from "@/assets/icons/diamon.svg";
 import { SidebarTrigger } from "./ui/sidebar";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useState, useEffect } from "react";
 
 export const MobileBottomAppBar: React.FC = () => {
+  const [isMounted, setIsMounted] = useState(false);
+  // Prevent hydration mismatch and allow SSR-safe rendering
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 shadow-md md:hidden z-50">
+    <nav className="fixed bottom-[10%] left-0 w-full bg-white border-t border-gray-200 shadow-md md:hidden z-50">
       <div className="grid grid-cols-5 h-16 justify-center items-center bottomBar">
         {/* Category Button */}
         <div className="item">
@@ -17,9 +24,11 @@ export const MobileBottomAppBar: React.FC = () => {
             aria-label="Category"
             className="flex flex-col items-center text-sm text-muted-foreground hover:text-primary transition"
           >
-            {/* <Menu className="w-5 h-5 text-primary" /> */}
-            <SidebarTrigger className="cursor-pointer text-[55px] text-primary hover:text-primary" />
-
+            {isMounted ? (
+              <SidebarTrigger className="cursor-pointer text-[55px] text-primary hover:text-primary" />
+            ) : (
+              <Skeleton className="w-[32px] h-[32px] rounded-md bg-gray-200" />
+            )}
             <span className="text-xs text-primary">Category</span>
           </button>
         </div>

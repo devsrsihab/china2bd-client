@@ -8,6 +8,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 import Link from "next/link";
@@ -18,8 +19,14 @@ import { AnimatePresence, motion } from "framer-motion";
 // Import icons
 import { commonSidebarItems } from "@/constans/sidebar-items";
 
-export function CommonSidebar() {
+// define the type of common sidebar props
+interface CommonSidebarProps {
+  setIsOpenSidebar: (open: boolean) => void;
+}
+
+export function CommonSidebar({ setIsOpenSidebar }: CommonSidebarProps) {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const { toggleSidebar } = useSidebar(); // use the same toggle function
 
   const toggleSubmenu = (title: string) => {
     setOpenMenu((prev) => (prev === title ? null : title));
@@ -89,6 +96,7 @@ export function CommonSidebar() {
                                   <Link
                                     href={sub.url}
                                     className="flex font-medium  !text-black items-center gap-2 px-[18px] py-[22px] text-sm "
+                                    onClick={() => toggleSidebar()}
                                   >
                                     <span>{sub.title}</span>
                                   </Link>
