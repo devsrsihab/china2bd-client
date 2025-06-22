@@ -27,7 +27,7 @@ export const MobileBottomAppBar: React.FC = () => {
             {isMounted ? (
               <SidebarTrigger className="cursor-pointer text-[55px] text-primary hover:text-primary" />
             ) : (
-              <Skeleton className="w-[32px] h-[32px] rounded-md bg-gray-200" />
+              <Skeleton className="w-[24px] h-[24px] rounded-md bg-gray-200" />
             )}
             <span className="text-xs text-primary">Category</span>
           </button>

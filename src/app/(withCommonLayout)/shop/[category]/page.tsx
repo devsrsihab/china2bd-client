@@ -1,3 +1,5 @@
+import CategoryHeader from "@/components/category-header";
+
 interface PageProps {
   params: Promise<{ category: string }>;
 }
@@ -7,7 +9,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <div>
-      <h2>{category}</h2>
+      <CategoryHeader name={category} totalItems={1} />
     </div>
   );
 }

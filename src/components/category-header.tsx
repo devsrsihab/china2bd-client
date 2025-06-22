@@ -2,7 +2,15 @@ import React from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
-const CategoryHeader: React.FC = () => {
+type CategoryHeaderProps = {
+  name: string;
+  totalItems: number;
+};
+
+const CategoryHeader: React.FC<CategoryHeaderProps> = ({
+  name,
+  totalItems,
+}) => {
   return (
     <div className="bg-white w-full border border-gray-200 rounded-md mb-2 md:mb-4">
       <div className="flex flex-col md:flex-row items-center justify-between p-4">
@@ -10,11 +18,14 @@ const CategoryHeader: React.FC = () => {
         <div className="flex  items-center mb-2 md:mb-0">
           <div className="flex flex-wrap items-center overflow-hidden">
             <b className="mr-2 text-sm">
-              SHOWING <b className="underline mx-0.5 text-sm">2000</b> RESULTS
-              FOR
+              SHOWING{" "}
+              <b className="underline mx-0.5 text-sm">
+                {totalItems ? totalItems : 0}{" "}
+              </b>
+              RESULTS FOR
             </b>
             <b className="text-[#94700b] uppercase break-all text-sm">
-              high heels
+              {name ? name : "No Category"}{" "}
             </b>
           </div>
         </div>

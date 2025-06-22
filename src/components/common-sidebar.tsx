@@ -19,12 +19,7 @@ import { AnimatePresence, motion } from "framer-motion";
 // Import icons
 import { commonSidebarItems } from "@/constans/sidebar-items";
 
-// define the type of common sidebar props
-interface CommonSidebarProps {
-  setIsOpenSidebar: (open: boolean) => void;
-}
-
-export function CommonSidebar({ setIsOpenSidebar }: CommonSidebarProps) {
+export function CommonSidebar() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const { toggleSidebar } = useSidebar(); // use the same toggle function
 
@@ -96,7 +91,11 @@ export function CommonSidebar({ setIsOpenSidebar }: CommonSidebarProps) {
                                   <Link
                                     href={sub.url}
                                     className="flex font-medium  !text-black items-center gap-2 px-[18px] py-[22px] text-sm "
-                                    onClick={() => toggleSidebar()}
+                                    onClick={() => {
+                                      if (window.innerWidth < 768) {
+                                        toggleSidebar();
+                                      }
+                                    }}
                                   >
                                     <span>{sub.title}</span>
                                   </Link>
