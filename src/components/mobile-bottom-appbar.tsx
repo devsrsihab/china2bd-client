@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, User, Phone, MessageCircle } from "lucide-react";
 import diamonIcon from "@/assets/icons/diamon.svg";
+import { SidebarTrigger } from "./ui/sidebar";
 
 export const MobileBottomAppBar: React.FC = () => {
   return (
@@ -16,7 +17,9 @@ export const MobileBottomAppBar: React.FC = () => {
             aria-label="Category"
             className="flex flex-col items-center text-sm text-muted-foreground hover:text-primary transition"
           >
-            <Menu className="w-5 h-5 text-primary" />
+            {/* <Menu className="w-5 h-5 text-primary" /> */}
+            <SidebarTrigger className="cursor-pointer text-[55px] text-primary hover:text-primary" />
+
             <span className="text-xs text-primary">Category</span>
           </button>
         </div>

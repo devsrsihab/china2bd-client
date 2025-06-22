@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactNode } from "react";
-import "../../styles/globals.css";
 import { AdminProviders } from "@/lib/Providers/adminProvider";
 
 interface RootLayoutProps {

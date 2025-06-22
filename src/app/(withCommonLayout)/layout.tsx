@@ -1,3 +1,5 @@
+"use client";
+import CategoryHeader from "@/components/category-header";
 import { CommonSidebar } from "@/components/common-sidebar";
 import { MobileBottomAppBar } from "@/components/mobile-bottom-appbar";
 import Footer from "@/components/shared/Footer/Footer";
@@ -5,26 +7,36 @@ import Header from "@/components/shared/Navbar/Header";
 import { Button } from "@/components/ui/button";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Providers } from "@/lib/Providers";
+import { useState } from "react";
 
 const CommonLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  // use state for open and close sidebar
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <Providers>
       <Header />
 
-      <SidebarProvider open={true}>
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "20rem",
+            "--sidebar-width-mobile": "18rem",
+          } as React.CSSProperties
+        }
+        open={true}
+      >
         <CommonSidebar />
-        <main className="mt-[184px] ml-16">
-          <SidebarTrigger className="cursor-pointer text-[55px] text-primary hover:text-primary" />
-          {/* shadcn button */}
-          <Button>Open</Button>
+        <main className="md:mt-24 mt-[135px] w-full ">
+          <CategoryHeader />
           {children}
         </main>
+        <MobileBottomAppBar />
       </SidebarProvider>
-      <MobileBottomAppBar />
       <Footer />
     </Providers>
   );
