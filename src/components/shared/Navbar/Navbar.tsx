@@ -6,7 +6,7 @@ import avaterImg from "@/assets/images/avater.png";
 
 const Navbar = () => {
   return (
-    <nav className="bg-primary fixed top-0 left-0 w-full sm:px-7 sm:py-2 py-2 px-4">
+    <nav className="bg-primary z-[999999] fixed top-0 left-0 w-full sm:px-7 sm:py-2 py-2 px-4">
       <div className="flex items-center w-full justify-between  ">
         <div className="flex-[2_1] object-contain justify-self-start flex">
           <Link href="/" aria-label="logo">
@@ -46,7 +46,6 @@ const Navbar = () => {
             name="search"
             id="pcSearch"
             placeholder="Search by keyword"
-            value=""
             className="flex-1 outline-none px-2"
           />
           <div className="bg-black h-[42px] rounded-none rounded-tr-[4px] rounded-br-[4px] p-0 flex items-center justify-center px-3">
@@ -102,7 +101,6 @@ const Navbar = () => {
           name="search"
           id="phoneSearch"
           placeholder="Search by keyword"
-          value=""
           className="flex-1 outline-none px-2"
         />
         <div className="bg-black h-[42px] rounded-none rounded-tr-[4px] rounded-br-[4px] p-0 flex items-center justify-center px-3">

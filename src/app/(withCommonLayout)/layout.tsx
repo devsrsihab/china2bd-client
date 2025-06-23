@@ -28,7 +28,7 @@ const CommonLayout = ({
         <CommonSidebar />
         <SidebarInset>
           <Header />
-          <main className="md:mt-24 mt-[135px] w-full p-2">
+          <main className="md:mt-[70px] mt-[135px] w-full p-2">
             <SidebarTrigger className="hidden md:block " />
 
             {children}
