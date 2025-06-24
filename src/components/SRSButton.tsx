@@ -24,7 +24,7 @@ const SRSButton: React.FC<SRButtonProps> = ({
         radiuse
       )}
     >
-      Explore {btnText}
+      {btnText}
     </Button>
   );
 };

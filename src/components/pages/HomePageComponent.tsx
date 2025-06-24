@@ -4,6 +4,7 @@ import CompanyCard from "@/components/company-card";
 import HomeBanner from "@/components/HomeBanner";
 import ProductCard from "@/components/product-card";
 import React from "react";
+import CategoryBannerViewMore from "../CategoryBannerViewMore";
 
 const HomePageComponent: React.FC = () => {
   return (
@@ -83,6 +84,19 @@ const HomePageComponent: React.FC = () => {
           isActive={true}
         />
       </div>
+
+      {/* category view more */}
+      <CategoryBannerViewMore title="SHOES" viewMoreHref="#" />
+
+      {/* 1. Banner with company section */}
+      {/* 2. Product Category Tab Section */}
+      {/* 3. TRENDING products with horizontal scroll Section */}
+      {/* 4. LADIES BAG products Section */}
+      {/* 5. JEWELRY Category products Section */}
+      {/* 6. SHOES Category products Section */}
+      {/* 7. WATCHES Category products Section */}
+      {/* 8. SUNGLASS Category products Section */}
+      {/* 9. Trending Products with infinite load Section */}
     </div>
   );
 };

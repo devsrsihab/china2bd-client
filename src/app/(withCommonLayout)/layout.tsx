@@ -33,10 +33,10 @@ const CommonLayout = ({
 
             {children}
           </main>
+          <Footer />
         </SidebarInset>
         <MobileBottomAppBar />
       </SidebarProvider>
-      <Footer />
     </Providers>
   );
 };
