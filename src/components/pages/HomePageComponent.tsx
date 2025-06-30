@@ -1,92 +1,104 @@
 "use client";
 import CategoryTabPan from "@/components/category-tab-pan";
-import CompanyCard from "@/components/company-card";
 import HomeBanner from "@/components/HomeBanner";
 import ProductCard from "@/components/product-card";
 import React from "react";
-import CategoryBannerViewMore from "../CategoryBannerViewMore";
+import { useProductList } from "@/hooks/product.hook";
+import { TProduct } from "@/types";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
+
+import shoesIcon from "@/assets/icons/shoes.svg";
+import handbagIcon from "@/assets/icons/handbag.svg";
+import necklaceIcon from "@/assets/icons/necklace.svg";
+import beautyProductIcon from "@/assets/icons/beauty_product.svg";
+import mensClothingIcon from "@/assets/icons/mens_clothing.svg";
+import clothingIcon from "@/assets/icons/kid.svg";
+import childShoeIcon from "@/assets/icons/baby_items.svg";
+import sunglassIcon from "@/assets/icons/sunglass.svg";
+import mobileIcon from "@/assets/icons/mobile.svg";
+import watchIcon from "@/assets/icons/watch.svg";
+import groceryIcon from "@/assets/icons/electronics.svg";
+import electronicsIcon from "@/assets/icons/electronics.svg";
+
+const categories = [
+  { icon: handbagIcon, tabName: "Bags" },
+  { icon: necklaceIcon, tabName: "Jewelry" },
+  { icon: shoesIcon, tabName: "Shoes" },
+  { icon: beautyProductIcon, tabName: "Beauty Products" },
+  { icon: mensClothingIcon, tabName: "Mens Clothing" },
+  { icon: clothingIcon, tabName: "Womens Clothing" },
+  { icon: childShoeIcon, tabName: "Baby Items" },
+  { icon: sunglassIcon, tabName: "Eyewear" },
+  { icon: mobileIcon, tabName: "Phone Accessories" },
+  { icon: watchIcon, tabName: "Watches" },
+  { icon: groceryIcon, tabName: "Groceries" },
+  { icon: electronicsIcon, tabName: "Electronics" },
+];
 
 const HomePageComponent: React.FC = () => {
+  // product list using hook /products/search?keyword=shoe&platform=skybuy
+  const { data: productList } = useProductList({
+    keyword: "shoe",
+    platform: "skybuy",
+  });
+  console.log("productList", productList?.result?.products);
+
   return (
-    <div>
+    <div className="overflow-hidden">
+      {/* 1. Banner with company section */}
       <HomeBanner />
-      <div className="grid grid-cols-6 gap-[1.5rem] p-4 bg-white">
-        <ProductCard
-          href={"/product/1"}
-          imageSrc={
-            "https://cbu01.alicdn.com/img/ibank/O1CN01Lc6QPS1uWfEnnCUqn_!!2218807776045-0-cib.310x310.jpg"
-          }
-          imageAlt={"Product 1"}
-          productName={"Example Product 1"}
-          productPrice={321}
-          soldQuantity={12}
-          isHasSoldQty={false}
-        />
-        <ProductCard
-          href={"/product/1"}
-          imageSrc={
-            "https://cbu01.alicdn.com/img/ibank/O1CN01Lc6QPS1uWfEnnCUqn_!!2218807776045-0-cib.310x310.jpg"
-          }
-          imageAlt={"Product 1"}
-          productName={"Example Product 1"}
-          productPrice={321}
-          soldQuantity={12}
-        />
-        <ProductCard
-          href={"/product/1"}
-          imageSrc={
-            "https://cbu01.alicdn.com/img/ibank/O1CN01Lc6QPS1uWfEnnCUqn_!!2218807776045-0-cib.310x310.jpg"
-          }
-          imageAlt={"Product 1"}
-          productName={"Example Product 1"}
-          productPrice={321}
-          soldQuantity={12}
-        />
-      </div>
 
-      {/* // company card grid  */}
-      <div className="grid grid-cols-1 md:grid-cols-4  gap-[1.5rem] p-4 bg-white">
-        <CompanyCard
-          imageSrc="https://skybuybd.com/_next/static/media/skybuy.6cfce4c7.jpg"
-          imageAlt="Company 1"
-          btnText="Explore SkyBuy"
-          companyName="সকল পাইকারি পণ্যের সমাহার"
-          href="/company/1"
-        />
-        <CompanyCard
-          imageSrc="https://skybuybd.com/_next/static/media/skyshop.61d2344c.jpg"
-          imageAlt="Company 1"
-          btnText="Visit SkyOne"
-          companyName="এক পিস কিনতে ভিজিট করুন"
-          href="/company/1"
-        />
-        <CompanyCard
-          imageSrc="https://skybuybd.com/_next/static/media/skymall.cd944b30.jpg"
-          imageAlt="Company 1"
-          btnText="Explore SkyBuy"
-          companyName="সকল এক্সক্লুসিভ পণ্যের সমাহার"
-          href="/company/1"
-        />
-        <CompanyCard
-          imageSrc="https://skybuybd.com/_next/static/media/skyship.9da8ae15.jpg"
-          imageAlt="Company 1"
-          btnText="Explore SkyBuy"
-          companyName="শিপিং সার্ভিস নিতে ভিজিট করুন"
-          href="/company/1"
-        />
-      </div>
+      {/* 2. Product Category Tab Section */}
+      <div className="p-4 bg-white overflow-hidden category-tab-container">
+        {/* category tabs */}
+        <div className="inline-flex overflow-x-scroll scroll-smooth gap-[1.5rem] scrollbar-hide">
+          {categories.map((cat, idx) => (
+            <CategoryTabPan
+              key={idx}
+              iconSrc={cat.icon}
+              categoryName={cat.tabName}
+              isActive={idx === 0}
+            />
+          ))}
+        </div>
 
-      {/* tab pan */}
-      <div className="grid grid-cols-8 gap-[1.5rem] p-4 bg-white">
-        <CategoryTabPan
-          iconSrc="https://skybuybd.com/_next/static/media/shoes.089eac13.svg"
-          categoryName="Shoes"
-          isActive={true}
-        />
+        {/* category products/tab content */}
+        <div className="[&_.carousel-content]:[scrollbar-width:none] [&_.carousel-content]:[-ms-overflow-style:none]">
+          <Carousel
+            opts={{}}
+            className="w-full overflow-hidden" // This remains correct for the carousel
+          >
+            <CarouselContent className="[&::-webkit-scrollbar]:hidden carousel-content">
+              {productList?.result?.products?.map((product: TProduct) => (
+                <CarouselItem key={product.code} className="md:basis-1/6">
+                  <div className="p-1">
+                    <ProductCard
+                      href={`/product/${product.code}`}
+                      imageSrc={product.thumbnail.medium}
+                      imageAlt={product.title}
+                      productName={product.title}
+                      productPrice={product.regular_price}
+                      isHasSoldQty={false}
+                      className="shadow-none"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="srs_prev_btn_cat bg-black absolute left-0 top-0 bottom-0 my-auto z-20 text-white text-[26px] px-[5px]" />
+            <CarouselNext className="srs_next_btn_cat bg-black absolute right-0 top-0 bottom-0 my-auto z-50 text-white text-[26px] px-[5px]" />
+          </Carousel>
+        </div>
       </div>
 
       {/* category view more */}
-      <CategoryBannerViewMore title="SHOES" viewMoreHref="#" />
+      {/* <CategoryBannerViewMore title="SHOES" viewMoreHref="#" /> */}
 
       {/* 1. Banner with company section */}
       {/* 2. Product Category Tab Section */}

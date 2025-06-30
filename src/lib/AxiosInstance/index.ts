@@ -1,5 +1,5 @@
 import axios from "axios";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import envConfig from "@/config/envConfig";
 import { getTokenFromCookies } from "@/utils/getTokenFromCookies";
 
@@ -10,12 +10,15 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async function (config) {
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("realStateAccessToken")?.value;
+    // const cookieStore = await cookies();
+    // const accessToken = cookieStore.get("realStateAccessToken")?.value;
 
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
+    // if (accessToken) {
+    //   config.headers.Authorization = `Bearer ${accessToken}`;
+    // }
+    // get full req url
+    const fullUrl = config.url ? `${envConfig.serverApi}${config.url}` : "";
+    console.log("fullUrl", fullUrl);
 
     return config;
   },

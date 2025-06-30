@@ -8,8 +8,9 @@ interface ProductCardProps {
   imageAlt: string;
   productName: string;
   productPrice: number;
-  soldQuantity: number;
+  soldQuantity?: number;
   isHasSoldQty?: boolean; // Optional prop to control sold quantity display
+  className?: string;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -18,12 +19,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
   imageAlt,
   productName,
   productPrice,
-  soldQuantity,
-  isHasSoldQty = true, // Default to true if not provided
+  soldQuantity = 0,
+  isHasSoldQty = true,
+  className = "",
 }) => {
   return (
     // The main card container
-    <Card className="flex flex-col items-center relative h-full transition-all duration-400 ease-in-out overflow-hidden cursor-pointer hover:shadow-lg bg-white rounded-md p-0 border border-gray-200">
+    <Card
+      className={`${className} flex flex-col items-center relative h-full transition-all duration-400 ease-in-out overflow-hidden cursor-pointer hover:shadow-lg bg-white rounded-md p-0 border border-gray-200 `}
+    >
       <Link href={href} className="w-full">
         {/* CardContent holds the actual product details */}
         <CardContent className="p-0 flex flex-col items-center">
