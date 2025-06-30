@@ -81,3 +81,9 @@
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
+.responsiveOverflow {
+  overflow: auto;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

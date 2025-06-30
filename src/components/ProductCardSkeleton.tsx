@@ -10,22 +10,22 @@ const ProductCardSkeleton: React.FC<{ isHasSoldQty?: boolean }> = ({
       <CardContent className="p-0 flex flex-col items-center w-full">
         {/* Image Skeleton */}
         <div className="w-full">
-          <Skeleton className="w-full h-[230px] rounded-xl bg-gray-100 mb-1.5" />
+          <Skeleton className="w-full h-[230px] rounded-xl bg-gray-300 mb-1.5 animate-pulse" />
         </div>
 
         {/* Product Details Skeleton */}
         <div className="w-full p-2">
           {/* Product Name */}
-          <Skeleton className="h-4 w-3/4 mb-3 bg-gray-100" />
+          <Skeleton className="h-4 w-3/4 mb-3 bg-gray-300 animate-pulse" />
 
           <div className="flex justify-between items-center mt-2">
             {/* Price */}
-            <Skeleton className="h-5 w-12 bg-gray-100" />
+            <Skeleton className="h-5 w-12 bg-gray-300 animate-pulse" />
 
             {/* Sold Quantity (conditionally shown) */}
             {isHasSoldQty && (
               <div>
-                <Skeleton className="h-3 w-16 bg-gray-100" />
+                <Skeleton className="h-3 w-16 bg-gray-300 animate-pulse" />
               </div>
             )}
           </div>

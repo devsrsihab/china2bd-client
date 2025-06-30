@@ -14,7 +14,7 @@ const CategoryTabPan: React.FC<CategoryTabPanProps> = ({
   isActive = false, // Default to false if not provided
 }) => {
   return (
-    <Link href="#" className="w-full cursor-pointer block">
+    <div className="cursor-pointer ">
       <div
         className={`  flex items-center justify-center w-full h-auto gap-3 
           px-4 py-2 rounded-xl border 
@@ -43,7 +43,7 @@ const CategoryTabPan: React.FC<CategoryTabPanProps> = ({
           {categoryName}
         </span>
       </div>
-    </Link>
+    </div>
   );
 };
 
