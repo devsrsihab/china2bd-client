@@ -26,6 +26,7 @@ import watchIcon from "@/assets/icons/watch.svg";
 import groceryIcon from "@/assets/icons/electronics.svg";
 import electronicsIcon from "@/assets/icons/electronics.svg";
 import ProductCardSkeleton from "../ProductCardSkeleton";
+import SRSButton from "../SRSButton";
 
 const categories = [
   { icon: handbagIcon, tabName: "Bags", keyword: "ladies bag" },
@@ -83,7 +84,11 @@ const HomePageComponent: React.FC = () => {
                 }}
                 className="cursor-pointer"
               >
-                <CategoryTabPan iconSrc={cat.icon} categoryName={cat.tabName} />
+                <CategoryTabPan
+                  isActive={selectedKeyword === cat.keyword}
+                  iconSrc={cat.icon}
+                  categoryName={cat.tabName}
+                />
               </div>
             ))}
           </div>
@@ -120,6 +125,12 @@ const HomePageComponent: React.FC = () => {
             <CarouselPrevious className="srs_prev_btn_cat bg-black absolute left-0 top-0 bottom-0 my-auto z-20 hover:text-white hover:bg-black hover:opacity-100 text-white text-[26px] px-[5px]" />
             <CarouselNext className="srs_next_btn_cat bg-black absolute right-0 top-0 bottom-0 my-auto z-50 hover:text-white hover:bg-black hover:opacity-100 text-white text-[26px] px-[5px]" />
           </Carousel>
+        </div>
+
+        {/* view more btn */}
+        <div className="flex justify-center mt-4">
+          {" "}
+          <SRSButton href={`/shop/${selectedKeyword}`} btnText="View More" />
         </div>
       </div>
     </div>
