@@ -18,14 +18,7 @@ const CommonLayout = ({
 }>) => {
   return (
     <Providers>
-      <SidebarProvider
-        style={
-          {
-            "--sidebar-width": "20rem",
-            "--sidebar-width-mobile": "18rem",
-          } as React.CSSProperties
-        }
-      >
+      <SidebarProvider>
         <CommonSidebar />
         <SidebarInset>
           <Header />
