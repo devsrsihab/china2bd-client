@@ -28,7 +28,6 @@ import electronicsIcon from "@/assets/icons/electronics.svg";
 import ProductCardSkeleton from "../ProductCardSkeleton";
 import SRSButton from "../SRSButton";
 import CategoryBannerViewMore from "../CategoryBannerViewMore";
-import InfiniteScroll from "react-infinite-scroll-component"; // Import InfiniteScroll
 
 const categories = [
   { icon: handbagIcon, tabName: "Bags", keyword: "ladies bag" },
@@ -60,9 +59,9 @@ const categories = [
 const HomePageComponent: React.FC = () => {
   const [selectedKeyword, setSelectedKeyword] = useState<string>("Shoe");
   const [trndingCurPage, setTrendingCurPage] = useState<number>(1);
-  const [allTrendingProducts, setAllTrendingProducts] = useState<TProduct[]>(
-    []
-  );
+  const [displayedTrendingProducts, setDisplayedTrendingProducts] = useState<
+    TProduct[]
+  >([]);
   const [hasMoreTrending, setHasMoreTrending] = useState<boolean>(true);
 
   // product data hook
@@ -115,20 +114,22 @@ const HomePageComponent: React.FC = () => {
   });
 
   // trending product list hook
-  const { data: trendingProductList, isSuccess: isTrendingProductListSuccess } =
-    useTrendingProductList({
-      page: String(trndingCurPage),
-      platform: "skybuy",
-    });
+  const {
+    data: trendingProductList,
+    isSuccess: isTrendingProductListSuccess,
+    isLoading: isTrendingProductListLoading,
+  } = useTrendingProductList({
+    page: String(trndingCurPage),
+    platform: "skybuy",
+  });
 
   // Effect to append new trending products when data arrives
   React.useEffect(() => {
     if (isTrendingProductListSuccess && trendingProductList) {
-      setAllTrendingProducts((prevProducts) => [
+      setDisplayedTrendingProducts((prevProducts) => [
         ...prevProducts,
         ...(trendingProductList.result || []),
       ]);
-      // Assuming your API returns an empty array or null for `result` when no more products
       if (
         !trendingProductList.result ||
         trendingProductList.result.length === 0
@@ -138,7 +139,7 @@ const HomePageComponent: React.FC = () => {
     }
   }, [trendingProductList, isTrendingProductListSuccess]);
 
-  const fetchMoreTrendingData = () => {
+  const loadMoreTrendingProducts = () => {
     if (hasMoreTrending) {
       setTrendingCurPage((prevPage) => prevPage + 1);
     }
@@ -382,42 +383,41 @@ const HomePageComponent: React.FC = () => {
         <h2 className="py-3 px-4 text-xl font-bold text-center">
           Trending Products
         </h2>
-        <InfiniteScroll
-          dataLength={allTrendingProducts.length}
-          next={fetchMoreTrendingData}
-          hasMore={hasMoreTrending}
-          loader={
-            <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <div key={index} className="p-1">
-                  <ProductCardSkeleton isHasSoldQty={true} />
-                </div>
-              ))}
+        <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
+          {displayedTrendingProducts.map((product: TProduct) => (
+            <div key={product.code} className="p-1">
+              <ProductCard
+                href={`/product/${product.code}`}
+                imageSrc={product.thumbnail.medium}
+                imageAlt={product.title}
+                productName={product.title}
+                productPrice={product.regular_price}
+                isHasSoldQty={true}
+                soldQuantity={product.meta.total_sold}
+                className="shadow-none"
+              />
             </div>
-          }
-          endMessage={
-            <p className="text-center py-4">
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
-        >
-          <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
-            {allTrendingProducts.map((product: TProduct) => (
-              <div key={product.code} className="p-1">
-                <ProductCard
-                  href={`/product/${product.code}`}
-                  imageSrc={product.thumbnail.medium}
-                  imageAlt={product.title}
-                  productName={product.title}
-                  productPrice={product.regular_price}
-                  isHasSoldQty={true}
-                  soldQuantity={product.meta.total_sold}
-                  className="shadow-none"
-                />
+          ))}
+          {/* Skeleton loaders for trending products */}
+          {!hasMoreTrending &&
+            displayedTrendingProducts.length === 0 &&
+            Array.from({ length: 10 }).map((_, index) => (
+              <div key={index} className="p-1">
+                <ProductCardSkeleton isHasSoldQty={true} />
               </div>
             ))}
+        </div>
+        {hasMoreTrending && (
+          <div
+            onClick={loadMoreTrendingProducts}
+            className="flex cursor-pointer justify-center mt-4"
+          >
+            <SRSButton
+              isLoading={isTrendingProductListLoading}
+              btnText="Load More"
+            />
           </div>
-        </InfiniteScroll>
+        )}
       </div>
     </div>
   );

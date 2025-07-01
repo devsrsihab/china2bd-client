@@ -15,9 +15,10 @@ const config: Config = {
         "primary-light": "rgb(var(--primary-light) / <alpha-value>)",
         "primary-success": "rgb(var(--primary-success) / <alpha-value>)",
         "primary-china2bd": "rgb(var(--primary-china2bd) / <alpha-value>)",
-        
+
         secondary: "rgb(var(--secondary) / <alpha-value>)",
-        "secondary-foreground": "rgb(var(--secondary-foreground) / <alpha-value>)",
+        "secondary-foreground":
+          "rgb(var(--secondary-foreground) / <alpha-value>)",
 
         muted: "rgb(var(--muted) / <alpha-value>)",
         "muted-foreground": "rgb(var(--muted-foreground) / <alpha-value>)",
@@ -32,6 +33,9 @@ const config: Config = {
       },
       borderRadius: {
         lg: "var(--radius)",
+      },
+      fontFamily: {
+        jost: ["Jost", "sans-serif"],
       },
     },
   },

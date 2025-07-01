@@ -49,8 +49,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {productName}
             </span>
             <div className="flex justify-between items-center mt-2">
-              <span className="product-price block text-[#cf3056] font-bold text-base">
-                {productPrice}
+              <span className="font-jost product-price block text-[#cf3056] font-bold text-base">
+                ৳ {productPrice}
               </span>
               {isHasSoldQty && (
                 <div>
