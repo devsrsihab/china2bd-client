@@ -16,7 +16,7 @@ const CategoryTabPan: React.FC<CategoryTabPanProps> = ({
   return (
     <div className="cursor-pointer ">
       <div
-        className={`  flex items-center justify-center w-full h-auto gap-3 
+        className={`flex-col md:flex-row  flex items-center justify-center w-full h-auto gap-3 
           px-4 py-2 rounded-xl border 
             ${
               isActive
@@ -28,7 +28,7 @@ const CategoryTabPan: React.FC<CategoryTabPanProps> = ({
         <Image
           src={iconSrc}
           alt={categoryName}
-          className="w-8 h-8 flex-shrink-0 object-contain"
+          className="w-8 h-8 category_tab_pane flex-shrink-0 object-contain"
           width={32}
           height={32}
           loading="lazy"

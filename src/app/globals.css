@@ -87,3 +87,21 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+.tab_pane_wrapper {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: start; /* Already present, good for larger screens */
+}
+
+/* Media query for mobile devices (screens smaller than a certain breakpoint, e.g., 768px for md) */
+@media (max-width: 767px) {
+  /* Adjust this breakpoint as needed based on your project's 'sm' or 'md' */
+  .tab_pane_wrapper {
+    flex-wrap: nowrap;
+  }
+
+  .category_tab_pane {
+    width: 40px;
+    height: 40px;
+  }
+}

@@ -35,6 +35,23 @@ export const getProductList = async (filters: Record<string, string>) => {
   }
 };
 
+// get trending product
+export const getTrendingProductList = async (
+  filters: Record<string, string>
+) => {
+  try {
+    const queryParams = new URLSearchParams({
+      ...filters,
+    }).toString();
+    const { data } = await axiosInstance.get(
+      `/products/trending?${queryParams}`
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 // details
 export const getProductDetails = async (id: number) => {
   try {

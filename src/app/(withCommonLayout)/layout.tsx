@@ -33,10 +33,10 @@ const CommonLayout = ({
             <SidebarTrigger className="hidden md:block " />
 
             <Container> {children}</Container>
+            <MobileBottomAppBar />
           </main>
           <Footer />
         </SidebarInset>
-        <MobileBottomAppBar />
       </SidebarProvider>
     </Providers>
   );

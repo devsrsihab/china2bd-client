@@ -16,7 +16,7 @@ export const MobileBottomAppBar: React.FC = () => {
     setIsMounted(true);
   }, []);
   return (
-    <nav className="fixed bottom-[10%] left-0 w-full bg-white border-t border-gray-200 shadow-md md:hidden z-50">
+    <nav className="fixed bottom-[0%] left-0 w-full bg-white border-t border-gray-200 shadow-md md:hidden z-50">
       <div className="grid grid-cols-5 h-16 justify-center items-center bottomBar">
         {/* Category Button */}
         <div className="item">

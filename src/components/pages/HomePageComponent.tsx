@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import CategoryTabPan from "@/components/category-tab-pan";
 import HomeBanner from "@/components/HomeBanner";
 import ProductCard from "@/components/product-card";
-import { useProductList } from "@/hooks/product.hook";
+import { useProductList, useTrendingProductList } from "@/hooks/product.hook";
 import { TProduct } from "@/types";
 import {
   Carousel,
@@ -27,6 +27,8 @@ import groceryIcon from "@/assets/icons/electronics.svg";
 import electronicsIcon from "@/assets/icons/electronics.svg";
 import ProductCardSkeleton from "../ProductCardSkeleton";
 import SRSButton from "../SRSButton";
+import CategoryBannerViewMore from "../CategoryBannerViewMore";
+import InfiniteScroll from "react-infinite-scroll-component"; // Import InfiniteScroll
 
 const categories = [
   { icon: handbagIcon, tabName: "Bags", keyword: "ladies bag" },
@@ -57,7 +59,13 @@ const categories = [
 
 const HomePageComponent: React.FC = () => {
   const [selectedKeyword, setSelectedKeyword] = useState<string>("Shoe");
+  const [trndingCurPage, setTrendingCurPage] = useState<number>(1);
+  const [allTrendingProducts, setAllTrendingProducts] = useState<TProduct[]>(
+    []
+  );
+  const [hasMoreTrending, setHasMoreTrending] = useState<boolean>(true);
 
+  // product data hook
   const { data: productList, isLoading: isProductListLoading } = useProductList(
     {
       keyword: selectedKeyword,
@@ -65,16 +73,87 @@ const HomePageComponent: React.FC = () => {
     }
   );
 
+  // ladies bag product list
+  const {
+    data: ladiesBagProductList,
+    isLoading: isLadiesBagPProductListLoading,
+  } = useProductList({
+    keyword: "ladies bag",
+    platform: "skybuy",
+  });
+
+  // jewelries bag product list
+  const {
+    data: jewelriesProductList,
+    isLoading: isJewelriesProductListLoading,
+  } = useProductList({
+    keyword: "jewelries",
+    platform: "skybuy",
+  });
+
+  // shoes product list
+  const { data: shoesProductList, isLoading: isShoesProductListLoading } =
+    useProductList({
+      keyword: "shoes",
+      platform: "skybuy",
+    });
+
+  // watches product list
+  const { data: watcheProductList, isLoading: isWatcheProductListLoading } =
+    useProductList({
+      keyword: "watche",
+      platform: "skybuy",
+    });
+
+  // sunglasses product list
+  const {
+    data: sunglassesProductList,
+    isLoading: isSunglassesProductListLoading,
+  } = useProductList({
+    keyword: "sunglasses",
+    platform: "skybuy",
+  });
+
+  // trending product list hook
+  const { data: trendingProductList, isSuccess: isTrendingProductListSuccess } =
+    useTrendingProductList({
+      page: String(trndingCurPage),
+      platform: "skybuy",
+    });
+
+  // Effect to append new trending products when data arrives
+  React.useEffect(() => {
+    if (isTrendingProductListSuccess && trendingProductList) {
+      setAllTrendingProducts((prevProducts) => [
+        ...prevProducts,
+        ...(trendingProductList.result || []),
+      ]);
+      // Assuming your API returns an empty array or null for `result` when no more products
+      if (
+        !trendingProductList.result ||
+        trendingProductList.result.length === 0
+      ) {
+        setHasMoreTrending(false);
+      }
+    }
+  }, [trendingProductList, isTrendingProductListSuccess]);
+
+  const fetchMoreTrendingData = () => {
+    if (hasMoreTrending) {
+      setTrendingCurPage((prevPage) => prevPage + 1);
+    }
+  };
+
   return (
     <div className="overflow-hidden">
       {/* 1. Banner with company section */}
       <HomeBanner />
 
       {/* 2. Product Category Tab Section */}
-      <div className="p-4 bg-white overflow-hidden category-tab-container">
+      <div className="p-4 bg-white overflow-hidden category-tab-container mt-2">
         {/* category tabs */}
         <div className="responsiveOverflow">
-          <div className="tab_pane_wrapper inline-flex flex-wrap">
+          <div className="tab_pane_wrapper ">
             {categories.map((cat, idx) => (
               <div
                 key={idx}
@@ -82,7 +161,6 @@ const HomePageComponent: React.FC = () => {
                   e.preventDefault();
                   setSelectedKeyword(cat.keyword);
                 }}
-                className="cursor-pointer"
               >
                 <CategoryTabPan
                   isActive={selectedKeyword === cat.keyword}
@@ -100,14 +178,20 @@ const HomePageComponent: React.FC = () => {
             <CarouselContent>
               {isProductListLoading &&
                 Array.from({ length: 6 }).map((_, index) => (
-                  <CarouselItem key={index} className="md:basis-1/6">
+                  <CarouselItem
+                    key={index}
+                    className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+                  >
                     <div className="p-1">
                       <ProductCardSkeleton isHasSoldQty={true} />
                     </div>
                   </CarouselItem>
                 ))}
               {productList?.result?.products?.map((product: TProduct) => (
-                <CarouselItem key={product.code} className="md:basis-1/6">
+                <CarouselItem
+                  key={product.code}
+                  className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+                >
                   <div className="p-1">
                     <ProductCard
                       href={`/product/${product.code}`}
@@ -132,6 +216,208 @@ const HomePageComponent: React.FC = () => {
           {" "}
           <SRSButton href={`/shop/${selectedKeyword}`} btnText="View More" />
         </div>
+      </div>
+
+      {/* 3. Product LADIES BAGS category */}
+      <div className="py-4 px-4 sm:px-6 bg-white overflow-hidden mt-2">
+        {/* category tab content */}
+        <CategoryBannerViewMore
+          title="Ladies Bags"
+          viewMoreHref="/shop/ladies-bags"
+        />
+        <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
+          {isLadiesBagPProductListLoading &&
+            Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className="p-1">
+                <ProductCardSkeleton isHasSoldQty={true} />
+              </div>
+            ))}
+          {ladiesBagProductList?.result?.products
+            ?.slice(0, 10)
+            ?.map((product: TProduct) => (
+              <div key={product.code} className="p-1">
+                <ProductCard
+                  href={`/product/${product.code}`}
+                  imageSrc={product.thumbnail.medium}
+                  imageAlt={product.title}
+                  productName={product.title}
+                  productPrice={product.regular_price}
+                  isHasSoldQty={true}
+                  soldQuantity={product.meta.total_sold}
+                  className="shadow-none"
+                />
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/* 4. Product JEWELRIES category */}
+      <div className="py-4 px-4 sm:px-6 bg-white overflow-hidden mt-2">
+        {/* category tab content */}
+        <CategoryBannerViewMore
+          title="JEWELRIES"
+          viewMoreHref="/shop/jewelries"
+        />
+        <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
+          {isJewelriesProductListLoading &&
+            Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className="p-1">
+                <ProductCardSkeleton isHasSoldQty={true} />
+              </div>
+            ))}
+          {jewelriesProductList?.result?.products
+            ?.slice(0, 10)
+            ?.map((product: TProduct) => (
+              <div key={product.code} className="p-1">
+                <ProductCard
+                  href={`/product/${product.code}`}
+                  imageSrc={product.thumbnail.medium}
+                  imageAlt={product.title}
+                  productName={product.title}
+                  productPrice={product.regular_price}
+                  isHasSoldQty={true}
+                  soldQuantity={product.meta.total_sold}
+                  className="shadow-none"
+                />
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/* 5. Product SHOE category */}
+      <div className="py-4 px-4 sm:px-6 bg-white overflow-hidden mt-2">
+        {/* category tab content */}
+        <CategoryBannerViewMore title="SHOES" viewMoreHref="/shop/shoes" />
+        <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
+          {isShoesProductListLoading &&
+            Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className="p-1">
+                <ProductCardSkeleton isHasSoldQty={true} />
+              </div>
+            ))}
+          {shoesProductList?.result?.products
+            ?.slice(0, 10)
+            ?.map((product: TProduct) => (
+              <div key={product.code} className="p-1">
+                <ProductCard
+                  href={`/product/${product.code}`}
+                  imageSrc={product.thumbnail.medium}
+                  imageAlt={product.title}
+                  productName={product.title}
+                  productPrice={product.regular_price}
+                  isHasSoldQty={true}
+                  soldQuantity={product.meta.total_sold}
+                  className="shadow-none"
+                />
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/* 6. Product WATCHE category */}
+      <div className="py-4 px-4 sm:px-6 bg-white overflow-hidden mt-2">
+        {/* category tab content */}
+        <CategoryBannerViewMore title="WATCHE" viewMoreHref="/shop/watche" />
+        <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
+          {isWatcheProductListLoading &&
+            Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className="p-1">
+                <ProductCardSkeleton isHasSoldQty={true} />
+              </div>
+            ))}
+          {watcheProductList?.result?.products
+            ?.slice(0, 10)
+            ?.map((product: TProduct) => (
+              <div key={product.code} className="p-1">
+                <ProductCard
+                  href={`/product/${product.code}`}
+                  imageSrc={product.thumbnail.medium}
+                  imageAlt={product.title}
+                  productName={product.title}
+                  productPrice={product.regular_price}
+                  isHasSoldQty={true}
+                  soldQuantity={product.meta.total_sold}
+                  className="shadow-none"
+                />
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/* 7. Product SUNGLASSES category */}
+      <div className="py-4 px-4 sm:px-6 bg-white overflow-hidden mt-2">
+        {/* category tab content */}
+        <CategoryBannerViewMore
+          title="SUNGLASSES"
+          viewMoreHref="/shop/sunglasses"
+        />
+        <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
+          {isSunglassesProductListLoading &&
+            Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className="p-1">
+                <ProductCardSkeleton isHasSoldQty={true} />
+              </div>
+            ))}
+          {sunglassesProductList?.result?.products
+            ?.slice(0, 10)
+            ?.map((product: TProduct) => (
+              <div key={product.code} className="p-1">
+                <ProductCard
+                  href={`/product/${product.code}`}
+                  imageSrc={product.thumbnail.medium}
+                  imageAlt={product.title}
+                  productName={product.title}
+                  productPrice={product.regular_price}
+                  isHasSoldQty={true}
+                  soldQuantity={product.meta.total_sold}
+                  className="shadow-none"
+                />
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/* 8. Product trending category */}
+      <div className="py-4 px-4 sm:px-6 bg-white overflow-hidden mt-4">
+        <h2 className="py-3 px-4 text-xl font-bold text-center">
+          Trending Products
+        </h2>
+        <InfiniteScroll
+          dataLength={allTrendingProducts.length}
+          next={fetchMoreTrendingData}
+          hasMore={hasMoreTrending}
+          loader={
+            <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <div key={index} className="p-1">
+                  <ProductCardSkeleton isHasSoldQty={true} />
+                </div>
+              ))}
+            </div>
+          }
+          endMessage={
+            <p className="text-center py-4">
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+        >
+          <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
+            {allTrendingProducts.map((product: TProduct) => (
+              <div key={product.code} className="p-1">
+                <ProductCard
+                  href={`/product/${product.code}`}
+                  imageSrc={product.thumbnail.medium}
+                  imageAlt={product.title}
+                  productName={product.title}
+                  productPrice={product.regular_price}
+                  isHasSoldQty={true}
+                  soldQuantity={product.meta.total_sold}
+                  className="shadow-none"
+                />
+              </div>
+            ))}
+          </div>
+        </InfiniteScroll>
       </div>
     </div>
   );

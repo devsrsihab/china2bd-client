@@ -12,7 +12,7 @@ const CategoryBannerViewMore: React.FC<CategoryBannerViewMoreProps> = ({
   viewMoreHref,
 }) => {
   return (
-    <div className="flex items-center justify-between py-4 px-6">
+    <div className="flex items-center justify-between">
       <h4 className="font-bold text-[17px] text-gray-800 leading-tight">
         {title}
       </h4>
