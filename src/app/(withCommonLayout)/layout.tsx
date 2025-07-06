@@ -25,7 +25,7 @@ const CommonLayout = ({
           <main className="md:mt-[70px] mt-[135px] overflow-hidden  p-2">
             <SidebarTrigger className="hidden md:block " />
 
-            <Container> {children}</Container>
+            {children}
             <MobileBottomAppBar />
           </main>
           <Footer />
