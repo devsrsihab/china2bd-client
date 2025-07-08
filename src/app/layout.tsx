@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 // Load the font (choose subset, weight if needed)
 const jost = Jost({
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`bg-[#f7f7f7] ${jost.className} antialiased`}>
         {children}
+        <Toaster />
       </body>
     </html>
   );

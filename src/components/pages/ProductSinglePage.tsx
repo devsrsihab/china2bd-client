@@ -3,7 +3,16 @@ import CountdownBanner from "@/components/CountdownBanner";
 import ImageVariantSelector from "@/components/ImageVariantSelector";
 import PriceRangesTab from "@/components/PriceRangesTab";
 import ProductSizeTable from "@/components/ProductSizeTable";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import ShippingDetails from "../ShippingDetails";
+import SRSButton from "../SRSButton";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import { IoBagCheckOutline } from "react-icons/io5";
+import ProductInfoAndShare from "../ProductInfoAndShare";
+import ShareAndCopy from "../ShareAndCopy";
+import ProductVendorCategory from "../ProductVendorCategory";
+import SellerInfoCard from "../SellerInfoCard";
+import ShippingChargeInfo from "../ShippingChargeInfo";
 
 const tieredPrices = [
   {
@@ -153,11 +162,18 @@ const sizeTableData: TableRowData[] = [
 ];
 
 const ProductSinglePage: React.FC = () => {
+  const [currentUrl, setCurrentUrl] = useState("");
+
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState<
     number | null
   >(null);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCurrentUrl(window.location.href);
+    }
+  }, []);
   const handleVariantSelection = (variant: any, index: number) => {
     setSelectedVariant(variant);
     setSelectedVariantIndex(index);
@@ -170,7 +186,7 @@ const ProductSinglePage: React.FC = () => {
     <div>
       <div className="grid grid-cols-[3fr_1fr] gap-2">
         {/* product detila section */}
-        <div>
+        <div className="max-w-[100%] bg-white over">
           <div className="p-6">
             {/* title */}
             <h2 className="text-[18px] font-bold">
@@ -261,8 +277,51 @@ const ProductSinglePage: React.FC = () => {
                 />
                 {/* price and quantity table */}
                 <ProductSizeTable data={sizeTableData} />
+                {/* shipping details */}
+                <ShippingDetails />
+
+                {/* car and bu buttons */}
+                <div className="flex gap-2 mt-6">
+                  <SRSButton
+                    icon={<MdOutlineShoppingCart />}
+                    className="flex-1"
+                    btnText="Add to Cart"
+                  />
+                  <SRSButton
+                    icon={<IoBagCheckOutline />}
+                    className="flex-1"
+                    btnText="Buy Now"
+                  />
+                </div>
+
+                {/* product short info and share */}
+                <div>
+                  <ProductInfoAndShare />
+                  <ShareAndCopy shareUrl={currentUrl} />
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* vendor accoutn details */}
+        <div className=" ">
+          <div className="px-4 py-3  mb-2 bg-white">
+            <h4 className="mb-5 border-b border-gray-200 py-4 font-bold">
+              Women's Crossbody Bags
+            </h4>
+
+            <div className="flex">
+              <SRSButton className="flex-1" btnText="Category Products" />
+            </div>
+          </div>
+          {/* vendor */}
+          <div className="px-4 py-6 bg-white mb-2">
+            <SellerInfoCard />
+          </div>
+          {/* shipping charge info */}
+          <div className="px-4 py-6 bg-white mb-2">
+            <ShippingChargeInfo />
           </div>
         </div>
       </div>

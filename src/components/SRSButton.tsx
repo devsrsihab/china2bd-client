@@ -11,6 +11,8 @@ type SRButtonProps = {
   radiuse?: string;
   href?: string;
   isLoading?: boolean;
+  className?: string;
+  icon?: React.ReactNode;
 };
 
 const SRSButton: React.FC<SRButtonProps> = ({
@@ -20,22 +22,27 @@ const SRSButton: React.FC<SRButtonProps> = ({
   radiuse = "rounded-[4px]",
   href = "",
   isLoading = false,
+  className = "",
+  icon,
 }) => {
   return (
     <Button
       disabled={isLoading}
       className={clsx(
         "relative text-sm cursor-pointer text-white font-normal bg-primary flex items-center justify-center transition-all duration-300",
+        className,
         padding,
         margin,
         radiuse,
         isLoading && "opacity-70 cursor-not-allowed"
       )}
     >
+      {/* icon */}
+      {icon}
       {/* Spinner in center */}
       <span
         className={clsx(
-          "absolute inset-0 flex items-center justify-center transition-opacity duration-300",
+          "ml-2 absolute inset-0 flex items-center justify-center transition-opacity duration-300",
           isLoading ? "opacity-100 visible" : "opacity-0 invisible"
         )}
       >
