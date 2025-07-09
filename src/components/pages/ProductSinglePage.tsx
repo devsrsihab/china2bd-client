@@ -16,6 +16,7 @@ import { useSimilarProductList } from "@/hooks/product.hook";
 import { TProduct } from "@/types";
 import ProductCard from "../ProductCard";
 import ProductTabs from "../ProductTabs";
+import ProductImageSection from "../ProductImageSection";
 
 const tieredPrices = [
   {
@@ -89,6 +90,15 @@ interface TableRowData {
   type: "input" | "button";
   initialQuantity?: number;
 }
+
+// product images
+const productImages = [
+  "https://global-img-cdn.1688.com/img/ibank/O1CN010Dg5iM1kMuZJojbG3_!!2206518654670-0-cib.600x600.jpg",
+  "https://global-img-cdn.1688.com/img/ibank/O1CN01pdrrfS1kMuZMvoYwF_!!2206518654670-0-cib.600x600.jpg",
+  "https://global-img-cdn.1688.com/img/ibank/O1CN01qv2AXF1kMuZM6aUql_!!2206518654670-0-cib.600x600.jpg",
+  "https://global-img-cdn.1688.com/img/ibank/O1CN01tEb5dJ1kMuZKbh9lA_!!2206518654670-0-cib.600x600.jpg",
+  "https://global-img-cdn.1688.com/img/ibank/O1CN01fDdLtb1kMuZM6bRCD_!!2206518654670-0-cib.600x600.jpg",
+];
 
 // Sample data for the product size table
 const sizeTableData: TableRowData[] = [
@@ -194,169 +204,106 @@ const ProductSinglePage: React.FC = () => {
   };
   return (
     <div>
-      <div className="grid grid-cols-[3fr_1fr] gap-2">
-        {/* ============ LEFT SECTION ============*/}
-        <div className="max-w-[100%] bg-white over">
-          <div className="p-6">
-            {/* title */}
-            <h2 className="text-[18px] font-bold">
-              Cross-border 4748 yards spring white shoes Korean trendy white
-              skate shoes casual sneakers fashion versatile casual shoes
-            </h2>
-            {/* details */}
-            <div className="grid grid-cols-[6fr_7fr] rounded-lg gap-8 p-4">
-              {/* image section */}
-              <div>
-                {/* tumbnail */}
-                <div className="overflow-hidden max-w-[456px] min-h-[456px]">
-                  <div className="cursor-crosshair w-[456px] h-[456px] relative select-none">
-                    <img
-                      src="https://global-img-cdn.1688.com/img/ibank/O1CN010Dg5iM1kMuZJojbG3_!!2206518654670-0-cib.600x600.jpg"
-                      alt="Product Image"
-                      className="w-[456px] h-[456px] pointer-events-none max-w-full object-contain"
+      <div className="container mx-auto px-2 sm:px-4">
+        <div className="grid lg:grid-cols-[3fr_1fr] gap-3 sm:gap-4">
+          {/* LEFT SECTION */}
+          <div className="bg-white rounded-lg overflow-hidden">
+            <div className="p-3 sm:p-4 md:p-6">
+              <h2 className="text-base sm:text-lg md:text-[18px] font-bold">
+                Cross-border 4748 yards spring white shoes Korean trendy white
+                skate shoes casual sneakers fashion versatile casual shoes
+              </h2>
+
+              <div className="flex flex-col lg:flex-row rounded-lg gap-4 sm:gap-6 p-2 sm:p-3 md:p-4">
+                <div className="w-full lg:w-[45%]">
+                  <ProductImageSection images={productImages} />
+                </div>
+
+                <div className="w-full lg:w-[55%]">
+                  <CountdownBanner />
+                  <div className="grid mb-4">
+                    <PriceRangesTab
+                      ranges={tieredPrices}
+                      activeRangeId={"range-2"}
                     />
                   </div>
-                </div>
-                {/* photo navigation */}
-                <div className="w-full overflow-auto mt-1">
-                  <div className="flex flex-row flex-wrap mt-2 items-center">
-                    {/* Video Thumbnail */}
-                    <div className="relative w-[76px] h-[76px] z-0 mr-2 mb-2">
-                      <div className="absolute top-[0.155rem] left-[0.155rem] right-[0.155rem] bottom-[0.155rem] rounded bg-black/35 flex items-center justify-center text-[#e0e0e0] cursor-pointer z-[8]">
-                        <img
-                          src="/_next/static/media/play.7e02e3b4.svg"
-                          alt="Play"
-                          className="w-[36px] h-[36px] m-0 p-0"
-                        />
-                      </div>
-                      <img
-                        src="https://global-img-cdn.1688.com/img/ibank/O1CN010Dg5iM1kMuZJojbG3_!!2206518654670-0-cib.600x600.jpg"
-                        alt="Video Thumbnail"
-                        className="relative w-[72px] h-[72px] z-0 p-2 mr-3 mb-3 object-contain"
-                      />
-                    </div>
 
-                    {/* Sub Images */}
-                    {[
-                      "https://global-img-cdn.1688.com/img/ibank/O1CN010Dg5iM1kMuZJojbG3_!!2206518654670-0-cib.600x600.jpg",
-                      "https://global-img-cdn.1688.com/img/ibank/O1CN01pdrrfS1kMuZMvoYwF_!!2206518654670-0-cib.600x600.jpg",
-                      "https://global-img-cdn.1688.com/img/ibank/O1CN01qv2AXF1kMuZM6aUql_!!2206518654670-0-cib.600x600.jpg",
-                      "https://global-img-cdn.1688.com/img/ibank/O1CN01tEb5dJ1kMuZKbh9lA_!!2206518654670-0-cib.600x600.jpg",
-                      "https://global-img-cdn.1688.com/img/ibank/O1CN01fDdLtb1kMuZM6bRCD_!!2206518654670-0-cib.600x600.jpg",
-                    ].map((src, index) => (
-                      <div key={index} className="w-[72px] h-[72px] mr-2 mb-2">
-                        <img
-                          src={src}
-                          alt={`Sub Image ${index + 1}`}
-                          title="Image"
-                          className="w-[46px] h-[46px] p-[0.15rem] object-contain cursor-pointer rounded"
-                        />
-                      </div>
-                    ))}
+                  <ImageVariantSelector
+                    variants={productVariantsData}
+                    initialSelectedIndex={0}
+                    onSelectVariant={handleVariantSelection}
+                  />
+
+                  <div className="overflow-x-auto">
+                    <ProductSizeTable data={sizeTableData} />
                   </div>
-                </div>
-                {/* buttons */}
-                <div>
-                  <div className="grid grid-cols-2 gap-4 mt-2">
-                    <button className="cursor-pointer mb-4 w-full bg-[#597445] text-white py-2 px-4 rounded">
-                      Download Images
-                    </button>
-                    <button className="cursor-pointer mb-4 w-full bg-[#B43F3F] text-white py-2 px-4 rounded">
-                      Original Images
-                    </button>
+
+                  <ShippingDetails />
+
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4 sm:mt-6">
+                    <SRSButton
+                      icon={<MdOutlineShoppingCart />}
+                      className="w-full sm:w-auto sm:flex-1"
+                      btnText="Add to Cart"
+                    />
+                    <SRSButton
+                      icon={<IoBagCheckOutline />}
+                      className="w-full sm:w-auto sm:flex-1"
+                      btnText="Buy Now"
+                    />
+                  </div>
+
+                  <div className="mt-4 sm:mt-6">
+                    <ProductInfoAndShare />
+                    <ShareAndCopy shareUrl={currentUrl} />
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* details section */}
-              <div>
-                <CountdownBanner />
-                {/* price range */}
-                <div className="grid">
-                  <PriceRangesTab
-                    ranges={tieredPrices}
-                    activeRangeId={"range-2"}
-                  />
-                </div>
+            <ProductTabs />
+          </div>
 
-                {/* variables */}
-                <ImageVariantSelector
-                  variants={productVariantsData}
-                  initialSelectedIndex={0} // Start with the first variant selected
-                  onSelectVariant={handleVariantSelection}
-                />
-                {/* price and quantity table */}
-                <ProductSizeTable data={sizeTableData} />
-                {/* shipping details */}
-                <ShippingDetails />
-
-                {/* car and bu buttons */}
-                <div className="flex gap-2 mt-6">
-                  <SRSButton
-                    icon={<MdOutlineShoppingCart />}
-                    className="flex-1"
-                    btnText="Add to Cart"
-                  />
-                  <SRSButton
-                    icon={<IoBagCheckOutline />}
-                    className="flex-1"
-                    btnText="Buy Now"
-                  />
-                </div>
-
-                {/* product short info and share */}
-                <div>
-                  <ProductInfoAndShare />
-                  <ShareAndCopy shareUrl={currentUrl} />
-                </div>
+          {/* RIGHT SECTION */}
+          <div className="space-y-3 sm:space-y-4">
+            <div className="px-3 py-3 sm:px-4 sm:py-4 bg-white rounded-lg">
+              <h4 className="mb-3 sm:mb-4 border-b border-gray-200 py-2 sm:py-3 font-bold text-sm sm:text-base">
+                Women's Crossbody Bags
+              </h4>
+              <div className="flex">
+                <SRSButton className="w-full" btnText="Category Products" />
               </div>
             </div>
-          </div>
-          {/* PRODUCT TAB */}
-          <ProductTabs />
-        </div>
 
-        {/* ============ RIGHT SECTION ============*/}
-        <div>
-          <div className="px-4 py-3  mb-2 bg-white">
-            <h4 className="mb-5 border-b border-gray-200 py-4 font-bold">
-              Women's Crossbody Bags
-            </h4>
-
-            <div className="flex">
-              <SRSButton className="flex-1" btnText="Category Products" />
+            <div className="px-3 py-4 sm:px-4 sm:py-5 bg-white rounded-lg">
+              <SellerInfoCard />
             </div>
-          </div>
-          {/* vendor */}
-          <div className="px-4 py-6 bg-white mb-2">
-            <SellerInfoCard />
-          </div>
-          {/* shipping charge info */}
-          <div className="px-4 py-6 bg-white mb-2">
-            <ShippingChargeInfo />
-          </div>
 
-          {/* similar product list */}
-          <div className="px-2 py-6 bg-white mb-2">
-            <h4 className="mb-5 border-b border-gray-200 py-4 font-bold">
-              Similar Products
-            </h4>
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(12rem,1fr))]">
-              {similarProductList?.result?.map((product: TProduct) => (
-                <div key={product.code} className="p-1">
-                  <ProductCard
-                    href={`/product/${product.code}`}
-                    imageSrc={product.thumbnail.medium}
-                    imageAlt={product.title}
-                    productName={product.title}
-                    productPrice={product.regular_price}
-                    isHasSoldQty={true}
-                    soldQuantity={product.meta.total_sold}
-                    className="shadow-none border-none"
-                    discountPercentage={6}
-                  />
-                </div>
-              ))}
+            <div className="px-3 py-4 sm:px-4 sm:py-5 bg-white rounded-lg">
+              <ShippingChargeInfo />
+            </div>
+
+            <div className="px-2 py-4 sm:px-3 sm:py-5 bg-white rounded-lg">
+              <h4 className="mb-3 sm:mb-4 border-b border-gray-200 py-2 sm:py-3 font-bold text-sm sm:text-base">
+                Similar Products
+              </h4>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-1 gap-2">
+                {similarProductList?.result?.map((product: TProduct) => (
+                  <div key={product.code} className="p-1">
+                    <ProductCard
+                      href={`/product/${product.code}`}
+                      imageSrc={product.thumbnail.medium}
+                      imageAlt={product.title}
+                      productName={product.title}
+                      productPrice={product.regular_price}
+                      isHasSoldQty={true}
+                      soldQuantity={product.meta.total_sold}
+                      className="shadow-none border-none"
+                      discountPercentage={6}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
