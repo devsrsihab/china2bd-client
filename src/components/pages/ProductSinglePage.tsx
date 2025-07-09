@@ -15,6 +15,7 @@ import ShippingChargeInfo from "../ShippingChargeInfo";
 import { useSimilarProductList } from "@/hooks/product.hook";
 import { TProduct } from "@/types";
 import ProductCard from "../ProductCard";
+import ProductTabs from "../ProductTabs";
 
 const tieredPrices = [
   {
@@ -194,7 +195,7 @@ const ProductSinglePage: React.FC = () => {
   return (
     <div>
       <div className="grid grid-cols-[3fr_1fr] gap-2">
-        {/* product detila section */}
+        {/* ============ LEFT SECTION ============*/}
         <div className="max-w-[100%] bg-white over">
           <div className="p-6">
             {/* title */}
@@ -311,9 +312,11 @@ const ProductSinglePage: React.FC = () => {
               </div>
             </div>
           </div>
+          {/* PRODUCT TAB */}
+          <ProductTabs />
         </div>
 
-        {/* vendor accoutn details */}
+        {/* ============ RIGHT SECTION ============*/}
         <div>
           <div className="px-4 py-3  mb-2 bg-white">
             <h4 className="mb-5 border-b border-gray-200 py-4 font-bold">

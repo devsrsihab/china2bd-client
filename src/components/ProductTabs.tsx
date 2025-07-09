@@ -1,75 +1,76 @@
-"use client";
 import React, { useState } from "react";
 
-const tabs = [
-  "Specification",
-  "Description",
-  "Seller Info",
-  "Reviews",
-  "Original Images",
-];
-
-const ProductTabs: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState("Specification");
+const TabSection = () => {
+  const tabs = [
+    "Specification",
+    "Description",
+    "Seller Info",
+    "Reviews",
+    "Original Images",
+  ];
+  const [activeTab, setActiveTab] = useState("Specification");
 
   return (
-    <div className="card mt-2 pt-5">
+    <div className="card mt-2.5 pt-5">
       {/* Tab Header */}
-      <div className="flex gap-4 border-b pb-2">
-        {tabs.map((tab) => (
-          <h4
+      <div className="flex flex-wrap justify-center gap-3 mb-2">
+        {tabs.map((tab, index) => (
+          <div
             key={tab}
-            onClick={() => setSelectedTab(tab)}
-            className={`cursor-pointer text-sm font-semibold relative ${
-              selectedTab === tab
-                ? "text-blue-600 border-b-2 border-blue-600"
-                : "text-gray-600"
+            onClick={() => setActiveTab(tab)}
+            className={`relative px-4 py-1.5 text-sm border border-gray-300 rounded capitalize cursor-pointer ${
+              activeTab === tab ? "bg-gray-200 font-semibold" : "bg-white"
             }`}
           >
             {tab}
             {(tab === "Reviews" || tab === "Original Images") && (
-              <span className="ml-1 text-[10px] text-white bg-red-500 px-1 rounded-sm topBadge">
+              <span className="absolute -top-2 -right-2 bg-gradient-to-r from-pink-600 to-orange-500 text-white text-xs px-1 rounded">
                 new
               </span>
             )}
-          </h4>
+          </div>
         ))}
       </div>
 
       {/* Tab Content */}
       <div className="p-4">
-        {selectedTab === "Specification" && (
-          <div className="overflow-x-auto">
-            <table className="w-full table-auto text-sm border border-gray-200">
+        {activeTab === "Specification" && (
+          <div className="px-8 pb-8">
+            <table className="w-full border border-gray-300 border-collapse table-fixed">
               <tbody>
-                {specData.map(([label, value]) => (
-                  <tr key={label} className="border-b border-gray-100">
-                    <td className="p-2 font-medium text-gray-700 w-1/3">
-                      {label}
+                {specData.map(([key, value], index) => (
+                  <tr
+                    key={key}
+                    className={`text-center capitalize ${
+                      index % 2 === 0 ? "bg-gray-100" : "bg-gray-50"
+                    } hover:bg-gray-200`}
+                  >
+                    <td className="p-4 text-sm font-semibold bg-gray-100 border border-gray-200">
+                      {key}
                     </td>
-                    <td className="p-2 text-gray-900">{value}</td>
+                    <td className="p-4 text-sm border border-gray-200">
+                      {value}
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         )}
-        {selectedTab === "Description" && (
-          <div>Description content here...</div>
-        )}
-        {selectedTab === "Seller Info" && (
-          <div>Seller info content here...</div>
-        )}
-        {selectedTab === "Reviews" && <div>Reviews content here...</div>}
-        {selectedTab === "Original Images" && (
-          <div>Original images content here...</div>
+        {/* Placeholder for other tabs */}
+        {activeTab !== "Specification" && (
+          <div className="text-center text-gray-500 text-sm mt-4">
+            Content for <strong>{activeTab}</strong> tab coming soon...
+          </div>
         )}
       </div>
     </div>
   );
 };
 
-// Example spec data
+export default TabSection;
+
+// Dummy data for specification
 const specData: [string, string][] = [
   ["Material function", "High color fastness"],
   ["Supply category", "Spot goods"],
@@ -111,5 +112,3 @@ const specData: [string, string][] = [
   ["Applicable gender", "Man"],
   ["Product category", "Casual suit"],
 ];
-
-export default ProductTabs;
