@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import CategoryTabPan from "@/components/category-tab-pan";
 import HomeBanner from "@/components/HomeBanner";
-import ProductCard from "@/components/product-card";
+import ProductCard from "@/components/ProductCard";
 import { useProductList, useTrendingProductList } from "@/hooks/product.hook";
 import { TProduct } from "@/types";
 import {

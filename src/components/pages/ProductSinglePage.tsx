@@ -10,9 +10,11 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoBagCheckOutline } from "react-icons/io5";
 import ProductInfoAndShare from "../ProductInfoAndShare";
 import ShareAndCopy from "../ShareAndCopy";
-import ProductVendorCategory from "../ProductVendorCategory";
 import SellerInfoCard from "../SellerInfoCard";
 import ShippingChargeInfo from "../ShippingChargeInfo";
+import { useSimilarProductList } from "@/hooks/product.hook";
+import { TProduct } from "@/types";
+import ProductCard from "../ProductCard";
 
 const tieredPrices = [
   {
@@ -169,6 +171,13 @@ const ProductSinglePage: React.FC = () => {
     number | null
   >(null);
 
+  //similar product list
+  const { data: similarProductList, isLoading: isProductListLoading } =
+    useSimilarProductList({
+      category_id: "1034353",
+      platform: "skybuy",
+    });
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       setCurrentUrl(window.location.href);
@@ -305,7 +314,7 @@ const ProductSinglePage: React.FC = () => {
         </div>
 
         {/* vendor accoutn details */}
-        <div className=" ">
+        <div>
           <div className="px-4 py-3  mb-2 bg-white">
             <h4 className="mb-5 border-b border-gray-200 py-4 font-bold">
               Women's Crossbody Bags
@@ -322,6 +331,30 @@ const ProductSinglePage: React.FC = () => {
           {/* shipping charge info */}
           <div className="px-4 py-6 bg-white mb-2">
             <ShippingChargeInfo />
+          </div>
+
+          {/* similar product list */}
+          <div className="px-2 py-6 bg-white mb-2">
+            <h4 className="mb-5 border-b border-gray-200 py-4 font-bold">
+              Similar Products
+            </h4>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(12rem,1fr))]">
+              {similarProductList?.result?.map((product: TProduct) => (
+                <div key={product.code} className="p-1">
+                  <ProductCard
+                    href={`/product/${product.code}`}
+                    imageSrc={product.thumbnail.medium}
+                    imageAlt={product.title}
+                    productName={product.title}
+                    productPrice={product.regular_price}
+                    isHasSoldQty={true}
+                    soldQuantity={product.meta.total_sold}
+                    className="shadow-none border-none"
+                    discountPercentage={6}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -35,6 +35,23 @@ export const getProductList = async (filters: Record<string, string>) => {
   }
 };
 
+// get similar products
+export const getSimilarProductList = async (
+  filters: Record<string, string>
+) => {
+  try {
+    const queryParams = new URLSearchParams({
+      ...filters,
+    }).toString();
+    const { data } = await axiosInstance.get(
+      `/products/similar?${queryParams}`
+    );
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 // get trending product
 export const getTrendingProductList = async (
   filters: Record<string, string>

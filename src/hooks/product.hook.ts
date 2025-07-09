@@ -7,6 +7,7 @@ import {
   updateProduct,
   getProductDetails,
   getTrendingProductList,
+  getSimilarProductList,
 } from "@/services/Product";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -26,6 +27,23 @@ export const useProductList = (filters: Record<string, string>) => {
     refetchOnWindowFocus: false,
   });
 };
+
+// get similar products
+export const useSimilarProductList = (filters: Record<string, string>) => {
+  return useQuery({
+    queryKey: ["PRODUCT_SIMILAR_LIST", filters],
+    queryFn: async () => {
+      try {
+        const response = await getSimilarProductList(filters);
+        return response;
+      } catch (error: any) {
+        throw new Error(error);
+      }
+    },
+    refetchOnWindowFocus: false,
+  });
+};
+
 // trending product hook
 export const useTrendingProductList = (filters: Record<string, string>) => {
   return useQuery({

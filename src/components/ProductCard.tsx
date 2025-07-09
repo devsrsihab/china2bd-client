@@ -11,6 +11,7 @@ interface ProductCardProps {
   soldQuantity?: number;
   isHasSoldQty?: boolean; // Optional prop to control sold quantity display
   className?: string;
+  discountPercentage?: number;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -22,6 +23,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   soldQuantity = 0,
   isHasSoldQty = true,
   className = "",
+  discountPercentage,
 }) => {
   return (
     // The main card container
@@ -48,18 +50,39 @@ const ProductCard: React.FC<ProductCardProps> = ({
             >
               {productName}
             </span>
-            <div className="flex justify-between items-center mt-2">
-              <span className="font-jost product-price block text-[#cf3056] font-bold text-base">
-                ৳ {productPrice}
-              </span>
-              {isHasSoldQty && (
+            {(!discountPercentage || discountPercentage <= 0) && (
+              <div className="flex justify-between items-center mt-2">
+                <span className="font-jost product-price block text-[#cf3056] font-bold text-base">
+                  ৳ {productPrice}
+                </span>
+                {isHasSoldQty && (
+                  <div>
+                    <span className="block text-xs text-gray-700 font-medium">
+                      SOLD: {soldQuantity}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {discountPercentage && discountPercentage > 0 && (
+              <div className="flex items-center mt-2 gap-2.5">
+                <span className="text-red-600 font-bold text-base block">
+                  ৳{" "}
+                  {Math.ceil(
+                    productPrice - (productPrice * discountPercentage) / 100
+                  )}
+                </span>
                 <div>
-                  <span className="block text-xs text-gray-700 font-medium">
-                    SOLD: {soldQuantity}
+                  <span className="text-gray-500 line-through text-base font-medium mr-2">
+                    ৳ {productPrice}
+                  </span>
+                  <span className="bg-pink-100 text-sm font-medium px-1.5 py-0.5 rounded">
+                    {discountPercentage}% Off
                   </span>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </CardContent>
       </Link>
