@@ -13,6 +13,7 @@ interface ImageVariantSelectorProps {
   initialSelectedIndex?: number;
   onSelectVariant: (variant: ProductVariant, index: number) => void;
   qty?: number;
+  setVariantImage: (src: string) => void;
 }
 
 const ImageVariantSelector: React.FC<ImageVariantSelectorProps> = ({
@@ -20,6 +21,7 @@ const ImageVariantSelector: React.FC<ImageVariantSelectorProps> = ({
   initialSelectedIndex = 0,
   onSelectVariant,
   qty,
+  setVariantImage,
 }) => {
   const [selectedIndex, setSelectedIndex] =
     useState<number>(initialSelectedIndex);
@@ -37,6 +39,7 @@ const ImageVariantSelector: React.FC<ImageVariantSelectorProps> = ({
   const handleClick = (index: number) => {
     setSelectedIndex(index);
     onSelectVariant(variants[index], index);
+    setVariantImage(variants[index].imageUrl);
   };
 
   return (

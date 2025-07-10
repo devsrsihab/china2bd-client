@@ -176,6 +176,7 @@ const sizeTableData: TableRowData[] = [
 
 const ProductSinglePage: React.FC = () => {
   const [currentUrl, setCurrentUrl] = useState("");
+  const [selectedImage, setSelectedImage] = useState(productImages[0]);
 
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState<
@@ -197,9 +198,12 @@ const ProductSinglePage: React.FC = () => {
   const handleVariantSelection = (variant: any, index: number) => {
     setSelectedVariant(variant);
     setSelectedVariantIndex(index);
-    console.log(
-      `Selected Variant: ${variant.name} (Image: ${variant.imageUrl}, Index: ${index})`
-    );
+    console.log("selected variant image", variant.imageUrl);
+
+    // setSelectedImage(variant.imageUrl);
+    // console.log(
+    //   `Selected Variant: ${variant.name} (Image: ${variant.imageUrl}, Index: ${index})`
+    // );
     // Here you would typically update your product state or fetch new data based on the selected variant
   };
   return (
@@ -216,7 +220,11 @@ const ProductSinglePage: React.FC = () => {
 
               <div className="flex flex-col lg:flex-row rounded-lg gap-4 sm:gap-6 p-2 sm:p-3 md:p-4">
                 <div className="w-full lg:w-[45%]">
-                  <ProductImageSection images={productImages} />
+                  <ProductImageSection
+                    setSelectedImage={setSelectedImage}
+                    selectedImage={selectedImage}
+                    images={productImages}
+                  />
                 </div>
 
                 <div className="w-full lg:w-[55%]">
@@ -232,6 +240,7 @@ const ProductSinglePage: React.FC = () => {
                     variants={productVariantsData}
                     initialSelectedIndex={0}
                     onSelectVariant={handleVariantSelection}
+                    setVariantImage={setSelectedImage}
                   />
 
                   <div className="overflow-x-auto">

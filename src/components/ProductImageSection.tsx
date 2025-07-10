@@ -15,12 +15,15 @@ import { CheckCircle2 } from "lucide-react";
 // ✅ Props Type
 type ProductImageSectionProps = {
   images: string[];
+  setSelectedImage: (src: any) => void;
+  selectedImage: string;
 };
 
 const ProductImageSection: React.FC<ProductImageSectionProps> = ({
   images,
+  setSelectedImage,
+  selectedImage,
 }) => {
-  const [selectedImage, setSelectedImage] = useState(images[0]);
   const [selectedDownloads, setSelectedDownloads] = useState<string[]>([]);
   const [isZoomVisible, setIsZoomVisible] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
