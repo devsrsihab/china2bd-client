@@ -208,7 +208,7 @@ const ProductSinglePage: React.FC = () => {
   };
   return (
     <div>
-      <div className="container mx-auto px-2 sm:px-4">
+      <div className="px-2 sm:px-4">
         <div className="grid lg:grid-cols-[3fr_1fr] gap-3 sm:gap-4">
           {/* LEFT SECTION */}
           <div className="bg-white rounded-lg overflow-hidden">
@@ -296,7 +296,7 @@ const ProductSinglePage: React.FC = () => {
               <h4 className="mb-3 sm:mb-4 border-b border-gray-200 py-2 sm:py-3 font-bold text-sm sm:text-base">
                 Similar Products
               </h4>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-1 gap-2">
+              <div className="productList grid [grid-template-columns:repeat(auto-fill,minmax(12rem,1fr))]">
                 {similarProductList?.result?.map((product: TProduct) => (
                   <div key={product.code} className="p-1">
                     <ProductCard
