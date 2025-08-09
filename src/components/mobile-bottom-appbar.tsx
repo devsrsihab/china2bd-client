@@ -20,9 +20,9 @@ export const MobileBottomAppBar: React.FC = () => {
       <div className="grid grid-cols-5 h-16 justify-center items-center bottomBar">
         {/* Category Button */}
         <div className="item">
-          <button
+          <div
             aria-label="Category"
-            className="flex flex-col items-center text-sm text-muted-foreground hover:text-primary transition"
+            className="flex flex-col items-center text-sm text-muted-foreground hover:text-primary transition cursor-pointer"
           >
             {isMounted ? (
               <SidebarTrigger className="cursor-pointer text-[55px] text-primary hover:text-primary" />
@@ -30,7 +30,7 @@ export const MobileBottomAppBar: React.FC = () => {
               <Skeleton className="w-[24px] h-[24px] rounded-md bg-gray-200" />
             )}
             <span className="text-xs text-primary">Category</span>
-          </button>
+          </div>
         </div>
 
         {/* Account Link */}

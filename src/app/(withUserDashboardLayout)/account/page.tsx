@@ -1,14 +1,10 @@
 import OrderStats from "@/components/user-account/OrderStats";
+import PageHeaderWithDate from "@/components/user-account/PageHeaderWithDate";
 
 function DashboardPage() {
   return (
     <div>
-      <div className="flex justify-between items-center border-b border-gray-200 p-4 bg-white">
-        <h4 className="font-bold text-[17px] text-gray-800 leading-tight">
-          Dashboard
-        </h4>
-        <p className="font-medium">9th August, 2025</p>
-      </div>
+      <PageHeaderWithDate title="Dashboard" date="9th August, 2025" />
       <OrderStats />
     </div>
   );

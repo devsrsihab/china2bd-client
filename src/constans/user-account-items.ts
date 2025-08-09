@@ -23,7 +23,7 @@ export const userAccountSidebarItems: SidebarItem[] = [
   {
     title: "Dashboard",
     icon: dashboardicon,
-    url: "/account/dashboard",
+    url: "/account",
   },
   {
     title: "Orders",
