@@ -1,5 +1,4 @@
 "use client";
-import { CommonSidebar } from "@/components/common-sidebar";
 import { MobileBottomAppBar } from "@/components/mobile-bottom-appbar";
 import Footer from "@/components/shared/Footer/Footer";
 import Header from "@/components/shared/Navbar/Header";
@@ -8,9 +7,10 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { UserAccountSidebar } from "@/components/user-account-common-sidebar";
 import { Providers } from "@/lib/Providers";
 
-const CommonLayout = ({
+const UserLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -18,20 +18,20 @@ const CommonLayout = ({
   return (
     <Providers>
       <SidebarProvider>
-        <CommonSidebar />
+        <UserAccountSidebar />
         <SidebarInset>
           <Header />
-          <main className="md:mt-[70px] mt-[135px] overflow-hidden  p-2">
+          <main className="md:mt-[70px] ml-[35px] mt-[135px] overflow-hidden  p-2">
             <SidebarTrigger className="" />
 
             {children}
             <MobileBottomAppBar />
           </main>
-          <Footer />
+          {/* <Footer /> */}
         </SidebarInset>
       </SidebarProvider>
     </Providers>
   );
 };
 
-export default CommonLayout;
+export default UserLayout;
