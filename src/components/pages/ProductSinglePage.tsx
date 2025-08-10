@@ -17,6 +17,7 @@ import { TProduct } from "@/types";
 import ProductCard from "../ProductCard";
 import ProductTabs from "../ProductTabs";
 import ProductImageSection from "../ProductImageSection";
+import CartModal from "../CartModal";
 
 const tieredPrices = [
   {
@@ -174,9 +175,13 @@ const sizeTableData: TableRowData[] = [
   },
 ];
 
+const qtyLimit = 3;
+
 const ProductSinglePage: React.FC = () => {
   const [currentUrl, setCurrentUrl] = useState("");
   const [selectedImage, setSelectedImage] = useState(productImages[0]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isQtyEnough, setIsQtyEnough] = useState(true);
 
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState<
@@ -198,13 +203,25 @@ const ProductSinglePage: React.FC = () => {
   const handleVariantSelection = (variant: any, index: number) => {
     setSelectedVariant(variant);
     setSelectedVariantIndex(index);
-    console.log("selected variant image", variant.imageUrl);
+    // console.log("selected variant image", variant.imageUrl);
 
     // setSelectedImage(variant.imageUrl);
     // console.log(
     //   `Selected Variant: ${variant.name} (Image: ${variant.imageUrl}, Index: ${index})`
     // );
     // Here you would typically update your product state or fetch new data based on the selected variant
+  };
+
+  const availableQty = 21; // Replace with actual selected size quantity
+
+  const handleAddToCart = () => {
+    if (availableQty >= qtyLimit) {
+      console.log("Product added to cart");
+      setIsQtyEnough(true);
+    } else {
+      setIsQtyEnough(false);
+    }
+    setIsDialogOpen(true);
   };
   return (
     <div>
@@ -251,6 +268,7 @@ const ProductSinglePage: React.FC = () => {
 
                   <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4 sm:mt-6">
                     <SRSButton
+                      onClick={handleAddToCart}
                       icon={<MdOutlineShoppingCart />}
                       className="w-full sm:w-auto sm:flex-1"
                       btnText="Add to Cart"
@@ -271,6 +289,14 @@ const ProductSinglePage: React.FC = () => {
             </div>
 
             <ProductTabs />
+
+            <CartModal
+              open={isDialogOpen}
+              onOpenChange={setIsDialogOpen}
+              isQtyEnough={isQtyEnough}
+              onShopMore={() => setIsDialogOpen(false)}
+              onOk={() => setIsDialogOpen(false)}
+            />
           </div>
 
           {/* RIGHT SECTION */}

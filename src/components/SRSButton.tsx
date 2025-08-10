@@ -13,6 +13,14 @@ type SRButtonProps = {
   isLoading?: boolean;
   className?: string;
   icon?: React.ReactNode;
+  onClick?: () => void;
+  variant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link";
 };
 
 const SRSButton: React.FC<SRButtonProps> = ({
@@ -24,9 +32,13 @@ const SRSButton: React.FC<SRButtonProps> = ({
   isLoading = false,
   className = "",
   icon,
+  onClick,
+  variant,
 }) => {
   return (
     <Button
+      variant={variant}
+      onClick={onClick}
       disabled={isLoading}
       className={clsx(
         "relative text-sm cursor-pointer text-white font-normal bg-primary flex items-center justify-center transition-all duration-300",
