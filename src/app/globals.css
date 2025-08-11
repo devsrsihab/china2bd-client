@@ -105,3 +105,46 @@
     height: 40px;
   }
 }
+
+/* For Select background */
+.select-background-fix {
+  background-color: white !important;
+}
+
+/* For custom input focus */
+.custom-input-focus:focus {
+  border-width: 1px;
+  border-color: #3b82f6; /* Your custom color */
+  box-shadow: 0 0 0 1px #3b82f6;
+  outline: none;
+}
+
+/* If you want to apply to all inputs */
+input:focus,
+textarea:focus {
+  border-width: 1px !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 1px #3b82f6 !important;
+  outline: none !important;
+}
+/* Fix for all shadcn Select triggers */
+[data-radix-popper-content-wrapper] .select-background {
+  background-color: white !important;
+}
+
+/* Or alternatively target all select triggers */
+[data-radix-popper-content-wrapper] [role="combobox"] {
+  background-color: white !important;
+}
+div [data-state="open"] {
+  background-color: white !important;
+}
+/* Custom hover for select items */
+[data-radix-popper-content-wrapper] [role="option"] {
+  transition: background-color 0.2s ease;
+}
+
+[data-radix-popper-content-wrapper] [role="option"]:hover {
+  background-color: #f3f4f6 !important; /* Your preferred hover color */
+  cursor: pointer;
+}

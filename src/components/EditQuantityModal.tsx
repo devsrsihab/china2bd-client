@@ -54,12 +54,12 @@ const EditQuantityModal: React.FC<EditQuantityModalProps> = ({
 
         <div className="p-4">
           {/* Variant Info */}
-          <div className="flex flex-col mb-4">
+          {/* <div className="flex flex-col mb-4">
             {item.variantName && (
               <span className="text-sm mb-1">{item.variantName}</span>
             )}
             {item.size && <span className="text-sm">{item.size}</span>}
-          </div>
+          </div> */}
 
           {/* Quantity Controls */}
           <div className="flex items-center justify-center mb-4">

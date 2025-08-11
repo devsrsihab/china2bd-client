@@ -14,6 +14,7 @@ type SRButtonProps = {
   className?: string;
   icon?: React.ReactNode;
   onClick?: () => void;
+  style?: React.CSSProperties;
   variant?:
     | "default"
     | "destructive"
@@ -21,6 +22,7 @@ type SRButtonProps = {
     | "secondary"
     | "ghost"
     | "link";
+  type?: "button" | "submit" | "reset";
 };
 
 const SRSButton: React.FC<SRButtonProps> = ({
@@ -34,9 +36,13 @@ const SRSButton: React.FC<SRButtonProps> = ({
   icon,
   onClick,
   variant,
+  style,
+  type,
 }) => {
   return (
     <Button
+      type={type}
+      style={style}
       variant={variant}
       onClick={onClick}
       disabled={isLoading}

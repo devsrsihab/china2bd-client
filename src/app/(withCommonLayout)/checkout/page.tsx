@@ -1,8 +1,9 @@
 "use client";
 
+import CheckoutWthForm from "@/components/checkout/CheckoutWthForm";
 import PageHeaderWithIcon from "@/components/PageHeaderWithIcon";
-import ShoppingCart from "@/components/cart/ShoppingCart";
 import React, { useState } from "react";
+import { FiShoppingCart } from "react-icons/fi";
 
 interface CartItem {
   id: string;
@@ -17,7 +18,6 @@ interface CartItem {
   unitPrice: number;
   totalPrice: number;
 }
-
 // Sample cart items data
 const cartItemsArray = [
   {
@@ -54,7 +54,7 @@ const cartItemsArray = [
   },
 ];
 
-const CartPage: React.FC = () => {
+const checkoutPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>(cartItemsArray);
 
   // Sample cart summary data
@@ -85,15 +85,18 @@ const CartPage: React.FC = () => {
     console.log("Proceeding to checkout");
     // Add your checkout logic here
   };
+
   return (
     <div className="min-h-screen">
       <PageHeaderWithIcon
-        variant="badge"
-        count={2}
-        title="Cart"
-        date="9th August, 2025"
+        variant="icon"
+        title="Checkout"
+        date="11 August 2025"
+        icon={<FiShoppingCart />}
       />
-      <ShoppingCart
+
+      {/* /CheckoutWthForm */}
+      <CheckoutWthForm
         items={cartItems}
         summary={cartSummary}
         onRemoveItem={handleRemoveItem}
@@ -104,4 +107,4 @@ const CartPage: React.FC = () => {
   );
 };
 
-export default CartPage;
+export default checkoutPage;
