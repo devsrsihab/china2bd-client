@@ -6,6 +6,7 @@ import { TProduct } from "@/types";
 import ProductCard from "../ProductCard";
 import ProductCardSkeleton from "../ProductCardSkeleton";
 import { normalizeProduct } from "@/lib/normalizeProduct";
+import { useState } from "react";
 
 function ShopPageSingle({
   categoryId,
@@ -14,47 +15,41 @@ function ShopPageSingle({
   categoryId: string;
   categoryName: string;
 }) {
+  const [page, setPage] = useState(1);
+
   const {
     data: productsResponse,
     isLoading,
     isError,
-  } = useProductsBySubcategory(categoryId, { framePosition: 1, frameSize: 40 });
+  } = useProductsBySubcategory(categoryId, {
+    framePosition: page,
+    frameSize: 40,
+  });
 
-  // 🔄 Normalize raw response
+  // products + meta
   const products: TProduct[] = (productsResponse?.data || []).map(
     normalizeProduct
   );
-  console.log("products", products);
   const totalItems = productsResponse?.meta?.total || 0;
-
-  if (isLoading) {
-    return (
-      <div>
-        <CategoryHeader name={categoryName} totalItems={0} />
-        <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
-          {Array.from({ length: 10 }).map((_, index) => (
-            <div key={index} className="p-1">
-              <ProductCardSkeleton isHasSoldQty />
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="p-4 text-center text-red-500">
-        Failed to load products. Please try again later.
-      </div>
-    );
-  }
+  const totalPages = productsResponse?.meta?.totalPages || 1;
 
   return (
     <div>
       <CategoryHeader name={categoryName} totalItems={totalItems} />
+
+      {/* Products Grid */}
       <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
-        {products.length > 0 ? (
+        {isLoading ? (
+          Array.from({ length: 40 }).map((_, index) => (
+            <div key={index} className="p-1">
+              <ProductCardSkeleton isHasSoldQty />
+            </div>
+          ))
+        ) : isError ? (
+          <div className="col-span-full text-center text-red-500">
+            Failed to load products. Please try again later.
+          </div>
+        ) : products.length > 0 ? (
           products.map((product: TProduct) => (
             <div key={product.id} className="p-1">
               <ProductCard
@@ -74,6 +69,69 @@ function ShopPageSingle({
             No products found in this category.
           </div>
         )}
+      </div>
+
+      {/* ✅ Pagination always visible */}
+      <div className="flex justify-center mt-6">
+        <nav className="flex items-center space-x-1">
+          {/* Prev */}
+          <button
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1 || isLoading}
+            className="px-3 py-1 border rounded-md text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
+          >
+            Prev
+          </button>
+
+          {/* Page Numbers */}
+          {Array.from({ length: totalPages }).map((_, idx) => {
+            const pageNumber = idx + 1;
+
+            // ✅ Show:
+            // - first 6 pages
+            // - last 2 pages
+            // - ellipsis in between
+            if (pageNumber <= 6 || pageNumber > totalPages - 2) {
+              return (
+                <button
+                  key={pageNumber}
+                  onClick={() => setPage(pageNumber)}
+                  disabled={isLoading}
+                  className={`px-3 py-1 border rounded-md text-sm cursor-pointer ${
+                    pageNumber === page
+                      ? "bg-green-600 text-white"
+                      : "hover:bg-gray-100"
+                  }`}
+                >
+                  {pageNumber}
+                </button>
+              );
+            }
+
+            // Insert ellipsis once between shown ranges
+            if (pageNumber === 7) {
+              return (
+                <span
+                  key="ellipsis"
+                  className="px-3 py-1 text-gray-500 select-none"
+                >
+                  …
+                </span>
+              );
+            }
+
+            return null;
+          })}
+
+          {/* Next */}
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages || isLoading}
+            className="px-3 py-1 border rounded-md text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
+          >
+            Next
+          </button>
+        </nav>
       </div>
     </div>
   );
