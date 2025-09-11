@@ -47,7 +47,7 @@ const PageHeaderWithIcon: React.FC<PageHeaderWithIconProps> = ({
         <div className="mr-2" style={{ width: iconSize, height: iconSize }}>
           <Image
             src={icon}
-            alt=""
+            alt={title}
             width={iconSize}
             height={iconSize}
             {...imageProps}

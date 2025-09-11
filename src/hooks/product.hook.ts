@@ -1,230 +1,94 @@
+'use client'
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { categoryIcons } from "@/lib/categoryIcons";
 import {
-  createProduct,
-  deleteProduct,
-  deleteMultipleProduct,
-  getProductList,
-  updateProduct,
-  getProductDetails,
-  getTrendingProductList,
-  getSimilarProductList,
+  getAllCategories,
+  getSubcategories,
+  getCategoriesWithSubcategories,
+  getProductsBySubcategory,
+  getProductById,
+  getVendorById,
 } from "@/services/Product";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { TSidebarItem } from "@/types";
+import { useQuery } from "@tanstack/react-query";
 
-// hooks/Product.hook.ts
-export const useProductList = (filters: Record<string, string>) => {
+// 1. Categories only
+export const useCategories = () => {
   return useQuery({
-    queryKey: ["PRODUCT_LIST", filters],
-    queryFn: async () => {
-      try {
-        const response = await getProductList(filters);
-        return response;
-      } catch (error: any) {
-        throw new Error(error);
-      }
-    },
+    queryKey: ["CATEGORIES"],
+    queryFn: getAllCategories,
     refetchOnWindowFocus: false,
   });
 };
 
-// get similar products
-export const useSimilarProductList = (filters: Record<string, string>) => {
+// 2. Subcategories only
+export const useSubcategories = (categoryId: string | number) => {
   return useQuery({
-    queryKey: ["PRODUCT_SIMILAR_LIST", filters],
-    queryFn: async () => {
-      try {
-        const response = await getSimilarProductList(filters);
-        return response;
-      } catch (error: any) {
-        throw new Error(error);
-      }
-    },
+    queryKey: ["SUBCATEGORIES", categoryId],
+    queryFn: () => getSubcategories(categoryId),
+    enabled: !!categoryId,
     refetchOnWindowFocus: false,
   });
 };
 
-// trending product hook
-export const useTrendingProductList = (filters: Record<string, string>) => {
+// 🚀 2.1 Optimized: Categories with Subcategories
+export const useCategoriesWithSubcategories = () => {
   return useQuery({
-    queryKey: ["PRODUCT_TRENDING_LIST", filters],
-    queryFn: async () => {
-      try {
-        const response = await getTrendingProductList(filters);
-        return response;
-      } catch (error: any) {
-        throw new Error(error);
-      }
-    },
+    queryKey: ["CATEGORIES_WITH_SUBS"],
+    queryFn: getCategoriesWithSubcategories,
     refetchOnWindowFocus: false,
   });
 };
 
-// details
-export const useProductDetails = (id: number) => {
+// 3. Products by subcategory
+export const useProductsBySubcategory = (
+  subCategoryId: string | number,
+  filters: any = {}
+) => {
+  return useQuery({
+    queryKey: ["PRODUCTS_BY_SUBCATEGORY", subCategoryId, filters],
+    queryFn: () => getProductsBySubcategory(subCategoryId, filters),
+    enabled: !!subCategoryId,
+    refetchOnWindowFocus: false,
+  });
+};
+
+// 4. Product details
+export const useProductById = (id: string | number) => {
   return useQuery({
     queryKey: ["PRODUCT_DETAILS", id],
-    queryFn: async () => {
-      try {
-        const response = await getProductDetails(id);
-        return response;
-      } catch (error: any) {
-        throw new Error(error);
-      }
-    },
+    queryFn: () => getProductById(id),
+    enabled: !!id,
     refetchOnWindowFocus: false,
   });
 };
 
-// make
-export const useCreateProduct = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation<any, Error, any>({
-    mutationKey: ["CREATE_PRODUCT"],
-    mutationFn: async (catData) => await createProduct(catData),
-    onSuccess: () => {
-      toast.success("Product make Successfully", { duration: 5000 });
-      queryClient.invalidateQueries({ queryKey: ["PRODUCT_LIST"] });
-    },
-    onError: (error) => {
-      try {
-        const parsedError = JSON.parse(
-          error.message.replace("Error:", "").trim()
-        );
-
-        if (parsedError.errors) {
-          Object.entries(parsedError.errors).forEach(([field, messages]) => {
-            if (Array.isArray(messages)) {
-              (messages as string[]).forEach((msg) => {
-                toast.error(`${field}: ${msg}`, { duration: 5000 });
-              });
-            }
-          });
-        } else {
-          toast.error(
-            parsedError.message || "An error occurred while updating the data.",
-            { duration: 5000 }
-          );
-        }
-      } catch (parseError: any) {
-        toast.error(parseError.message, { duration: 5000 });
-      }
-    },
+// 5. Vendor details
+export const useVendorById = (id: string | number) => {
+  return useQuery({
+    queryKey: ["VENDOR_DETAILS", id],
+    queryFn: () => getVendorById(id),
+    enabled: !!id,
+    refetchOnWindowFocus: false,
   });
 };
 
-// update
-export const useUpdateProduct = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation<any, Error, any>({
-    mutationKey: ["UPDATE_PRODUCT"],
-    mutationFn: async ({ updateData, id }) =>
-      await updateProduct(updateData, id),
-    onSuccess: () => {
-      toast.success("Product update Successfully", { duration: 5000 });
-      queryClient.invalidateQueries({ queryKey: ["PRODUCT_LIST"] });
-    },
-    onError: (error: any) => {
-      try {
-        const parsedError = JSON.parse(
-          error.message.replace("Error:", "").trim()
-        );
-
-        if (parsedError.errors) {
-          Object.entries(parsedError.errors).forEach(([field, messages]) => {
-            if (Array.isArray(messages)) {
-              (messages as string[]).forEach((msg) => {
-                toast.error(`${field}: ${msg}`, { duration: 5000 });
-              });
-            }
-          });
-        } else {
-          toast.error(
-            parsedError.message || "An error occurred while updating the data.",
-            { duration: 5000 }
-          );
-        }
-      } catch (parseError: any) {
-        toast.error(parseError.message, { duration: 5000 });
-      }
-    },
-  });
-};
-
-// delete
-export const useDeleteProduct = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation<any, Error, any>({
-    mutationKey: ["DELETE_PRODUCT"],
-    mutationFn: async (id) => await deleteProduct(id),
-    onSuccess: () => {
-      toast.success("Product delete Successfully", { duration: 5000 });
-      queryClient.invalidateQueries({ queryKey: ["PRODUCT_LIST"] });
-    },
-    onError: (error) => {
-      try {
-        const parsedError = JSON.parse(
-          error.message.replace("Error:", "").trim()
-        );
-
-        if (parsedError.errors) {
-          Object.entries(parsedError.errors).forEach(([field, messages]) => {
-            if (Array.isArray(messages)) {
-              (messages as string[]).forEach((msg) => {
-                toast.error(`${field}: ${msg}`, { duration: 5000 });
-              });
-            }
-          });
-        } else {
-          toast.error(
-            parsedError.message || "An error occurred while updating the data.",
-            { duration: 5000 }
-          );
-        }
-      } catch (parseError: any) {
-        toast.error(parseError.message, { duration: 5000 });
-      }
-    },
-  });
-};
-
-// delete multiple
-export const useDeleteMultipleProduct = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation<any, Error, any>({
-    mutationKey: ["DELETE_PRODUCT_MULTIPLE"],
-    mutationFn: async (ids) => await deleteMultipleProduct(ids),
-    onSuccess: () => {
-      toast.success("Product delete Successfully", { duration: 5000 });
-      queryClient.invalidateQueries({ queryKey: ["PRODUCT_LIST"] });
-    },
-    onError: (error) => {
-      try {
-        const parsedError = JSON.parse(
-          error.message.replace("Error:", "").trim()
-        );
-
-        if (parsedError.errors) {
-          Object.entries(parsedError.errors).forEach(([field, messages]) => {
-            if (Array.isArray(messages)) {
-              (messages as string[]).forEach((msg) => {
-                toast.error(`${field}: ${msg}`, { duration: 5000 });
-              });
-            }
-          });
-        } else {
-          toast.error(
-            parsedError.message || "An error occurred while updating the data.",
-            { duration: 5000 }
-          );
-        }
-      } catch (parseError: any) {
-        toast.error(parseError.message, { duration: 5000 });
-      }
-    },
-  });
+/**
+ * Build sidebar items directly from categories + subcategories
+ */
+export const buildSidebarItems = (categoriesWithSubs: any[]): TSidebarItem[] => {
+  return categoriesWithSubs.map((cat: any) => ({
+    id: cat.Id,
+    title: cat.Name,
+    icon: categoryIcons[cat.Name] ?? { src: "" },
+    submenu: (cat.subcategories || []).map((sub: any) => ({
+      id: sub.Id,
+      title: sub.Name,
+      url: `/shop/${(sub.Name || "")
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w-]/g, "")}`,
+    })),
+  }));
 };

@@ -22,7 +22,7 @@ const UserLayout = ({
         <SidebarInset>
           <Header />
           <main className="md:mt-[70px] ml-[35px] mt-[135px] overflow-hidden  p-2">
-            <SidebarTrigger className="" />
+            <SidebarTrigger  />
 
             {children}
             <MobileBottomAppBar />

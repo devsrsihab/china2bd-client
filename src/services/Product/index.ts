@@ -2,100 +2,67 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axiosInstance from "@/lib/AxiosInstance";
 
-// create
-export const createProduct = async (formData: any) => {
+// 1. Get all categories
+export const getAllCategories = async () => {
   try {
-    const { data } = await axiosInstance.post("/properties", formData);
+    const { data } = await axiosInstance.get("/products/categories");
     return data;
   } catch (error: any) {
     throw new Error(error);
   }
 };
 
-// update
-export const updateProduct = async (pageData: any, id: number) => {
+// 2. Get subcategories by category ID
+export const getSubcategories = async (categoryId: string | number) => {
   try {
-    const { data } = await axiosInstance.patch(`/properties/${id}`, pageData);
+    const { data } = await axiosInstance.get(`/products/categories/${categoryId}/subcategories`);
     return data;
   } catch (error: any) {
     throw new Error(error);
   }
 };
 
-// get all
-export const getProductList = async (filters: Record<string, string>) => {
+// 🚀 2.1 Optimized: Get categories WITH subcategories (new aggregated endpoint)
+export const getCategoriesWithSubcategories = async () => {
   try {
-    const queryParams = new URLSearchParams({
-      ...filters,
-    }).toString();
-    const { data } = await axiosInstance.get(`/products/search?${queryParams}`);
+    const { data } = await axiosInstance.get("/products/categories-with-subcategories");
     return data;
   } catch (error: any) {
     throw new Error(error);
   }
 };
 
-// get similar products
-export const getSimilarProductList = async (
-  filters: Record<string, string>
+// 3. Get product list under subcategory
+export const getProductsBySubcategory = async (
+  subCategoryId: string | number,
+  filters: Record<string, string> = {}
 ) => {
   try {
-    const queryParams = new URLSearchParams({
-      ...filters,
-    }).toString();
+    const queryParams = new URLSearchParams(filters).toString();
     const { data } = await axiosInstance.get(
-      `/products/similar?${queryParams}`
+      `/products/subcategories/${subCategoryId}/products?${queryParams}`
     );
+    console.log("data", data);
     return data;
   } catch (error: any) {
     throw new Error(error);
   }
 };
 
-// get trending product
-export const getTrendingProductList = async (
-  filters: Record<string, string>
-) => {
+// 4. Get single product info
+export const getProductById = async (id: string | number) => {
   try {
-    const queryParams = new URLSearchParams({
-      ...filters,
-    }).toString();
-    const { data } = await axiosInstance.get(
-      `/products/trending?${queryParams}`
-    );
+    const { data } = await axiosInstance.get(`/products/${id}`);
     return data;
   } catch (error: any) {
     throw new Error(error);
   }
 };
 
-// details
-export const getProductDetails = async (id: number) => {
+// 5. Get vendor info
+export const getVendorById = async (id: string | number) => {
   try {
-    const { data } = await axiosInstance.get(`/properties/${id}`);
-    return data;
-  } catch (error: any) {
-    throw new Error(error);
-  }
-};
-
-// delete
-export const deleteProduct = async (id: any) => {
-  try {
-    const { data } = await axiosInstance.delete(`/properties/${id}`);
-    return data;
-  } catch (error: any) {
-    throw new Error(error);
-  }
-};
-
-// delete multiple
-export const deleteMultipleProduct = async (ids: any) => {
-  try {
-    const { data } = await axiosInstance.delete(
-      "/properties/properties-destroy/destroy-multiple",
-      { data: ids }
-    );
+    const { data } = await axiosInstance.get(`/products/vendors/${id}`);
     return data;
   } catch (error: any) {
     throw new Error(error);

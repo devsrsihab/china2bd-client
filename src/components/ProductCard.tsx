@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link"; // Assuming you are using Next.js for routing
 import { Card, CardContent } from "@/components/ui/card"; // Assuming your Shadcn Card component path
+import Image from "next/image";
 
 interface ProductCardProps {
   href: string;
@@ -35,7 +36,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <CardContent className="p-0 flex flex-col items-center">
           {/* Image Container */}
           <div className="prod-image-container overflow-hidden rounded-2xl w-full">
-            <img
+            <Image
+              width={223}
+              height={230}
               className="product-image w-full  h-[230px] object-cover object-center bg-white rounded-xl border border-gray-100 mb-1.5 transition-all duration-200 ease-in-out"
               src={imageSrc}
               loading="lazy"
@@ -53,7 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             {(!discountPercentage || discountPercentage <= 0) && (
               <div className="flex justify-between items-center mt-2">
                 <span className="font-jost product-price block text-[#cf3056] font-bold text-base">
-                  ৳ {productPrice}
+                  {productPrice}
                 </span>
                 {isHasSoldQty && (
                   <div>

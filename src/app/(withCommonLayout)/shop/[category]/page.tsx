@@ -1,15 +1,13 @@
-import CategoryHeader from "@/components/category-header";
+import ShopPageSingle from "@/components/pages/ShopPageSingle";
 
 interface PageProps {
-  params: Promise<{ category: string }>;
+  params: { category: string }; // comes from [category]
+  searchParams: { name?: string }; // query string
 }
 
-export default async function Page({ params }: PageProps) {
-  const category = (await params).category;
+export default function Page({ params, searchParams }: PageProps) {
+  const categoryId = params.category; // abb-122338008
+  const categoryName = searchParams.name || "Unknown"; // Wigs
 
-  return (
-    <div>
-      <CategoryHeader name={category} totalItems={1} />
-    </div>
-  );
+  return <ShopPageSingle categoryId={categoryId} categoryName={categoryName} />;
 }

@@ -16,7 +16,7 @@ const UserInfoCard: React.FC = () => {
       >
         <img
           src="https://skybuybd.com/_next/static/media/point.7d578a08.png"
-          alt=""
+          alt="point"
           srcSet=""
           className="w-5"
         />
