@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaCamera, FaSearch, FaShoppingCart, FaHeart } from "react-icons/fa";
 import avaterImg from "@/assets/images/avater.png";
+import logoImg from "@/assets/images/logo.png";
 
 const Navbar = () => {
   return (
@@ -11,10 +12,10 @@ const Navbar = () => {
         <div className="flex-[2_1] object-contain justify-self-start flex">
           <Link href="/" aria-label="logo">
             <Image
-              className="h-[54px]"
-              src="https://skybuybd.com/_next/static/media/logo.2d8160b9.svg"
+              className="h-[54px] object-cover"
+              src={logoImg.src}
               alt="logo"
-              width={104}
+              width={125}
               height={54}
             />
           </Link>

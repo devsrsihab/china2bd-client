@@ -1,5 +1,5 @@
 const envConfig = {
-  serverApi: process.env.NEXT_PUBLIC_SERVER_API,
+  serverApi: process.env.CINA2BD_NEXT_PUBLIC_SERVER_API,
 };
 
 export default envConfig;

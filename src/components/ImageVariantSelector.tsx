@@ -25,19 +25,25 @@ const ImageVariantSelector: React.FC<ImageVariantSelectorProps> = ({
 }) => {
   const [selectedIndex, setSelectedIndex] =
     useState<number>(initialSelectedIndex);
-  // set the color name
   const [colorName, setColorName] = useState<string>(
-    variants[initialSelectedIndex].name
+    variants[initialSelectedIndex]?.name || ""
   );
 
+  // ✅ Run only when variants change, not on every parent render
   useEffect(() => {
     if (variants[initialSelectedIndex]) {
+      setSelectedIndex(initialSelectedIndex);
+      setColorName(variants[initialSelectedIndex].name);
       onSelectVariant(variants[initialSelectedIndex], initialSelectedIndex);
+      setVariantImage(variants[initialSelectedIndex].imageUrl);
     }
-  }, [initialSelectedIndex, onSelectVariant, variants]);
+    // intentionally exclude onSelectVariant/setVariantImage (stable in parent)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [variants, initialSelectedIndex]);
 
   const handleClick = (index: number) => {
     setSelectedIndex(index);
+    setColorName(variants[index].name);
     onSelectVariant(variants[index], index);
     setVariantImage(variants[index].imageUrl);
   };
@@ -50,16 +56,13 @@ const ImageVariantSelector: React.FC<ImageVariantSelectorProps> = ({
       <div className="flex flex-wrap gap-2">
         {variants.map((variant, index) => (
           <div
-            key={index}
-            className={` relative border rounded-md p-1 cursor-pointer ${
+            key={variant.name + index}
+            className={`relative border rounded-md p-1 cursor-pointer ${
               selectedIndex === index
                 ? "ring-1 ring-[#167389] border-[#167389]"
                 : "border-gray-300"
             }`}
-            onClick={() => {
-              handleClick(index);
-              setColorName(variant.name);
-            }}
+            onClick={() => handleClick(index)}
           >
             <Image
               src={variant.imageUrl}
@@ -67,15 +70,13 @@ const ImageVariantSelector: React.FC<ImageVariantSelectorProps> = ({
               width={50}
               height={50}
               className="rounded object-contain"
+              unoptimized
             />
-            {
-              // show the quantity if it is greater than 0
-              qty && qty > 0 && (
-                <div className="absolute top-0 left-0 bg-[linear-gradient(to_top_left,transparent_0,transparent_50%,#167389_50%,#167389_100%)] text-white px-0 py-1 pl-1 text-[12px] h-9 w-9 text-left rounded-tl-[8px] font-bold">
-                  {qty}
-                </div>
-              )
-            }
+            {qty && qty > 0 && (
+              <div className="absolute top-0 left-0 bg-[linear-gradient(to_top_left,transparent_0,transparent_50%,#167389_50%,#167389_100%)] text-white px-0 py-1 pl-1 text-[12px] h-9 w-9 text-left rounded-tl-[8px] font-bold">
+                {qty}
+              </div>
+            )}
           </div>
         ))}
       </div>

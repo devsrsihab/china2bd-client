@@ -6,6 +6,7 @@ import facebookIcon from "@/assets/icons/facebook.svg";
 import instagramIcon from "@/assets/icons/instagram.svg";
 import youtubeIcon from "@/assets/icons/youtube.svg";
 import lnkedinIcon from "@/assets/icons/linkedin.svg";
+import logoImg from "@/assets/images/logo-colored.png";
 
 const FooterTop: React.FC = () => {
   // Hardcoded sister company logos data
@@ -40,11 +41,11 @@ const FooterTop: React.FC = () => {
         <div className="flex flex-col items-center">
           {/* flexColumn align-center */}
           <Image
-            src="https://skybuybd.com/_next/static/media/logo.2d8160b9.svg"
+            src={logoImg.src}
             alt="SkyBuy Logo"
             width={160}
             height={40}
-            className="w-40 max-w-[80%] h-auto"
+            className="w-40 max-w-[80%] h-[40px] object-cover"
             priority
           />
         </div>
@@ -108,7 +109,7 @@ const FooterTop: React.FC = () => {
           </Link>
         </div>
         {/* Company Logos / Sister Brands Section */}
-        <div className="flex flex-col items-center justify-center">
+        {/* <div className="flex flex-col items-center justify-center">
           <p className="text-[18px]  md:text-xl mt-4 text-center mb-2 font-semibold">
             Explore Sky Brands... Think to the Sky.
           </p>
@@ -133,7 +134,7 @@ const FooterTop: React.FC = () => {
               </Link>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

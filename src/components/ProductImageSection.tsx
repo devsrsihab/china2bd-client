@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import Image from "next/image";
 import {
   Dialog,
@@ -12,11 +10,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 
-// ✅ Props Type
 type ProductImageSectionProps = {
   images: string[];
-  setSelectedImage: (src: any) => void;
-  selectedImage: string;
+  setSelectedImage: (src: string) => void;
+  selectedImage: string | null; // allow null to indicate “no image”
 };
 
 const ProductImageSection: React.FC<ProductImageSectionProps> = ({
@@ -28,6 +25,25 @@ const ProductImageSection: React.FC<ProductImageSectionProps> = ({
   const [isZoomVisible, setIsZoomVisible] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
   const imageRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * Filter out any empty or falsy image strings.  useMemo
+   * prevents creating a new array on every render, which
+   * helps stop unnecessary re-renders and side effects.
+   */
+  const validImages = useMemo(
+    () => images.filter((img) => img && img.trim().length > 0),
+    [images]
+  );
+
+  /**
+   * Choose the main image: prefer the incoming selectedImage if
+   * it has content; otherwise use the first valid image.
+   */
+  const mainImage =
+    selectedImage && selectedImage.trim().length > 0
+      ? selectedImage
+      : validImages[0] ?? null;
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!imageRef.current) return;
@@ -57,43 +73,46 @@ const ProductImageSection: React.FC<ProductImageSectionProps> = ({
   return (
     <div>
       {/* Thumbnail with Zoom Effect */}
-      <div
-        ref={imageRef}
-        className="relative overflow-hidden max-w-full min-h-[300px] sm:min-h-[400px] md:min-h-[456px] mx-auto"
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsZoomVisible(true)}
-        onMouseLeave={() => setIsZoomVisible(false)}
-      >
-        <div className="cursor-crosshair w-full md:min-w-[456px] aspect-square relative select-none mx-auto">
-          <Image
-            src={selectedImage}
-            alt="Product Thumbnail"
-            className="w-full h-full object-contain"
-            width={456}
-            height={456}
-          />
-          {isZoomVisible && (
-            <div
-              className="hidden sm:block absolute top-0 left-0 w-full h-full pointer-events-none"
-              style={{
-                backgroundImage: `url(${selectedImage})`,
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
-                backgroundSize: "200%",
-              }}
-            ></div>
-          )}
+      {mainImage && (
+        <div
+          ref={imageRef}
+          className="relative overflow-hidden max-w-full min-h-[300px] sm:min-h-[400px] md:min-h-[456px] mx-auto"
+          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsZoomVisible(true)}
+          onMouseLeave={() => setIsZoomVisible(false)}
+        >
+          <div className="cursor-crosshair w-full md:min-w-[456px] aspect-square relative select-none mx-auto">
+            <Image
+              src={mainImage}
+              alt="Product Thumbnail"
+              className="w-full h-full object-contain"
+              width={456}
+              height={456}
+              unoptimized
+            />
+            {isZoomVisible && (
+              <div
+                className="hidden sm:block absolute top-0 left-0 w-full h-full pointer-events-none"
+                style={{
+                  backgroundImage: `url(${mainImage})`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                  backgroundSize: "200%",
+                }}
+              ></div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Sub Images */}
       <div className="flex flex-wrap mt-3 justify-center sm:justify-start">
-        {images.map((img, i) => (
+        {validImages.map((img, i) => (
           <div
             key={i}
             onClick={() => setSelectedImage(img)}
             className={`cursor-pointer border ${
-              selectedImage === img ? "border-[#597445]" : "border-[#ededed]"
+              mainImage === img ? "border-[#597445]" : "border-[#ededed]"
             } rounded p-1 w-[64px] h-[64px] sm:w-[72px] sm:h-[72px] mr-2 mb-2`}
           >
             <Image
@@ -102,12 +121,13 @@ const ProductImageSection: React.FC<ProductImageSectionProps> = ({
               width={72}
               height={72}
               className="object-contain w-full h-full"
+              unoptimized
             />
           </div>
         ))}
       </div>
 
-      {/* Buttons */}
+      {/* Buttons and modal remain unchanged */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
         <Dialog>
           <DialogTrigger asChild>
@@ -123,7 +143,7 @@ const ProductImageSection: React.FC<ProductImageSectionProps> = ({
               </p>
             </DialogHeader>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto p-4">
-              {images.map((img, i) => (
+              {validImages.map((img, i) => (
                 <div
                   key={i}
                   className="relative cursor-pointer group rounded overflow-hidden border border-muted"
@@ -148,6 +168,7 @@ const ProductImageSection: React.FC<ProductImageSectionProps> = ({
                     width={200}
                     height={200}
                     className="w-full h-[120px] object-cover bg-white"
+                    unoptimized
                   />
                   {selectedDownloads.includes(img) && (
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center">

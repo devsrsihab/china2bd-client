@@ -35,14 +35,13 @@ export const getCategoriesWithSubcategories = async () => {
 // 3. Get product list under subcategory
 export const getProductsBySubcategory = async (
   subCategoryId: string | number,
-  filters: Record<string, string> = {}
+  { framePosition, frameSize }: { framePosition: number, frameSize: number }
 ) => {
   try {
-    const queryParams = new URLSearchParams(filters).toString();
     const { data } = await axiosInstance.get(
-      `/products/subcategories/${subCategoryId}/products?${queryParams}`
+      `/products/subcategories/${subCategoryId}/products?framePosition=${framePosition}&frameSize=${frameSize}`
     );
-    console.log("data", data);
+
     return data;
   } catch (error: any) {
     throw new Error(error);
@@ -52,7 +51,7 @@ export const getProductsBySubcategory = async (
 // 4. Get single product info
 export const getProductById = async (id: string | number) => {
   try {
-    const { data } = await axiosInstance.get(`/products/${id}`);
+    const { data } = await axiosInstance.get(`/products/single/${id}`);
     return data;
   } catch (error: any) {
     throw new Error(error);

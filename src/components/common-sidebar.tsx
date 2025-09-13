@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Sidebar,
   SidebarContent,
@@ -10,100 +8,69 @@ import {
   SidebarMenuButton,
   useSidebar,
 } from "@/components/ui/sidebar";
-
 import Link from "next/link";
-import { useEffect, useState, useCallback } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
-import { getCategoriesWithSubcategories } from "@/services/Product";
-import { categoryIcons } from "@/lib/categoryIcons";
+import { useState } from "react";
+import { ChevronLeft } from "lucide-react";
 
-// Types
-type SubmenuItem = {
-  id: string;
-  title: string;
-  url: string;
+// Each category from the API has the shape { Id: string, Name: string, subcategories: Array<{ Id: string; Name: string }> }
+// We'll import the data from utils instead of defining it here.
+import { categorySubCategoryItems } from "@/utils/categorySubCategory";
+import Image from "next/image";
+
+// Define TypeScript interfaces for better type checking
+type Subcategory = {
+  Id: string;
+  Name: string;
+  ExternalId?: string;
+  order?: number;
+  slug?: string;
 };
 
-type SidebarItem = {
-  id: string;
-  title: string;
-  icon: { src: string };
-  submenu: SubmenuItem[];
+type Category = {
+  Id: string;
+  Name: string;
+  order?: number;
+  icon?: any;
+  subcategories: Subcategory[];
 };
 
 export function CommonSidebar() {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  // Track which category is currently active (null means we're at the top-level category view)
+  const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
   const { toggleSidebar } = useSidebar();
 
-  const [sidebarItems, setSidebarItems] = useState<SidebarItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const handleCategoryClick = (categoryId: string) => {
+    setActiveCategoryId(categoryId);
+  };
+  const handleBackClick = () => {
+    setActiveCategoryId(null);
+  };
 
-  const toggleSubmenu = useCallback((categoryId: string) => {
-    setOpenMenu((prev) => (prev === categoryId ? null : categoryId));
-  }, []);
+  // Find the active category object based on activeCategoryId
+  const activeCategory: Category | undefined =
+    activeCategoryId != null
+      ? (categorySubCategoryItems as Category[]).find(
+          (c) => c.Id === activeCategoryId
+        )
+      : undefined;
 
-  useEffect(() => {
-    const loadSidebarData = async () => {
-      try {
-        const res = await getCategoriesWithSubcategories();
-        const categoriesWithSubs = Array.isArray(res?.data) ? res.data : [];
+  // array prevents mutation of the original data.
+  const sortedCategories: Category[] = (categorySubCategoryItems as Category[])
+    .slice()
+    .sort((a, b) => {
+      const orderA = a.order ?? Number.MAX_SAFE_INTEGER;
+      const orderB = b.order ?? Number.MAX_SAFE_INTEGER;
+      return orderA - orderB;
+    });
 
-        const sidebarData: SidebarItem[] = categoriesWithSubs.map(
-          (cat: any) => ({
-            id: cat.Id,
-            title: cat.Name,
-            icon: categoryIcons[cat.Name] || { src: "" },
-            submenu: (cat.subcategories || []).map((sub: any) => {
-              return {
-                id: sub.Id,
-                title: sub.Name,
-                // ✅ Id + Name together in the URL
-                url: `/shop/${sub.Id}?name=${encodeURIComponent(sub.Name)}`,
-              };
-            }),
-          })
-        );
-
-        setSidebarItems(sidebarData);
-      } catch (err) {
-        console.error("Failed to load sidebar:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadSidebarData();
-  }, []);
-
-  // 🔥 Skeleton Loader
-  if (loading) {
-    return (
-      <div className="srs_sidebar">
-        <Sidebar
-          style={{ width: "18rem", borderRight: "0px", background: "white" }}
-          className="bg-white mt-18 w-[256px] z-50"
-        >
-          <SidebarContent className="pt-2">
-            <SidebarGroup>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {Array.from({ length: 12 }).map((_, idx) => (
-                    <SidebarMenuItem key={idx}>
-                      <div className="flex items-center gap-[18px] px-[18px] py-[14px] animate-pulse">
-                        <div className="w-6 h-6 bg-gray-200 rounded" />
-                        <div className="flex-1 h-4 bg-gray-200 rounded" />
-                      </div>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-        </Sidebar>
-      </div>
-    );
-  }
+  // If we have an active category, sort its subcategories in a similar manner.
+  const sortedSubcategories: Subcategory[] | undefined = activeCategory
+    ? activeCategory.subcategories.slice().sort((a, b) => {
+        const orderA = a.order ?? Number.MAX_SAFE_INTEGER;
+        const orderB = b.order ?? Number.MAX_SAFE_INTEGER;
+        return orderA - orderB;
+      })
+    : undefined;
 
   return (
     <div className="srs_sidebar">
@@ -115,79 +82,76 @@ export function CommonSidebar() {
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
-                {sidebarItems.map((item) => (
-                  <div key={item.id}>
-                    <SidebarMenuItem>
-                      {item.submenu.length > 0 ? (
+                {/* Top-level categories in a 2-column grid */}
+                {activeCategory == null && (
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-4 px-[16px] py-[8px]">
+                    {sortedCategories.map((cat) => (
+                      <SidebarMenuItem key={cat.Id} className="cursor-pointer">
+                        <div>
+                          <div
+                            className="flex flex-col items-center justify-center"
+                            onClick={() => handleCategoryClick(cat.Id)}
+                          >
+                            {cat.icon && (
+                              <div className="w-8 h-[42px] sm:w-9 sm:h-9 flex items-center justify-center">
+                                <Image
+                                  src={cat.icon}
+                                  alt={cat.Name}
+                                  width={32}
+                                  height={42}
+                                  className="object-contain w-[32] h-[42px]"
+                                />
+                              </div>
+                            )}
+                            <span className="mt-[4px] text-[11px] sm:text-xs text-center leading-tight">
+                              {cat.Name}
+                            </span>
+                          </div>
+                        </div>
+                      </SidebarMenuItem>
+                    ))}
+                  </div>
+                )}
+
+                {/* Subcategory view, unchanged */}
+                {activeCategory != null && (
+                  <>
+                    <SidebarMenuItem key={`${activeCategory.Id}-header`}>
+                      <SidebarMenuButton asChild>
                         <button
-                          onClick={() => toggleSubmenu(item.id)}
-                          className="w-full flex items-center gap-[18px] font-medium !text-black px-[18px] py-[14px] hover:bg-[#e9f0ee] transition-all"
+                          onClick={handleBackClick}
+                          className="w-full flex items-center gap-[12px] font-medium !text-black px-[18px] py-[14px] hover:bg-[#e9f0ee] transition-all"
                         >
-                          {/* {item.icon?.src && (
-                            <img
-                              src={item.icon.src}
-                              alt={item.title}
-                              className="w-6 h-6"
-                            />
-                          )} */}
-                          <span>{item.title}</span>
-                          {openMenu === item.id ? (
-                            <ChevronUp className="ml-auto w-4 h-4" />
-                          ) : (
-                            <ChevronDown className="ml-auto w-4 h-4" />
-                          )}
+                          <ChevronLeft className="w-4 h-4" />
+                          <span>{activeCategory.Name}</span>
                         </button>
-                      ) : (
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    {sortedSubcategories?.map((sub) => (
+                      <SidebarMenuItem
+                        className=" px-[18px] py-[8px] "
+                        key={sub.Id}
+                      >
                         <SidebarMenuButton asChild>
                           <Link
-                            href={item.submenu[0]?.url || "#"}
-                            className="flex items-center font-medium !text-black px-[18px] py-[14px] gap-[18px]"
+                            href={`/shop/${sub.slug}`}
+                            className="flex !text-black items-center gap-2 px-0 py-0 h-auto text-sm"
+                            onClick={() => {
+                              if (
+                                typeof window !== "undefined" &&
+                                window.innerWidth < 768
+                              ) {
+                                toggleSidebar();
+                              }
+                            }}
                           >
-                            {/* {item.icon?.src && (
-                              <img
-                                src={item.icon.src}
-                                alt={item.title}
-                                className="w-6 h-6"
-                              />
-                            )} */}
-                            <span>{item.title}</span>
+                            <span>{sub.Name}</span>
                           </Link>
                         </SidebarMenuButton>
-                      )}
-                    </SidebarMenuItem>
-
-                    {/* Submenu */}
-                    <AnimatePresence>
-                      {openMenu === item.id && item.submenu.length > 0 && (
-                        <motion.div
-                          className="ml-6"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: "easeInOut" }}
-                        >
-                          {item.submenu.map((sub) => (
-                            <SidebarMenuItem key={sub.id}>
-                              <SidebarMenuButton asChild>
-                                <Link
-                                  href={sub.url}
-                                  className="flex font-medium !text-black items-center gap-2 px-[18px] py-[22px] text-sm"
-                                  onClick={() => {
-                                    if (window.innerWidth < 768) {
-                                      toggleSidebar();
-                                    }
-                                  }}
-                                >
-                                  <span>{sub.title}</span>
-                                </Link>
-                              </SidebarMenuButton>
-                            </SidebarMenuItem>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ))}
+                      </SidebarMenuItem>
+                    ))}
+                  </>
+                )}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

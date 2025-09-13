@@ -23,7 +23,7 @@ function ShopPageSingle({
     isError,
   } = useProductsBySubcategory(categoryId, {
     framePosition: page,
-    frameSize: 40,
+    frameSize: 60,
   });
 
   // products + meta
@@ -50,13 +50,13 @@ function ShopPageSingle({
             Failed to load products. Please try again later.
           </div>
         ) : products.length > 0 ? (
-          products.map((product: TProduct) => (
-            <div key={product.id} className="p-1">
+          products.map((product: TProduct, index: number) => (
+            <div key={`${product?.id}-${index}`} className="p-1">
               <ProductCard
-                href={`/product/${product.id}`}
-                imageSrc={product.thumbnail || "/placeholder.png"}
-                imageAlt={product.title}
-                productName={product.title}
+                href={`/product/${product?.id}`}
+                imageSrc={product?.thumbnail || "/placeholder.png"}
+                imageAlt={product?.title}
+                productName={product?.title}
                 productPrice={product?.price?.converted ?? 0}
                 isHasSoldQty
                 soldQuantity={product.stats.totalSales ?? 0}

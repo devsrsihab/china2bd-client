@@ -11,7 +11,7 @@ import {
   getVendorById,
 } from "@/services/Product";
 import { TSidebarItem } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+import { QueryKey, useQuery, UseQueryOptions } from "@tanstack/react-query";
 
 // 1. Categories only
 export const useCategories = () => {
@@ -43,26 +43,30 @@ export const useCategoriesWithSubcategories = () => {
 
 // 3. Products by subcategory
 export const useProductsBySubcategory = (
-  subCategoryId: string | number,
-  filters: any = {}
+  subCategoryId: string | number, { framePosition, frameSize }: { framePosition: number, frameSize: number }
 ) => {
   return useQuery({
-    queryKey: ["PRODUCTS_BY_SUBCATEGORY", subCategoryId, filters],
-    queryFn: () => getProductsBySubcategory(subCategoryId, filters),
+    queryKey: ["PRODUCTS_BY_SUBCATEGORY", subCategoryId],
+    queryFn: () => getProductsBySubcategory(subCategoryId, { framePosition, frameSize }),
     enabled: !!subCategoryId,
     refetchOnWindowFocus: false,
   });
 };
 
 // 4. Product details
-export const useProductById = (id: string | number) => {
+export const useProductById = (
+  id: string | number,
+  options?: Omit<UseQueryOptions<any, any, any, QueryKey>, 'queryKey' | 'queryFn'>
+) => {
   return useQuery({
-    queryKey: ["PRODUCT_DETAILS", id],
+    queryKey: ['PRODUCT_DETAILS', id],
     queryFn: () => getProductById(id),
     enabled: !!id,
     refetchOnWindowFocus: false,
+    ...options,
   });
 };
+
 
 // 5. Vendor details
 export const useVendorById = (id: string | number) => {
