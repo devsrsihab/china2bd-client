@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**", // wildcard for all subdomains and domains
-        pathname: "**", // allow all paths
+        hostname: "**.alicdn.com", // allow all subdomains of alicdn.com
+        pathname: "/**",           // allow all paths
       },
     ],
   },

@@ -43,6 +43,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
               src={imageSrc}
               alt={imageAlt}
               unoptimized
+              loading="lazy"
+              draggable={false}
+              quality={100}
+              priority={false}
+              blurDataURL="/placeholder.png"
             />
           </div>
           {/* Product Details (Name, Price, Sold) */}
