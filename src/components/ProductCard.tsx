@@ -44,6 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               src={imageSrc}
               alt={imageAlt}
               unoptimized
+
             />
           </div>
           {/* Product Details (Name, Price, Sold) */}
