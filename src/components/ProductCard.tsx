@@ -36,6 +36,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <CardContent className="p-0 flex flex-col items-center">
           {/* Image Container */}
           <div className="prod-image-container overflow-hidden rounded-2xl w-full">
+            <span>testing update</span>
             <Image
               width={223}
               height={230}
