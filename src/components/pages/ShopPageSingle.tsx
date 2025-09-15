@@ -1,6 +1,6 @@
 "use client";
 
-import { useProductsBySubcategory } from "@/hooks/product.hook";
+import { useProductsByTitle } from "@/hooks/product.hook";
 import CategoryHeader from "../category-header";
 import { TProduct } from "@/types";
 import ProductCard from "../ProductCard";
@@ -8,20 +8,14 @@ import ProductCardSkeleton from "../ProductCardSkeleton";
 import { normalizeProduct } from "@/lib/normalizeProduct";
 import { useState } from "react";
 
-function ShopPageSingle({
-  categoryId,
-  categoryName,
-}: {
-  categoryId: string;
-  categoryName: string;
-}) {
+function ShopPageSingle({ categoryName }: { categoryName: string }) {
   const [page, setPage] = useState(1);
 
   const {
     data: productsResponse,
     isLoading,
     isError,
-  } = useProductsBySubcategory(categoryId, {
+  } = useProductsByTitle(categoryName, {
     framePosition: page,
     frameSize: 60,
   });

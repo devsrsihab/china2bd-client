@@ -21,7 +21,6 @@ import Image from "next/image";
 type Subcategory = {
   Id: string;
   Name: string;
-  ExternalId?: string;
   order?: number;
   slug?: string;
 };
@@ -134,7 +133,7 @@ export function CommonSidebar() {
                       >
                         <SidebarMenuButton asChild>
                           <Link
-                            href={`/shop/${sub.slug}`}
+                            href={`/shop/${sub.Name}`}
                             className="flex !text-black items-center gap-2 px-0 py-0 h-auto text-sm"
                             onClick={() => {
                               if (

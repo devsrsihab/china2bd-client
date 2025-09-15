@@ -6,7 +6,7 @@ import {
   getAllCategories,
   getSubcategories,
   getCategoriesWithSubcategories,
-  getProductsBySubcategory,
+  getProductsByTitle,
   getProductById,
   getVendorById,
 } from "@/services/Product";
@@ -42,13 +42,13 @@ export const useCategoriesWithSubcategories = () => {
 };
 
 // 3. Products by subcategory
-export const useProductsBySubcategory = (
-  subCategoryId: string | number, { framePosition, frameSize }: { framePosition: number, frameSize: number }
+export const useProductsByTitle = (
+  title: string | number, { framePosition, frameSize }: { framePosition: number, frameSize: number }
 ) => {
   return useQuery({
-    queryKey: ["PRODUCTS_BY_SUBCATEGORY", subCategoryId],
-    queryFn: () => getProductsBySubcategory(subCategoryId, { framePosition, frameSize }),
-    enabled: !!subCategoryId,
+    queryKey: ["PRODUCTS_BY_SUBCATEGORY", title],
+    queryFn: () => getProductsByTitle(title, { framePosition, frameSize }),
+    enabled: !!title,
     refetchOnWindowFocus: false,
   });
 };

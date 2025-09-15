@@ -22,8 +22,6 @@ const CommonLayout = ({
         <SidebarInset>
           <Header />
           <main className="md:mt-[70px] ml-[45px] mt-[135px] overflow-hidden  p-2">
-            <SidebarTrigger />
-
             {children}
             <MobileBottomAppBar />
           </main>

@@ -33,13 +33,13 @@ export const getCategoriesWithSubcategories = async () => {
 };
 
 // 3. Get product list under subcategory
-export const getProductsBySubcategory = async (
-  subCategoryId: string | number,
+export const getProductsByTitle = async (
+  categoryName: string | number,
   { framePosition, frameSize }: { framePosition: number, frameSize: number }
 ) => {
   try {
     const { data } = await axiosInstance.get(
-      `/products/subcategories/${subCategoryId}/products?framePosition=${framePosition}&frameSize=${frameSize}`
+      `/products/search?framePosition=${framePosition}&frameSize=${frameSize}&keyword=${categoryName}`
     );
 
     return data;
