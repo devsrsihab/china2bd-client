@@ -15,11 +15,9 @@ const Footer: React.FC = () => {
           <div>
             <h2 className="mb-2 text-[17px] font-bold uppercase ">Contact</h2>
             <ul className="text-gray-500 dark:text-gray-400 font-medium">
-              <li className="mb-2">
-                House 42, Road 3/A, Dhanmondi, Dhaka, Bangladesh
-              </li>
-              <li className="mb-2">Email: skybuybd@gmail.com</li>
-              <li className="mb-2">Phone: 09613828606</li>
+              <li className="mb-2">Dhaka, Bangladesh</li>
+              <li className="mb-2">Email: china2bd@gmail.com</li>
+              <li className="mb-2">Phone: </li>
             </ul>
           </div>
           <div>
