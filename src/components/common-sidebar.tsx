@@ -133,8 +133,8 @@ export function CommonSidebar() {
                       >
                         <SidebarMenuButton asChild>
                           <Link
-                            href={`/shop/${sub.Name}`}
-                            className="flex !text-black items-center gap-2 px-0 py-0 h-auto text-sm"
+                            href={`/shop/${sub.slug}`}
+                            className="flex capitalize !text-black items-center gap-2 px-0 py-0 h-auto text-sm"
                             onClick={() => {
                               if (
                                 typeof window !== "undefined" &&

@@ -32,7 +32,7 @@ function ShopPageSingle({ categoryName }: { categoryName: string }) {
       <CategoryHeader name={categoryName} totalItems={totalItems} />
 
       {/* Products Grid */}
-      <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
+      <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1 sm:gap-2">
         {isLoading ? (
           Array.from({ length: 40 }).map((_, index) => (
             <div key={index} className="p-1">

@@ -38,7 +38,7 @@ export function normalizeProduct(raw: any): TProduct {
     ],
 
     // thumbnail
-    thumbnail: raw.MainPictureUrl || "/placeholder.png",
+    thumbnail: raw.Pictures[0].Small.Url || "/placeholder.png",
 
     // Stats (sales, rating, etc.)
     stats: {
