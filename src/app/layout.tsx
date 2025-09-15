@@ -22,6 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <meta name="referrer" content="no-referrer" /> t
       <body className={`bg-[#f7f7f7] ${jost.className} antialiased`}>
         {children}
         <Toaster />
