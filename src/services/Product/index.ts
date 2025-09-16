@@ -1,6 +1,20 @@
 "use server";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axiosInstance from "@/lib/AxiosInstance";
+const maybeSignal = (signal?: AbortSignal) =>
+  typeof window !== "undefined" && signal ? { signal } : undefined;
+export type PopularPayload = {
+  success: boolean;
+  message: string;
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    maximumPageCount: number;
+  };
+  data: any[];
+};
 
 // 1. Get all categories
 export const getAllCategories = async () => {
@@ -48,6 +62,23 @@ export const getProductsByTitle = async (
   } catch (error: any) {
     throw new Error(error);
   }
+}
+
+// popular 
+export const getPopularProducts = async ({
+  framePosition,
+  frameSize,
+  signal,
+}: {
+  framePosition: number;
+  frameSize: number;
+  signal?: AbortSignal;
+}) => {
+  const { data } = await axiosInstance.get<PopularPayload>("/products/popular", {
+    params: { framePosition, frameSize },
+    ...maybeSignal(signal),
+  });
+  return data; // { success, message, meta, data }
 };
 
 // 4. Get single product info

@@ -9,9 +9,12 @@ import {
   getProductsByTitle,
   getProductById,
   getVendorById,
+  getPopularProducts,
+  PopularPayload,
 } from "@/services/Product";
 import { TSidebarItem } from "@/types";
 import { keepPreviousData, QueryKey, useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { useEffect } from "react";
 // tweak these per your product
 const STALE_MS = 5 * 60 * 1000;  // 5 minutes = serve from cache on revisits within this window
 const GC_MS    = 30 * 60 * 1000; // 30 minutes = keep unused pages around
@@ -135,4 +138,49 @@ export const buildSidebarItems = (categoriesWithSubs: any[]): TSidebarItem[] => 
         .replace(/[^\w-]/g, "")}`,
     })),
   }));
+};
+
+
+
+// popular 
+export const usePopularProducts = ({
+  framePosition,
+  frameSize,
+}: {
+  framePosition: number;
+  frameSize: number;
+}) => {
+  const query = useQuery<PopularPayload, Error>({
+    queryKey: ["POPULAR_PRODUCTS", framePosition, frameSize],
+    queryFn: ({ signal }) =>
+      getPopularProducts({ framePosition, frameSize, signal }),
+    enabled: frameSize > 0,
+    placeholderData: keepPreviousData,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
+    staleTime: STALE_MS,
+    gcTime: GC_MS,
+    retry: 1,
+  });
+
+  // v5: do side-effects in effects
+  useEffect(() => {
+    if (query.isSuccess) {
+      console.groupCollapsed("[rq] popular success");
+      console.log("meta:", query.data?.meta);
+      console.log(
+        "items:",
+        Array.isArray(query.data?.data) ? query.data!.data.length : "N/A"
+      );
+      console.groupEnd();
+    }
+  }, [query.isSuccess, query.data]);
+
+  useEffect(() => {
+    if (query.isError) {
+      console.error("[rq] popular error:", query.error?.message);
+    }
+  }, [query.isError, query.error]);
+
+  return query;
 };

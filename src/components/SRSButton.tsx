@@ -11,6 +11,7 @@ type SRButtonProps = {
   radiuse?: string;
   href?: string;
   isLoading?: boolean;
+  disabled?: boolean; // NEW
   className?: string;
   icon?: React.ReactNode;
   onClick?: () => void;
@@ -32,32 +33,42 @@ const SRSButton: React.FC<SRButtonProps> = ({
   radiuse = "rounded-[4px]",
   href = "",
   isLoading = false,
+  disabled = false, // NEW
   className = "",
   icon,
   onClick,
   variant,
   style,
-  type,
+  type = "button",
 }) => {
+  const isDisabled = Boolean(disabled || isLoading);
+
+  // Avoid invoking onClick while disabled
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> | undefined =
+    isDisabled ? undefined : onClick;
+
   return (
     <Button
       type={type}
       style={style}
       variant={variant}
-      onClick={onClick}
-      disabled={isLoading}
+      onClick={handleClick}
+      disabled={isDisabled}
+      aria-disabled={isDisabled || undefined}
+      aria-busy={isLoading || undefined}
       className={clsx(
-        "relative text-sm cursor-pointer text-white font-normal bg-primary flex items-center justify-center transition-all duration-300",
+        "relative cursor-pointer text-sm text-white font-normal bg-primary flex items-center justify-center transition-all duration-300",
         className,
         padding,
         margin,
         radiuse,
-        isLoading && "opacity-70 cursor-not-allowed"
+        isDisabled && "opacity-70 cursor-not-allowed pointer-events-none" // ensure nested link can't be clicked
       )}
     >
-      {/* icon */}
+      {/* Optional leading icon (hidden while loading for visual clarity if you prefer) */}
       {icon}
-      {/* Spinner in center */}
+
+      {/* Centered spinner */}
       <span
         className={clsx(
           "ml-2 absolute inset-0 flex items-center justify-center transition-opacity duration-300",
@@ -67,14 +78,19 @@ const SRSButton: React.FC<SRButtonProps> = ({
         <AiOutlineLoading3Quarters className="animate-spin text-white text-lg" />
       </span>
 
-      {/* Button Text */}
+      {/* Button text / link */}
       <span
         className={clsx(
           "transition-opacity duration-300",
           isLoading && "opacity-0"
         )}
       >
-        {href ? <Link href={href}>{btnText}</Link> : btnText}
+        {href && !isDisabled ? (
+          // If you use shadcn/ui, consider <Button asChild><Link .../></Button> in future
+          <Link href={href}>{btnText}</Link>
+        ) : (
+          btnText
+        )}
       </span>
     </Button>
   );
