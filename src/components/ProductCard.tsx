@@ -60,7 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               onError={() => {
                 if (imgSrc !== placeholderImg) setImgSrc(placeholderImg);
               }}
-              onLoadingComplete={() => setLoaded(true)}
+              onLoad={() => setLoaded(true)}
               sizes="(max-width:768px) 100vw, 100vw"
             />
           </div>
