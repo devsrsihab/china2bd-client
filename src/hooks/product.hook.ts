@@ -11,7 +11,17 @@ import {
   getVendorById,
 } from "@/services/Product";
 import { TSidebarItem } from "@/types";
-import { QueryKey, useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { keepPreviousData, QueryKey, useQuery, UseQueryOptions } from "@tanstack/react-query";
+// tweak these per your product
+const STALE_MS = 5 * 60 * 1000;  // 5 minutes = serve from cache on revisits within this window
+const GC_MS    = 30 * 60 * 1000; // 30 minutes = keep unused pages around
+
+// 3. Products by subcategory
+type UseProductsByTitleOpts = {
+  framePosition: number; // offset (or page) you pass to API
+  frameSize: number;     // page size / limit
+};
+
 
 // 1. Categories only
 export const useCategories = () => {
@@ -41,15 +51,45 @@ export const useCategoriesWithSubcategories = () => {
   });
 };
 
-// 3. Products by subcategory
+
+
 export const useProductsByTitle = (
-  title: string | number, { framePosition, frameSize }: { framePosition: number, frameSize: number }
+  title: string | number,
+  { framePosition, frameSize }: UseProductsByTitleOpts
 ) => {
   return useQuery({
-    queryKey: ["PRODUCTS_BY_SUBCATEGORY", title],
-    queryFn: () => getProductsByTitle(title, { framePosition, frameSize }),
-    enabled: !!title,
+    // Each (title + offset + size) is its own cached page
+    queryKey: [
+      "PRODUCTS_BY_SUBCATEGORY",
+      String(title ?? ""),
+      framePosition,
+      frameSize,
+    ],
+
+    // Pass AbortController signal if your fetcher supports it (recommended)
+    queryFn: ({ signal }) =>
+      getProductsByTitle(title, { framePosition, frameSize, signal } as any),
+
+    enabled: !!title && frameSize > 0,
+
+    // UX: keep previous page visible while the new one loads
+    placeholderData: keepPreviousData,
+
+    // Don’t spam refetches on focus; only refetch on reconnect (useful after offline)
     refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
+
+    // Freshness & caching:
+    // - Within 5 min, revisiting a page uses cached data (no server call)
+    // - After 5 min, data is considered stale and will refetch on mount if viewed again
+    staleTime: STALE_MS,
+
+    // Keep unused pages in cache for 30 min so back/forward navigation is instant
+    gcTime: GC_MS,
+
+    // Production resilience: retry briefly with exponential backoff
+    retry: 2,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 8000),
   });
 };
 

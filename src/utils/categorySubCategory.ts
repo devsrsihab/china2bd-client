@@ -1,18 +1,25 @@
-import womanClothesIcon from "@/assets/icons/flaticons/woman-clothes.png";
-import sunglassesIcon from "@/assets/icons/flaticons/sunglasses.png";
-import kitchenIcon from "@/assets/icons/flaticons/kitchen.png";
-import mensShoesIcon from "@/assets/icons/flaticons/mens-shoes.png";
-import highHeelIcon from "@/assets/icons/flaticons/high-heel.png";
-import handbagIcon from "@/assets/icons/flaticons/handbag.png";
-import gadgetsIcon from "@/assets/icons/flaticons/gadgets.png";
-import deskOrganizerIcon from "@/assets/icons/flaticons/desk-organizer.png";
-import babyClothesIcon from "@/assets/icons/flaticons/baby-clothes.png";
-import automobileAccessoryIcon from "@/assets/icons/flaticons/automobile-accessory.png";
-import beautyProductIcon from "@/assets/icons/flaticons/beauty-product.png";
-import necklaceIcon from "@/assets/icons/flaticons/neckless.png";
-import mensClothingIcon from "@/assets/icons/flaticons/man-clothes.png";
-import toysIcon from "@/assets/icons/flaticons/toy-and-game.png";
-import sportIcon from "@/assets/icons/flaticons/sports.png";
+
+import sportIcon from "@/assets/icons/category/Sports-And-Fitness.png";
+import shoeIcon from "@/assets/icons/category/Shoes.png"; 
+import bagIcon from "@/assets/icons/category/bag.png"; 
+import beautyProductIcon from "@/assets/icons/category/Beauty-Products.png"; 
+import jewelryIcon from "@/assets/icons/category/jewelry.png"; 
+import mensClothingIcon from "@/assets/icons/category/Men_s-Clothing.png"; 
+import womanClothesIcon from "@/assets/icons/category/Baby-Items.png"; 
+import babyItemIcon from "@/assets/icons/category/Baby-Items.png"; 
+import outdoorIcon from "@/assets/icons/category/Outdoor-And-Travelling.png"; 
+import electronicsIcon from "@/assets/icons/category/ElectronicsAnd-Gadgets.png"; 
+import kitchenIcon from "@/assets/icons/category/Kitchen-Gadgets.png"; 
+import toolsIcon from "@/assets/icons/category/Tools-Home.png"; 
+import schoolSuppliesIcon from "@/assets/icons/category/School-Supplies.png"; 
+import groceriesIcon from "@/assets/icons/category/Groceries-And-Pets.png"; 
+import automobileItemsIcon from "@/assets/icons/category/Automobile-Items.png"; 
+import watchesIcon from "@/assets/icons/category/Watches.png"; 
+import entertainmentIcon from "@/assets/icons/category/Entertainment-Items.png"; 
+import phoneAccessoriesIcon from "@/assets/icons/category/Phone-Accessories.png"; 
+import seasonalProductIcon from "@/assets/icons/category/Seasonal-Products.png"; 
+import officeSuppliesIcon from "@/assets/icons/category/Office-Supplies.png"; 
+import eyewearIcon from "@/assets/icons/category/Eyewear.png"; 
 import { makeSlug } from "./makeSlug";
 
 
@@ -24,7 +31,7 @@ export const categorySubCategoryItems = [
         "Id": "ebca539f-d6fe-43b6-bd05-c22fad19fcaa",
         "ExternalId": null,
         "Name": "Shoes",
-        "icon": highHeelIcon,
+        "icon": shoeIcon,
         "slug": makeSlug("Shoes"),
         "subcategories": [
             {
@@ -147,7 +154,7 @@ export const categorySubCategoryItems = [
         "Id": "f8b3ae91-c97a-450a-900e-ca90fa45886f",
         "ExternalId": null,
         "Name": "Bag",
-        "icon": handbagIcon,
+        "icon": bagIcon,
         "slug": makeSlug("Bag"),
         "subcategories": [
             {
@@ -459,7 +466,7 @@ export const categorySubCategoryItems = [
         "Id": "d32a821b-558c-408e-8464-660a40687cbd",
         "ExternalId": null,
         "Name": "Jewelry",
-        "icon": necklaceIcon,
+        "icon": jewelryIcon,
         "slug": makeSlug("Jewelry"),
         "subcategories": [
             {
@@ -816,7 +823,7 @@ export const categorySubCategoryItems = [
         "Id": "53116a73-5f9b-4b29-93b5-a87d87f80743",
         "ExternalId": null,
         "Name": "Baby Items",
-        "icon": babyClothesIcon,
+        "icon": babyItemIcon,
         "slug": makeSlug("Baby Items"),
         "subcategories": [
             {
@@ -957,7 +964,7 @@ export const categorySubCategoryItems = [
         "Id": "6dabe5b9-a0b6-4e1f-be2f-5050e3f3fcb3",
         "ExternalId": null,
         "Name": "Eyewear",
-        "icon": sunglassesIcon,
+        "icon": eyewearIcon,
         "slug": makeSlug("Eyewear"),
         "subcategories": [
             {
@@ -1008,7 +1015,7 @@ export const categorySubCategoryItems = [
         "Id": "b59067db-f573-41e7-8c82-c412bbd649bf",
         "ExternalId": null,
         "Name": "Office Supplies",
-        "icon": deskOrganizerIcon,
+        "icon": officeSuppliesIcon,
         "slug": makeSlug("Office Supplies"),
         "subcategories": [
             {
@@ -1246,6 +1253,7 @@ export const categorySubCategoryItems = [
         "ExternalId": null,
         "Name": "Seasonal Products",
         "slug": makeSlug("Seasonal Products"),
+        "icon": seasonalProductIcon,
         "subcategories": [
             {
                 "Id": "04dcb166-6355-49fa-addc-6d3290be0eeb",
@@ -1325,7 +1333,7 @@ export const categorySubCategoryItems = [
         "Id": "43fe581c-4eb5-4a34-98b2-c4a4e1074097",
         "ExternalId": null,
         "Name": "Phone Accessories",
-        "icon": gadgetsIcon,
+        "icon": phoneAccessoriesIcon,
         "slug": makeSlug("Phone Accessories"),
         "subcategories": [
             {
@@ -1517,7 +1525,7 @@ export const categorySubCategoryItems = [
         "Id": "f39f43ae-9717-4a47-9629-c63c0273c359",
         "ExternalId": null,
         "Name": "Entertainment Items",
-        "icon": toysIcon,
+        "icon": entertainmentIcon,
         "slug": makeSlug("Entertainment Items"),
         "subcategories": [
             {
@@ -1634,6 +1642,7 @@ export const categorySubCategoryItems = [
         "Id": "a3cffdb7-34f5-41c4-b877-85333eb9f6af",
         "ExternalId": null,
         "Name": "Watches",
+        icon: watchesIcon,
         "slug": makeSlug("Watches"),
         "subcategories": [
             {
@@ -1750,7 +1759,7 @@ export const categorySubCategoryItems = [
         "Id": "a8dd44f1-405d-4b5d-bb0b-2974147be7fa",
         "ExternalId": null,
         "Name": "Automobile Items",
-        "icon": automobileAccessoryIcon,
+        "icon": automobileItemsIcon,
         "slug": makeSlug("Automobile Items"),
         "subcategories": [
             {
@@ -1837,6 +1846,7 @@ export const categorySubCategoryItems = [
         "Id": "41f94e8d-3c38-47a2-a966-95d79c7abf5f",
         "ExternalId": null,
         "Name": "Groceries And Pets",
+        "icon": groceriesIcon,
         "slug": makeSlug("Groceries And Pets"),
         "subcategories": [
             {
@@ -1911,6 +1921,7 @@ export const categorySubCategoryItems = [
         "Id": "5d0d22f9-00aa-4f8e-9ebe-afb48f4e0af0",
         "ExternalId": null,
         "Name": "Outdoor And Travelling",
+        "icon": outdoorIcon,
         "slug": makeSlug("Outdoor And Travelling"),
         "subcategories": [
             {
@@ -1991,7 +2002,7 @@ export const categorySubCategoryItems = [
         "Id": "f42f25d2-155f-4162-9794-c417e9dcca59",
         "ExternalId": null,
         "Name": "Electronics And Gadgets",
-        "icon": gadgetsIcon,
+        "icon": electronicsIcon,
         "slug": makeSlug("Electronics And Gadgets"),
         "subcategories": [
             {
@@ -2084,7 +2095,7 @@ export const categorySubCategoryItems = [
         "Id": "15b96694-0353-408d-9532-4bbc6b225701",
         "ExternalId": null,
         "Name": "Kitchen Gadgets",
-        "icon": gadgetsIcon,
+        "icon": kitchenIcon,
         "slug": makeSlug("Kitchen Gadgets"),
         "subcategories": [
             {
@@ -2135,6 +2146,7 @@ export const categorySubCategoryItems = [
         "Id": "8a42016e-23d5-4ed5-bf9c-80dcc886449a",
         "ExternalId": null,
         "Name": "Tools & Home",
+        "icon": toolsIcon,
         "slug": makeSlug("Tools & Home"),
         "subcategories": [
             {
@@ -2173,7 +2185,7 @@ export const categorySubCategoryItems = [
         "Id": "d78d6196-d724-457b-a5bd-6becf4930dfc",
         "ExternalId": null,
         "Name": "School Supplies",
-        "icon": deskOrganizerIcon,
+        "icon": schoolSuppliesIcon,
         "slug": makeSlug("School Supplies"),
         "subcategories": [
             {

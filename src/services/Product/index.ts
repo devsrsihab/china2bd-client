@@ -38,6 +38,8 @@ export const getProductsByTitle = async (
   { framePosition, frameSize }: { framePosition: number, frameSize: number }
 ) => {
   try {
+    console.log('fram position ', framePosition);
+    
     const { data } = await axiosInstance.get(
       `/products/search?framePosition=${framePosition}&frameSize=${frameSize}&keyword=${categoryName}`
     );

@@ -6,18 +6,26 @@ import { TProduct } from "@/types";
 import ProductCard from "../ProductCard";
 import ProductCardSkeleton from "../ProductCardSkeleton";
 import { normalizeProduct } from "@/lib/normalizeProduct";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 function ShopPageSingle({ categoryName }: { categoryName: string }) {
+  const pageSize = 40;
   const [page, setPage] = useState(1);
+
+  // Reset to first page if category changes
+  useEffect(() => setPage(1), [categoryName]);
+
+  // Translate page -> offset expected by API
+  const offset = useMemo(() => Math.max(0, (page - 1) * pageSize), [page]);
 
   const {
     data: productsResponse,
     isLoading,
     isError,
+    isFetching,
   } = useProductsByTitle(categoryName, {
-    framePosition: page,
-    frameSize: 60,
+    framePosition: offset, // ✅ offset, not page number
+    frameSize: pageSize,
   });
 
   // products + meta
@@ -33,19 +41,20 @@ function ShopPageSingle({ categoryName }: { categoryName: string }) {
 
       {/* Products Grid */}
       <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1 sm:gap-2">
-        {isLoading ? (
-          Array.from({ length: 40 }).map((_, index) => (
+        {isError ? (
+          <div className="col-span-full text-center text-red-500">
+            Failed to load products. Please try again later.
+          </div>
+        ) : isLoading || isFetching ? (
+          // 👇 Show the pulse skeletons on initial load AND while paginating
+          Array.from({ length: pageSize }).map((_, index) => (
             <div key={index} className="p-1">
               <ProductCardSkeleton isHasSoldQty />
             </div>
           ))
-        ) : isError ? (
-          <div className="col-span-full text-center text-red-500">
-            Failed to load products. Please try again later.
-          </div>
         ) : products.length > 0 ? (
-          products.map((product: TProduct, index: number) => (
-            <div key={`${product?.id}-${index}`} className="p-1">
+          products.map((product: TProduct) => (
+            <div key={product?.id} className="p-1">
               <ProductCard
                 href={`/product/${product?.id}`}
                 imageSrc={product?.thumbnail || "/placeholder.png"}
@@ -53,7 +62,7 @@ function ShopPageSingle({ categoryName }: { categoryName: string }) {
                 productName={product?.title}
                 productPrice={product?.price?.converted ?? 0}
                 isHasSoldQty
-                soldQuantity={product.stats.totalSales ?? 0}
+                soldQuantity={product.stats?.totalSales ?? 0}
                 className="shadow-none"
               />
             </div>
@@ -65,13 +74,13 @@ function ShopPageSingle({ categoryName }: { categoryName: string }) {
         )}
       </div>
 
-      {/* ✅ Pagination always visible */}
+      {/* Pagination */}
       <div className="flex justify-center mt-6">
         <nav className="flex items-center space-x-1">
           {/* Prev */}
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
-            disabled={page === 1 || isLoading}
+            disabled={page === 1 || isLoading || isFetching}
             className="px-3 py-1 border rounded-md text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
           >
             Prev
@@ -81,16 +90,13 @@ function ShopPageSingle({ categoryName }: { categoryName: string }) {
           {Array.from({ length: totalPages }).map((_, idx) => {
             const pageNumber = idx + 1;
 
-            // ✅ Show:
-            // - first 6 pages
-            // - last 2 pages
-            // - ellipsis in between
+            // Show first 6, last 2, and an ellipsis between
             if (pageNumber <= 6 || pageNumber > totalPages - 2) {
               return (
                 <button
                   key={pageNumber}
                   onClick={() => setPage(pageNumber)}
-                  disabled={isLoading}
+                  disabled={isLoading || isFetching}
                   className={`px-3 py-1 border rounded-md text-sm cursor-pointer ${
                     pageNumber === page
                       ? "bg-green-600 text-white"
@@ -102,7 +108,6 @@ function ShopPageSingle({ categoryName }: { categoryName: string }) {
               );
             }
 
-            // Insert ellipsis once between shown ranges
             if (pageNumber === 7) {
               return (
                 <span
@@ -120,7 +125,7 @@ function ShopPageSingle({ categoryName }: { categoryName: string }) {
           {/* Next */}
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-            disabled={page === totalPages || isLoading}
+            disabled={page >= totalPages || isLoading || isFetching}
             className="px-3 py-1 border rounded-md text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
           >
             Next
