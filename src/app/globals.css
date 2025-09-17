@@ -152,20 +152,42 @@ div [data-state="open"] {
 /* base: mobile first */
 [data-slot="sidebar-content"] {
   position: fixed;
-  top: 120px; /* mobile header height (logo + search row) */
+  top: 70px; /* mobile header height (logo + search row) */
   left: 0;
   width: 256px;
-  height: calc(100vh - 120px);
+  height: calc(100vh);
   background: #fff;
   border-right: 1px solid #e5e7eb; /* gray-200 */
   z-index: 40;
   overflow-y: auto; /* scroll if content is taller */
 }
+[data-slot="sidebar"] {
+  background: white !important;
+}
+.bannerSection {
+  margin: auto;
+  width: 100%;
+  transition: height 0.15s ease-in;
+}
 
-/* desktop/tablet adjustments */
-@media (min-width: 768px) {
-  [data-slot="sidebar-content"] {
-    top: 64px; /* smaller navbar height on md+ */
-    height: calc(100vh - 64px);
-  }
+.homeSlider img.bannerImage {
+  object-fit: cover;
+  border: none;
+}
+
+.bannerPromotions {
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+[data-slot="sidebar-group"] {
+  overflow-y: scroll; /* enable vertical scroll */
+  scrollbar-width: none; /* Firefox */
+  border: 0px !important;
+}
+
+[data-slot="sidebar-group"]::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }

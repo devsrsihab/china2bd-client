@@ -18,7 +18,7 @@ const CommonLayout = ({ children }: { children: React.ReactNode }) => {
           <main
             className="
                 w-full
-                pt-[120px] md:pt-[72px]     /* header spacing */
+                pt-[120px] md:pt-[72px]    
                 px-2 sm:px-4 lg:px-6
                 min-h-screen
                 bg-gray-50

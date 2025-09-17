@@ -4,7 +4,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, User, Phone, MessageCircle } from "lucide-react";
-import diamonIcon from "@/assets/icons/diamon.svg";
+import c2bdLogo from "@/assets/images/single-logo.png";
 import { SidebarTrigger } from "./ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState, useEffect } from "react";
@@ -52,13 +52,13 @@ export const MobileBottomAppBar: React.FC = () => {
             aria-label="Home"
             className="flex justify-center items-center"
           >
-            <div className="w-15 h-15 rounded-full flex items-center justify-center   select-none shadow-md bg-primary ">
+            <div className="w-15 h-15 rounded-full flex items-center justify-center select-none shadow-md bg-primary relative overflow-hidden">
               <Image
-                src={diamonIcon.src}
+                src={c2bdLogo.src}
                 alt="Home"
-                width={40}
-                height={40}
-                className="object-contain w-[40px] h-[40px] "
+                fill // ✅ makes the image fill parent
+                className="object-cover"
+                sizes="100%"
               />
             </div>
           </Link>

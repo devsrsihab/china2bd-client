@@ -74,7 +74,7 @@ export function CommonSidebar() {
   return (
     <div className="srs_sidebar">
       <Sidebar
-        style={{ width: "18rem", borderRight: "0px", background: "white" }}
+        style={{ borderRight: "0px", background: "white" }}
         className="c2bdSidebar"
       >
         <SidebarContent className="pt-2">

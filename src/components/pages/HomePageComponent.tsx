@@ -67,7 +67,7 @@ const HomePageComponent: React.FC = () => {
       {/* ✅ Banner stays full width */}
       <HomeBanner />
 
-      <section className="w-full max-w-7xl mx-auto  py-6 sm:py-10 bg-white mt-6 rounded-lg shadow-sm">
+      <section className="w-full  mx-auto  py-6 sm:py-10 bg-white mt-6 rounded-lg shadow-sm">
         <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-center mb-6">
           Trending Products
         </h2>
@@ -79,7 +79,7 @@ const HomePageComponent: React.FC = () => {
         )}
 
         {/* ✅ Responsive Grid */}
-        <div className="grid gap-3 sm:gap-4 md:gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        <div className="grid gap-3 sm:gap-4 md:gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
           {initialLoading &&
             Array.from({ length: PAGE_SIZE }).map((_, i) => (
               <div key={i} className="p-1">
