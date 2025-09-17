@@ -12,11 +12,10 @@ import { usePopularProducts } from "@/hooks/product.hook";
 const PAGE_SIZE = 8;
 
 const HomePageComponent: React.FC = () => {
-  const [page, setPage] = useState(0); // 0-based page index
+  const [page, setPage] = useState(0);
   const [displayed, setDisplayed] = useState<TProduct[]>([]);
   const [hasMore, setHasMore] = useState(true);
 
-  // 🔧 send page index; server converts to offset internally
   const {
     data: popularRes,
     error,
@@ -24,7 +23,6 @@ const HomePageComponent: React.FC = () => {
     isPending,
     isFetching,
     isSuccess,
-    refetch,
   } = usePopularProducts({ framePosition: page, frameSize: PAGE_SIZE });
 
   useEffect(() => {
@@ -46,11 +44,10 @@ const HomePageComponent: React.FC = () => {
       return prev.concat(toAdd);
     });
 
-    // Prefer server meta; fallback to count
     const meta = popularRes.meta;
     const moreByMeta =
       meta && typeof meta.totalPages === "number"
-        ? meta.page < meta.totalPages - 1 // meta.page should be the page index
+        ? meta.page < meta.totalPages - 1
         : undefined;
 
     const moreByCount = incoming.length === PAGE_SIZE;
@@ -66,21 +63,23 @@ const HomePageComponent: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
+      {/* ✅ Banner stays full width */}
       <HomeBanner />
 
-      <div className="py-4 px-4 sm:px-6 bg-white overflow-hidden mt-4">
-        <h2 className="py-3 px-4 text-xl font-bold text-center">
+      <section className="w-full max-w-7xl mx-auto  py-6 sm:py-10 bg-white mt-6 rounded-lg shadow-sm">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-center mb-6">
           Trending Products
         </h2>
 
         {isError && (
-          <p className="text-red-600 text-sm mb-3">
+          <p className="text-red-600 text-sm text-center mb-3">
             Error: {(error as Error)?.message || "Failed to load"}
           </p>
         )}
 
-        <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
+        {/* ✅ Responsive Grid */}
+        <div className="grid gap-3 sm:gap-4 md:gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {initialLoading &&
             Array.from({ length: PAGE_SIZE }).map((_, i) => (
               <div key={i} className="p-1">
@@ -114,7 +113,7 @@ const HomePageComponent: React.FC = () => {
         </div>
 
         {displayed.length > 0 && (
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mt-6">
             <SRSButton
               onClick={onLoadMore}
               btnText={hasMore ? "Load More" : "No More Items"}
@@ -125,13 +124,13 @@ const HomePageComponent: React.FC = () => {
         )}
 
         {!initialLoading && popularRes?.meta && (
-          <p className="text-xs text-gray-500 mt-2 text-center">
+          <p className="text-xs text-gray-500 mt-4 text-center">
             Page {popularRes.meta.page + 1} of{" "}
             {Math.max(1, popularRes.meta.totalPages)} • {popularRes.meta.total}{" "}
             items total
           </p>
         )}
-      </div>
+      </section>
     </div>
   );
 };

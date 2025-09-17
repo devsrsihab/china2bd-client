@@ -1648,7 +1648,7 @@ export const categorySubCategoryItems = [
             {
                 "Id": "e4e97908-2d3c-47d4-a724-5a27dc93a4b8",
                 "ExternalId": null,
-                "Name": "womens watch",
+                "Name": "womens watches",
                 "slug": makeSlug("womens watch")
             },
             {

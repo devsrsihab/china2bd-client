@@ -148,3 +148,24 @@ div [data-state="open"] {
   background-color: #f3f4f6 !important; /* Your preferred hover color */
   cursor: pointer;
 }
+
+/* base: mobile first */
+[data-slot="sidebar-content"] {
+  position: fixed;
+  top: 120px; /* mobile header height (logo + search row) */
+  left: 0;
+  width: 256px;
+  height: calc(100vh - 120px);
+  background: #fff;
+  border-right: 1px solid #e5e7eb; /* gray-200 */
+  z-index: 40;
+  overflow-y: auto; /* scroll if content is taller */
+}
+
+/* desktop/tablet adjustments */
+@media (min-width: 768px) {
+  [data-slot="sidebar-content"] {
+    top: 64px; /* smaller navbar height on md+ */
+    height: calc(100vh - 64px);
+  }
+}
