@@ -46,7 +46,7 @@ export const MobileBottomAppBar: React.FC = () => {
         </div>
 
         {/* Home Icon (center) */}
-        <div className="item">
+        <div className="item mt-[-14px]">
           <Link
             href="/"
             aria-label="Home"

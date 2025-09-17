@@ -7,6 +7,7 @@ import ProductCard from "../ProductCard";
 import ProductCardSkeleton from "../ProductCardSkeleton";
 import { normalizeProduct } from "@/lib/normalizeProduct";
 import { useEffect, useMemo, useState } from "react";
+import ProductCardContainerGrid from "../ProductCardContainerGrid";
 
 function ShopPageSingle({ categoryName }: { categoryName: string }) {
   const pageSize = 40;
@@ -40,7 +41,7 @@ function ShopPageSingle({ categoryName }: { categoryName: string }) {
       <CategoryHeader name={categoryName} totalItems={totalItems} />
 
       {/* Products Grid */}
-      <div className="grid p-2 sm:p-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1 sm:gap-2">
+      <ProductCardContainerGrid>
         {isError ? (
           <div className="col-span-full text-center text-red-500">
             Failed to load products. Please try again later.
@@ -72,7 +73,7 @@ function ShopPageSingle({ categoryName }: { categoryName: string }) {
             No products found in this category.
           </div>
         )}
-      </div>
+      </ProductCardContainerGrid>
 
       {/* Pagination */}
       <div className="flex justify-center mt-6">

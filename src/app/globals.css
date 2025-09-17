@@ -105,6 +105,10 @@
     height: 40px;
   }
 }
+html,
+body {
+  overflow-x: hidden;
+}
 
 /* For Select background */
 .select-background-fix {
@@ -190,4 +194,17 @@ div [data-state="open"] {
 
 [data-slot="sidebar-group"]::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
+}
+
+.product_card_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 📱 Mobile: 2 items */
+  gap: 1rem; /* default gap */
+}
+
+@media (min-width: 640px) {
+  /* sm breakpoint */
+  .product_card_grid {
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  }
 }

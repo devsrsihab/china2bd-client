@@ -8,6 +8,9 @@ import SRSButton from "@/components/SRSButton";
 import { normalizeProduct } from "@/lib/normalizeProduct";
 import { TProduct } from "@/types";
 import { usePopularProducts } from "@/hooks/product.hook";
+import ProductCategorySection from "../ProductCategorySection";
+import CategorySlider from "../CategorySlider";
+import ProductCardContainerGrid from "../ProductCardContainerGrid";
 
 const PAGE_SIZE = 8;
 
@@ -67,6 +70,31 @@ const HomePageComponent: React.FC = () => {
       {/* ✅ Banner stays full width */}
       <HomeBanner />
 
+      {/* category slider */}
+      <CategorySlider />
+
+      {/* Dynamic sections */}
+      <ProductCategorySection
+        title="Shoes"
+        queryTitle="shoes"
+        viewMoreHref="/shop/shoes"
+      />
+      <ProductCategorySection
+        title="Mens Clothing"
+        queryTitle="mens clothing"
+        viewMoreHref="/shop/mens-clothing"
+      />
+      <ProductCategorySection
+        title="Womens Clothing"
+        queryTitle="womens clothing"
+        viewMoreHref="/shop/womens-clothing"
+      />
+      <ProductCategorySection
+        title="Watches"
+        queryTitle="watches"
+        viewMoreHref="/shop/watches"
+      />
+
       <section className="w-full  mx-auto  py-6 sm:py-10 bg-white mt-6 rounded-lg shadow-sm">
         <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-center mb-6">
           Trending Products
@@ -79,7 +107,7 @@ const HomePageComponent: React.FC = () => {
         )}
 
         {/* ✅ Responsive Grid */}
-        <div className="grid gap-3 sm:gap-4 md:gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+        <ProductCardContainerGrid>
           {initialLoading &&
             Array.from({ length: PAGE_SIZE }).map((_, i) => (
               <div key={i} className="p-1">
@@ -110,7 +138,7 @@ const HomePageComponent: React.FC = () => {
               </div>
             );
           })}
-        </div>
+        </ProductCardContainerGrid>
 
         {displayed.length > 0 && (
           <div className="flex justify-center mt-6">
