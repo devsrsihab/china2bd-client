@@ -18,13 +18,28 @@ import { AnimatePresence, motion } from "framer-motion";
 import { userAccountSidebarItems } from "@/constans/user-account-items";
 import UserInfoCard from "./user-account/UserInforCard";
 import UserManager from "./user-account/UserManager";
+import { useAuth } from "@/lib/Providers";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export function UserAccountSidebar() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const { toggleSidebar } = useSidebar(); // use the same toggle function
+  const { toggleSidebar } = useSidebar();
+  const { logout } = useAuth();
+  const router = useRouter();
 
   const toggleSubmenu = (title: string) => {
     setOpenMenu((prev) => (prev === title ? null : title));
+  };
+
+  const handleLogout = () => {
+    logout();
+    toast.success("Logged out successfully"); // top-right (Toaster already mounted)
+    // close sidebar on mobile
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
+      toggleSidebar();
+    }
+    router.push("/login");
   };
 
   return (
@@ -43,10 +58,29 @@ export function UserAccountSidebar() {
                 {userAccountSidebarItems.map((item) => (
                   <div key={item.title}>
                     <SidebarMenuItem>
-                      {Array.isArray(item.submenu) ? (
+                      {item.action === "logout" ? (
+                        // ✅ Use SidebarMenuButton for consistent look & sizing
+                        <SidebarMenuButton
+                          className="hover:bg-[#f2f2f2] duration-300"
+                          asChild
+                        >
+                          <button
+                            type="button"
+                            onClick={handleLogout}
+                            className="flex items-center font-medium !text-black p-[28px] gap-[18px] w-full text-left"
+                          >
+                            <img
+                              src={item.icon.src}
+                              alt={item.title}
+                              className="w-6 h-6"
+                            />
+                            <span>{item.title}</span>
+                          </button>
+                        </SidebarMenuButton>
+                      ) : Array.isArray(item.submenu) ? (
                         <button
                           onClick={() => toggleSubmenu(item.title)}
-                          className="w-full flex items-center gap-[18px] font-medium  !text-black px-[18px] py-[14px]  hover:bg-[#e9f0ee] transition-all"
+                          className="w-full flex items-center gap-[18px] font-medium !text-black px-[18px] py-[14px] hover:bg-[#e9f0ee] transition-all"
                         >
                           <img
                             src={item.icon.src}
@@ -67,7 +101,7 @@ export function UserAccountSidebar() {
                         >
                           <Link
                             href={item.url || "#"}
-                            className="flex  items-center font-medium  !text-black p-[28px]  gap-[18px] "
+                            className="flex items-center font-medium !text-black p-[28px] gap-[18px]"
                           >
                             <img
                               src={item.icon.src}
@@ -96,7 +130,7 @@ export function UserAccountSidebar() {
                                 <SidebarMenuButton asChild>
                                   <Link
                                     href={sub.url}
-                                    className="flex font-medium  !text-black items-center gap-2 px-[18px] py-[22px] text-sm "
+                                    className="flex font-medium !text-black items-center gap-2 px-[18px] py-[22px] text-sm "
                                     onClick={() => {
                                       if (window.innerWidth < 768) {
                                         toggleSidebar();

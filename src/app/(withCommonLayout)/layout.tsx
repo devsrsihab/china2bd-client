@@ -17,12 +17,12 @@ const CommonLayout = ({ children }: { children: React.ReactNode }) => {
           {/* ✅ Responsive spacing without hardcoded margins */}
           <main
             className="
-  w-full
-  pt-[120px] md:pt-[72px]     /* header spacing */
-  px-2 sm:px-4 lg:px-6
-  min-h-screen
-  bg-gray-50
-"
+                w-full
+                pt-[120px] md:pt-[72px]     /* header spacing */
+                px-2 sm:px-4 lg:px-6
+                min-h-screen
+                bg-gray-50
+              "
           >
             {children}
             <MobileBottomAppBar />

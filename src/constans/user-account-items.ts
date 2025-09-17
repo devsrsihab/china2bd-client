@@ -17,6 +17,7 @@ type SidebarItem = {
     title: string;
     url: string;
   }[];
+  action?:"logout"
 };
 
 export const userAccountSidebarItems: SidebarItem[] = [
@@ -68,6 +69,7 @@ export const userAccountSidebarItems: SidebarItem[] = [
   {
     title: "Logout",
     icon: logouticon,
-    url: "/account/logout",
+    action: "logout", // 👈 add action instead of url
+
   },
 ];
