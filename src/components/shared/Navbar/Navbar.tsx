@@ -17,8 +17,6 @@ import { useAuth } from "@/lib/Providers";
 const Navbar = () => {
   const { currentUser } = useAuth(); // ✅ এখন ঠিকমত কাজ করবে
 
-  console.log("current user info ===>", currentUser);
-
   return (
     <nav className="bg-primary z-[999999] fixed top-0 left-0 w-full sm:px-7 sm:py-2 py-2 px-4">
       <div className="flex items-center w-full justify-between">
