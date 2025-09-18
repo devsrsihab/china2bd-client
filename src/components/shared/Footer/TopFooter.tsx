@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import a from "next/link";
 import tiktokIcon from "@/assets/icons/tiktok.svg";
 import facebookIcon from "@/assets/icons/facebook.svg";
 import instagramIcon from "@/assets/icons/instagram.svg";
@@ -51,7 +51,12 @@ const FooterTop: React.FC = () => {
         </div>
         {/* Social Links Section */}
         <div className="flex mt-4 justify-center  space-x-[0.5rem] ">
-          <Link href="#" className="transition duration-400 hover:scale-110">
+          <a
+            href="https://www.facebook.com/china2bdpro"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition duration-400 hover:scale-110"
+          >
             <Image
               src={facebookIcon.src}
               alt="TikTok Icon"
@@ -61,8 +66,13 @@ const FooterTop: React.FC = () => {
               loading="lazy"
             />
             <span className="sr-only">Facebook</span>
-          </Link>
-          <Link href="#" className="transition duration-400 hover:scale-110">
+          </a>
+          <a
+            href="https://www.instagram.com/china2bdpro/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition duration-400 hover:scale-110"
+          >
             <Image
               src={instagramIcon.src}
               alt="TikTok Icon"
@@ -72,8 +82,13 @@ const FooterTop: React.FC = () => {
               loading="lazy"
             />
             <span className="sr-only">instagram</span>
-          </Link>
-          <Link href="#" className="transition duration-400 hover:scale-110">
+          </a>
+          <a
+            href="https://www.youtube.com/@china2bdpro"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition duration-400 hover:scale-110"
+          >
             <Image
               src={youtubeIcon.src}
               alt="TikTok Icon"
@@ -83,9 +98,14 @@ const FooterTop: React.FC = () => {
               loading="lazy"
             />
             <span className="sr-only">youtube</span>
-          </Link>
-          s
-          <Link href="#" className="transition duration-400 hover:scale-110">
+          </a>
+
+          <a
+            href="https://www.tiktok.com/@china2bdpro"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition duration-400 hover:scale-110"
+          >
             <Image
               src={tiktokIcon.src}
               alt="TikTok Icon"
@@ -95,46 +115,8 @@ const FooterTop: React.FC = () => {
               loading="lazy"
             />
             <span className="sr-only">tiktok</span>
-          </Link>
-          <Link href="#" className="transition duration-400 hover:scale-110">
-            <Image
-              src={lnkedinIcon.src}
-              alt="TikTok Icon"
-              width={32}
-              height={32}
-              className="w-8 h-8"
-              loading="lazy"
-            />
-            <span className="sr-only">linkedin</span>
-          </Link>
+          </a>
         </div>
-        {/* Company Logos / Sister Brands Section */}
-        {/* <div className="flex flex-col items-center justify-center">
-          <p className="text-[18px]  md:text-xl mt-4 text-center mb-2 font-semibold">
-            Explore Sky Brands... Think to the Sky.
-          </p>
-          <div className="grid grid-cols-3 gap-4 md:max-w-[600px] w-full md:px-4">
-            {sisterCompanyLogos.map((logo, index) => (
-              <Link
-                key={index}
-                href={logo.href}
-                target={logo.href.startsWith("/") ? "_self" : "_blank"}
-                rel={logo.href.startsWith("/") ? "" : "noopener noreferrer"}
-                aria-label={logo.label} // Using the label for aria-label
-              >
-                <Image
-                  src={logo.imageSrc}
-                  alt={logo.alt}
-                  width={150}
-                  height={50}
-                  loading="lazy"
-                  className="w-full p-2 h-[90px] object-contain rounded bg-[#e8f0f3]
-"
-                />
-              </Link>
-            ))}
-          </div>
-        </div> */}
       </div>
     </div>
   );
