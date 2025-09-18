@@ -199,7 +199,7 @@ div [data-state="open"] {
 .product_card_grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 📱 Mobile: 2 items */
-  gap: 1rem; /* default gap */
+  gap: 6px; /* default gap */
 }
 
 @media (min-width: 640px) {

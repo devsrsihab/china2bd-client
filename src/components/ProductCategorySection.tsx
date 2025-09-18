@@ -51,7 +51,7 @@ const ProductCategorySection: React.FC<ProductSectionProps> = ({
         {products.map((product) => {
           const key = String(product.id);
           return (
-            <div key={key} className="p-1">
+            <div key={key}>
               <ProductCard
                 href={`/product/${product.id ?? product.id}`}
                 imageSrc={product.thumbnail || "/placeholder.png"}

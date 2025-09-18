@@ -37,13 +37,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <Link href={href} className="w-full">
         <CardContent className="p-0 flex flex-col items-center">
           {/* Image Container */}
-          <div className="prod-image-container relative overflow-hidden rounded-xl w-full h-[230px] bg-white border border-gray-100 mb-1.5">
+          <div className="prod-image-container relative overflow-hidden rounded-xl w-full h-[180px] sm:h-[230px] bg-white border border-gray-100 mb-1.5">
             {/* Placeholder (visible until main image has loaded) */}
             <Image
               src={placeholderImg}
               alt="placeholder"
               fill
-              className={`object-contain p-3 transition-opacity duration-300 ${
+              className={` object-cover sm:object-contain p-3 transition-opacity duration-300 ${
                 loaded ? "opacity-0" : "opacity-100"
               }`}
               priority={false}
