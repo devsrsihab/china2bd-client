@@ -97,12 +97,27 @@ export const useProductsByTitle = (
 };
 
 // 4. Product details
+// export const useProductById = (
+//   id: string | number,
+//   options?: Omit<UseQueryOptions<any, any, any, QueryKey>, 'queryKey' | 'queryFn'>
+// ) => {
+//   return useQuery({
+//     queryKey: ['PRODUCT_DETAILS', id],
+//     queryFn: () => getProductById(id),
+//     enabled: !!id,
+//     refetchOnWindowFocus: false,
+//     ...options,
+//   });
+// };
 export const useProductById = (
   id: string | number,
-  options?: Omit<UseQueryOptions<any, any, any, QueryKey>, 'queryKey' | 'queryFn'>
+  options?: Omit<
+    UseQueryOptions<any, any, any, QueryKey>,
+    "queryKey" | "queryFn"
+  >
 ) => {
   return useQuery({
-    queryKey: ['PRODUCT_DETAILS', id],
+    queryKey: ["PRODUCT_DETAILS", id],
     queryFn: () => getProductById(id),
     enabled: !!id,
     refetchOnWindowFocus: false,

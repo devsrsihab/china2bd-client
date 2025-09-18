@@ -32,21 +32,20 @@ const ShareAndCopy: React.FC<ShareAndCopyProps> = ({ shareUrl }) => {
     <div className="mt-4 flex items-center -2 space-x-2">
       {/* Facebook Share */}
       <a
-        onClick={() =>
-          openInNewTab(
-            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-              shareUrl
-            )}`
-          )
-        }
-        className="text-[#3b5998]"
+        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+          shareUrl
+        )}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[#3b5998] cursor-pointer"
       >
         <svg viewBox="0 0 64 64" width="32" height="32">
-          <circle cx="32" cy="32" r="31" fill="#3b5998"></circle>
+          <circle cx="32" cy="32" r="31" fill="#3b5998" />
           <path
-            d="M34.1,47V33.3h4.6l0.7-5.3h-5.3v-3.4c0-1.5,0.4-2.6,2.6-2.6l2.8,0v-4.8c-0.5-0.1-2.2-0.2-4.1-0.2 c-4.1,0-6.9,2.5-6.9,7V28H24v5.3h4.6V47H34.1z"
+            d="M34.1,47V33.3h4.6l0.7-5.3h-5.3v-3.4c0-1.5,0.4-2.6,2.6-2.6l2.8,0v-4.8c-0.5-0.1-2.2-0.2-4.1-0.2
+         c-4.1,0-6.9,2.5-6.9,7V28H24v5.3h4.6V47H34.1z"
             fill="white"
-          ></path>
+          />
         </svg>
       </a>
 
@@ -57,7 +56,7 @@ const ShareAndCopy: React.FC<ShareAndCopyProps> = ({ shareUrl }) => {
             `https://api.whatsapp.com/send?text=${encodeURIComponent(shareUrl)}`
           )
         }
-        className="text-[#25D366]"
+        className="text-[#25D366] cursor-pointer"
       >
         <svg viewBox="0 0 64 64" width="32" height="32">
           <circle cx="32" cy="32" r="31" fill="#25D366"></circle>

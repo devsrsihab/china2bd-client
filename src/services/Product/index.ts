@@ -1,4 +1,5 @@
 "use server";
+import envConfig from "@/config/envConfig";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axiosInstance from "@/lib/AxiosInstance";
 const maybeSignal = (signal?: AbortSignal) =>
@@ -82,13 +83,25 @@ export const getPopularProducts = async ({
 };
 
 // 4. Get single product info
+// export const getProductById = async (id: string | number) => {
+//   try {
+//     const { data } = await axiosInstance.get(`/products/single/${id}`);
+//     return data;
+//   } catch (error: any) {
+//     throw new Error(error);
+//   }
+// };
 export const getProductById = async (id: string | number) => {
-  try {
-    const { data } = await axiosInstance.get(`/products/single/${id}`);
-    return data;
-  } catch (error: any) {
-    throw new Error(error);
+  const res = await fetch(`${envConfig.serverApi}/products/single/${id}`, {
+    next: { revalidate: 60 }, // optional: ISR (60s)
+    cache: "no-store",        // or use force-cache depending on your case
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch product");
   }
+
+  return res.json();
 };
 
 // 5. Get vendor info
