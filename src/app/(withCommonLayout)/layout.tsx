@@ -22,6 +22,7 @@ const CommonLayout = ({ children }: { children: React.ReactNode }) => {
                 px-2 sm:px-4 lg:px-6
                 min-h-screen
                 bg-gray-50
+                overflow-x-clip
               "
           >
             {children}

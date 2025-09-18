@@ -76,12 +76,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
             {(!discountPercentage || discountPercentage <= 0) && (
               <div className="flex justify-between items-center mt-2">
-                <span className="font-jost product-price block text-[#cf3056] font-bold text-base">
+                <span className="font-jost product-price block text-[#cf3056] font-bold text-xs sm:text-base">
                   {productPrice}
                 </span>
                 {isHasSoldQty && (
                   <div>
-                    <span className="block text-xs text-gray-700 font-medium">
+                    <span className="block text-[10px] sm:text-xs text-gray-700 font-medium">
                       SOLD: {soldQuantity}
                     </span>
                   </div>

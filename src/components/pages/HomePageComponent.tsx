@@ -71,7 +71,7 @@ const HomePageComponent: React.FC = () => {
       <HomeBanner />
 
       {/* category slider */}
-      <CategorySlider />
+      {/* <CategorySlider /> */}
 
       {/* Dynamic sections */}
       <ProductCategorySection

@@ -83,7 +83,7 @@ export function CommonSidebar() {
               <SidebarMenu>
                 {/* Top-level categories in a 2-column grid */}
                 {activeCategory == null && (
-                  <div className="grid grid-cols-2 gap-x-3 gap-y-4 px-[16px] py-[8px]">
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-4 px-[16px] pt-[8px] pb-10">
                     {sortedCategories.map((cat) => (
                       <SidebarMenuItem key={cat.Id} className="cursor-pointer">
                         <div>

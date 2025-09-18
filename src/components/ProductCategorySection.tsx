@@ -35,7 +35,7 @@ const ProductCategorySection: React.FC<ProductSectionProps> = ({
   }, [res, isSuccess, limit]);
 
   return (
-    <div className="py-4 px-4 sm:px-6 bg-white overflow-hidden mt-2">
+    <div className="py-4 px-2 sm:px-6 bg-white overflow-hidden mt-2">
       {/* Section header with "View More" */}
       <CategoryBannerViewMore title={title} viewMoreHref={viewMoreHref} />
 

@@ -67,7 +67,7 @@ export const MobileBottomAppBar: React.FC = () => {
         {/* Phone Link */}
         <div className="item">
           <a
-            href="tel:+8809613828606"
+            href="tel:+8801811396279"
             aria-label="Call"
             className="flex flex-col items-center text-sm text-muted-foreground hover:text-primary transition"
           >
@@ -79,7 +79,7 @@ export const MobileBottomAppBar: React.FC = () => {
         {/* Chat Link */}
         <div className="item">
           <a
-            href="https://m.me/153346908438921"
+            href="https://m.me/china2bdpro"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat"
