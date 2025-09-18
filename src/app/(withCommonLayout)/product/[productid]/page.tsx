@@ -6,11 +6,11 @@ import {
 import { getProductById } from "@/services/Product";
 import ProductSinglePage from "@/components/pages/ProductSinglePage";
 
-type TParams = { productid: string };
+type TParams = Promise<{ productid: string }>;
 
 // ✅ Dynamic SEO + OG metadata
 export async function generateMetadata({ params }: { params: TParams }) {
-  const { productid } = params;
+  const { productid } = await params;
 
   try {
     const product = await getProductById(productid);
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: { params: TParams }) {
 
 // ✅ Hydrate product page
 export default async function Page({ params }: { params: TParams }) {
-  const { productid } = params;
+  const { productid } = await params;
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
