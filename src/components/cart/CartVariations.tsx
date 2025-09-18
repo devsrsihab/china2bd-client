@@ -28,7 +28,7 @@ const CartVariations: React.FC<CartVariationsProps> = ({
       <div className="flex-1 flex items-center">
         {variantImageUrl && (
           <Image
-            src={variantImageUrl}
+            src={""}
             alt={variantName || ""}
             width={36}
             height={36}

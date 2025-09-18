@@ -26,10 +26,8 @@ const cartItemsArray = [
     productName:
       "[Sheii Su Yinyin] Same Style as Mengling ~ Amiu Genuine Leather Mid-High Western Cowboy Boots Female Knight Boots",
     productUrl: "/product/abb-0289811763880",
-    imageUrl:
-      "https://global-img-cdn.1688.com/img/ibank/O1CN01UoKHr82EW0qI9lTDq_!!2215645088751-0-cib.600x600.jpg",
-    variantImageUrl:
-      "https://global-img-cdn.1688.com/img/ibank/O1CN015mswS02EW0qH6GdiV_!!2215645088751-0-cib.600x600.jpg",
+    imageUrl: ",",
+    variantImageUrl: ",",
     variantName: "Color: Brown long tube",
     size: "Size: 38",
     quantity: 6,
@@ -42,10 +40,8 @@ const cartItemsArray = [
     productName:
       "Aloe Vera Gel Moisturizing, Moisturizing, After-Sun Repair and Repair Cream Lotion for Men",
     productUrl: "/product/abb-0344599710378",
-    imageUrl:
-      "https://global-img-cdn.1688.com/img/ibank/O1CN01GNdOGi1CyI3mipTgJ_!!2219493330149-0-cib.600x600.jpg",
-    variantImageUrl:
-      "https://global-img-cdn.1688.com/img/ibank/O1CN01XcMb8g1CyI3mHFhBW_!!2219493330149-0-cib.600x600.jpg",
+    imageUrl: ",",
+    variantImageUrl: ",",
     variantName:
       "Product specifications: Skin care aloe vera gel 220g [deep hydration]",
     quantity: 5,

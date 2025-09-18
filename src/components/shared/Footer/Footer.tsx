@@ -30,27 +30,22 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:underline">
+                <Link href="/cart" className="hover:underline">
                   Cart
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:underline">
+                <Link href="/wishlist" className="hover:underline">
                   Wishlist
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:underline">
+                <Link href="/shipping-charge" className="hover:underline">
                   Shipping Charge
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:underline">
-                  Retail Purchase
-                </Link>
-              </li>
-              <li>
-                <Link href="/" className="hover:underline">
+                <Link href="/faq" className="hover:underline">
                   FAQ
                 </Link>
               </li>
@@ -63,32 +58,32 @@ const Footer: React.FC = () => {
 
             <ul className="text-gray-500 dark:text-gray-400 font-medium">
               <li>
-                <Link href="/" className="hover:underline">
+                <Link href="/about-us" className="hover:underline">
                   About us
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:underline">
+                <Link href="/contact-us" className="hover:underline">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:underline">
+                <Link href="/privacy-policy" className="hover:underline">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:underline">
+                <Link href="/returns-and-refund" className="hover:underline">
                   Returns & Refund
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:underline">
+                <Link href="/terms-and-conditions" className="hover:underline">
                   Terms & Conditions
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:underline">
+                <Link href="/secured-payment" className="hover:underline">
                   Secured Payment
                 </Link>
               </li>

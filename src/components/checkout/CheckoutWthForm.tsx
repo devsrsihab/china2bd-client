@@ -104,7 +104,7 @@ const CheckoutWthForm: React.FC<CheckoutWthFormProps> = ({
 
             {/* Item Variants */}
             <CartVariations
-              variantImageUrl={item.variantImageUrl}
+              variantImageUrl={""}
               variantName={item.variantName}
               size={item.size}
               quantity={item.quantity}
